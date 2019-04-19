@@ -1,6 +1,4 @@
 import React from "react";
-import { TransitionMotion, spring } from "react-motion";
-import PropTypes from 'prop-types';
 
 import './inputbox.css'
 
