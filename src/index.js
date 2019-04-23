@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import axios from 'axios';
+
 import Input from './components/inputs/InputBox.jsx';
 import InputBtn from './components/inputs/InputBtn.jsx'
 import './index.css';
@@ -81,33 +83,63 @@ class Login extends React.Component {
 
 };
 
+class TestList extends React.Component {
+	constructor(props) {
+		super(props)
 
-	function LoginTitle() {
+		this.state = {
+			persons: []
+		}
+	}
+
+	componentDidMount() {
+		axios.get('https://jsonplaceholder.typicode.com/users')
+			.then(res =>{
+				const persons = res.data;
+				this.setState({ persons });
+			})
+	}
+
+	render(){
+		const persons = this.state.persons;
+
+		return (
+			<ul>
+				{persons.map( person => <li>{person.name}</li>)}
+			</ul>
+		)
+	}
+}
+
+
+function LoginTitle() {
 		return ( 
 			<p id='loginTitle'>
 				<span style={titleStyle}>Welcome to </span>
-				<span style={titleDisaster}>disaster</span>
+				<span style={titleStyle}>disaster</span>
 				<span style={titleStyle}>gram</span>
 			</p>
 		);
-	};
+};
 
 
 
 const titleStyle = {
-	color: "white",
-	textShadow: "0px 3px 5px #000000",
+	color: "black",
+	textShadow: "0px 3px 5px #585858",
 	fontSize: "30px",
-	fontWeight: "bold",
+	fontWeight: "100",
 	paddingLeft: "2px"
 };
 
+
+{/*"#f49511"*/}
 const titleDisaster = {
-	color: "blac",//"#e51d1d",
+	color: "white",//"#e51d1d",
 	//textShadow: "0px 0px 10px #9f0000",
 	fontSize: "30px",
-	fontWeight: "bold",
-	background:"#f49511",
+	fontWeight: "light",
+	background: "white",
 	borderRadius: "5px",
 	paddingLeft: "5px",
 	paddingRight: "5px"

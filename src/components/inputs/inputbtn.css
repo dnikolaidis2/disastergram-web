@@ -7,7 +7,7 @@
 #inputBtn {
 	-webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  background-color: #1a0000; /* Green */
+  background-color: black;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -21,7 +21,7 @@
 }
 
 #inputBtn:hover {
-  background-color: #f49511; /* Green */
+  background-color: white;
   color: black;
   font-weight: 600;
 }
