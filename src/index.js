@@ -1,19 +1,35 @@
+// Main modules
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import axios from 'axios';
 
+// API imports
+import AuthAPI from './api/authService.js';
+// Components
 import Input from './components/inputs/InputBox.jsx';
 import InputBtn from './components/inputs/InputBtn.jsx'
 import Table from './components/Table/Table.jsx'
+
 import './index.css';
+
 import * as serviceWorker from './serviceWorker';
 
+
+/*** ----
+ @TODO:
+  1. Create Three separate components that
+   	will live under "card" component
+ 	2. Components: "Login", "Register", "Already logged in"
+	3. Switch between them
+
+*/
 
 class Login extends React.Component {
 
 	constructor(props) {
 		super(props);
+
+		this.Auth = new AuthAPI('http://disastergram.nikolaidis.tech:5000');
 
 		this.state = {
 			username: "",
@@ -41,7 +57,9 @@ class Login extends React.Component {
 	}
 
 	handleSubmit(e){
-		alert('You sumbitted: ' + this.state.username + this.state.password);
+		if (this.Auth.login(this.state.username, this.state.password))
+			alert('You are logged in!');
+		// alert('You sumbitted: ' + this.state.username + this.state.password);
 		e.preventDefault();
 	}
 
@@ -115,33 +133,33 @@ class Login extends React.Component {
 // 	}
 // }
 
-// class TestList extends React.Component {
-// 	constructor (props) {
-// 		super(props);
+class TestList extends React.Component {
+	constructor (props) {
+		super(props);
 
-// 		this.state = {
-// 			pubkey: props.pubkey || "",
-// 		}
-// 	}
+		this.state = {
+			pubkey: props.pubkey || "",
+		}
+	}
 
-// 	componentDidMount() {
-// 		axios.get('http://192.168.1.150:5000/auth/pubkey',{crossDomain: true})
-// 			.then(res =>{
-// 				const pubkey = res.data.public_key;
-// 				this.setState({ pubkey });
-// 			})
-// 	}
+	componentDidMount() {
+		axios.get('http://192.168.1.150:5000/auth/pubkey',{crossDomain: true})
+			.then(res => {
+				const pubkey = res.data.public_key;
+				this.setState({ pubkey });
+			})
+	}
 
-// 	render(){
-// 		const pubkey = this.state.pubkey;
+	render() {
+		const pubkey = this.state.pubkey;
 
-// 		return (
-// 			<div id="testlist">
-// 					<p>Public Key: {pubkey}</p>
-// 			</div>
-// 		)
-// 	}
-// }
+		return (
+			<div id="testlist">
+					<p>Public Key: {pubkey}</p>
+			</div>
+		)
+	}
+}
 
 
 
