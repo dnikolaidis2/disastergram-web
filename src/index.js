@@ -115,33 +115,33 @@ class Login extends React.Component {
 // 	}
 // }
 
-class TestList extends React.Component {
-	constructor (props) {
-		super(props);
+// class TestList extends React.Component {
+// 	constructor (props) {
+// 		super(props);
 
-		this.state = {
-			pubkey: props.pubkey || "",
-		}
-	}
+// 		this.state = {
+// 			pubkey: props.pubkey || "",
+// 		}
+// 	}
 
-	componentDidMount() {
-		axios.get('http://192.168.1.150:5000/auth/pubkey',{crossDomain: true})
-			.then(res =>{
-				const pubkey = res.data.public_key;
-				this.setState({ pubkey });
-			})
-	}
+// 	componentDidMount() {
+// 		axios.get('http://192.168.1.150:5000/auth/pubkey',{crossDomain: true})
+// 			.then(res =>{
+// 				const pubkey = res.data.public_key;
+// 				this.setState({ pubkey });
+// 			})
+// 	}
 
-	render(){
-		const pubkey = this.state.pubkey;
+// 	render(){
+// 		const pubkey = this.state.pubkey;
 
-		return (
-			<div id="testlist">
-					<p>Public Key: {pubkey}</p>
-			</div>
-		)
-	}
-}
+// 		return (
+// 			<div id="testlist">
+// 					<p>Public Key: {pubkey}</p>
+// 			</div>
+// 		)
+// 	}
+// }
 
 
 
