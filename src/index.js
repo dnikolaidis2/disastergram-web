@@ -192,7 +192,6 @@ const titleDisaster = {
 
 ReactDOM.render(
 	<FlexBox>
-		<TestList />
 		<Login />
 	</FlexBox>,
 	document.getElementById('root')
