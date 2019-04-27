@@ -43,7 +43,6 @@ export default class Login extends React.Component {
 	handleSubmit(e){
 		this.Auth.login(this.state.username, this.state.password)
 			.then( res => {
-				alert('You are logged in!')
 			})
 		
 		if (this.Auth.loggedIn()) {

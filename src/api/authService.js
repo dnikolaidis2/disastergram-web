@@ -35,7 +35,7 @@ export default class AuthAPI {
 				// Save token useing localstorage
 				this.setToken(res.data.token);
 				
-				if (process.env.NODE_ENV!=='development') {
+				if (process.env.NODE_ENV ==='development') {
 					console.log('Token received!');
 					console.log(res.data.token);
 				}
