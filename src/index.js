@@ -17,14 +17,6 @@ import * as serviceWorker from './serviceWorker';
 
 
 /*** ----
- @TODO:
-  1. Create Three separate components that
-   	will live under "card" component
- 	2. Components: "Login", "Register", "Already logged in"
-	3. Switch between them
-	4. user page
-
-
 
 	**** @TODO!IMPORTANT Will need to fix Routing on NGINX ****
 

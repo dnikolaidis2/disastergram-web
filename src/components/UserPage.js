@@ -53,9 +53,8 @@ function LogoutBtn(props) {
 			<button 
 				className='logout'
 				type='button'
-				onClick={props.func}
-			>
-				Logout
+				onClick={props.func}>
+					Logout
 			</button>
 		)
 

@@ -16,19 +16,42 @@ export default class Login extends React.Component {
 		this.updateLoggedIn = this.props.updateLoggedIn;
 
 		this.state = {
-			username: "",
-			password: ""
+			username: '',
+			password: '',
+			confpass: '',
+			erPass: '',
+			erCPass: '',
+			isRegistering: false
 		};
 
 		this.handleUsernameChange = this.handleUsernameChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
+		this.handleConfPassChange = this.handleConfPassChange.bind(this);
+		this.handleRegisterChange = this.handleRegisterChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.validateForm = this.validateForm.bind(this);
 	}
 
 	// Do some basic Validation
 	// @TODO expand
 	validateForm() {
-		return this.state.username.length > 0 && this.state.password.length > 0;
+		const { username, password, confpass, isRegistering } = this.state;
+
+		if (isRegistering && (password !== confpass)) {
+			
+			this.setState({
+					username: '',
+					password: '',
+					confpass: '',
+					erPass: 'Passwords do not match!'
+				});
+			return false;
+		}
+
+		if (username.length <= 0 && password.length <= 0)
+			return false;
+
+		return true;
 	}
 
 	// @TODO Probably can migrate these two functions
@@ -40,25 +63,58 @@ export default class Login extends React.Component {
 		this.setState({password: password});
 	}
 
+	handleConfPassChange(confpass) {
+		this.setState({confpass: confpass});
+	}
+
+
 	handleSubmit(e){
 		e.preventDefault();
+		if (!this.validateForm())
+			return;
 
-		this.Auth.login(this.state.username, this.state.password)
+
+		const { username, password, isRegistering } = this.state;
+
+		if(isRegistering) {
+			this.Auth.register(username, password)
+			.then( res => {
+				
+				if (res.status === 201)
+					// If succesfully registered, then
+
+					this.Auth.login(username, password)
+						.then( res => {
+							// force refresh parents logged in status
+							this.updateLoggedIn();
+						})			
+
+			})
+			return;
+		}
+
+		// 
+		this.Auth.login(username, password)
 			.then( res => {
 				// force refresh parents logged in status
 				this.updateLoggedIn();
-			})			
+			})		
+
+		
 		
 	}
 
+	handleRegisterChange(){
+		this.setState({isRegistering : !this.state.isRegistering})
+	}
+
 	render() {
-		const username = this.state.username;
-		const password = this.state.password;
+		const { username, password, confpass, erCPass, erPass, isRegistering } = this.state;
 
 		return (
 			<div id='login'>
-				
 				<form 
+					className="loginForm"
 					autoComplete="off" 
 					onSubmit={this.handleSubmit}>
 
@@ -80,10 +136,24 @@ export default class Login extends React.Component {
 						label="Password"
 						locked={false}
 						active={false}
+						error={erPass}
 						/>
+						{ isRegistering && 
+							<Input 
+								onUser
+								id={3}
+								value={confpass}
+								onValueChange={this.handleConfPassChange}
+								type="password"
+								label="Confirm Password"
+								locked={false}
+								active={false}
+								error={erCPass}
+							/>
+						}
 					<InputBtn />
-
 				</form>
+				<p className='registerPrompt' onClick={this.handleRegisterChange}>Do you want to register Instead?</p>
 			</div>
 		);
 	}

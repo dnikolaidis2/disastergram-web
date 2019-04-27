@@ -8,6 +8,7 @@
 
 
 .loginpage > .flexbox {
+
   height:100%;
   display: flex;
   justify-content: flex-end;
@@ -17,9 +18,8 @@
   padding: 0px 15%;
 }
 
-
 .card {
-   padding: 20px 0px;
+  padding: 20px 0px;
   margin-left: 50px;
   width: 400px;
   /*border: 5px solid red;*/
@@ -36,3 +36,21 @@
   margin-bottom: 30px;
 }
 
+.registerPrompt {
+  text-align: center;
+  margin: 0px 0px;
+  color: black;
+  font-weight: 400;
+  transition: all 0.5 ease-in-out;
+}
+
+.registerPrompt:hover {
+  color: purple;
+  font-weight: 400;
+  transition: all 0.3 ease-in-out;
+}
+
+.loginForm {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}

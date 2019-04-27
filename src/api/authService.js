@@ -44,6 +44,30 @@ export default class AuthAPI {
 			})
 	}
 
+	register(username, password) {
+		//** Get a token from the auth server
+
+		const headers = this.getHeaders();
+
+		const data = {
+			username: username,
+			password: password
+		}
+
+		return axios.post(`/auth/register`,
+			{headers: {...headers}},
+		 	{data: {...data}})
+			.then( res => {
+				// Save token useing localstorage
+				
+				if (process.env.NODE_ENV ==='development' && res.status === 203) {
+					console.log('Succesfully registered!');
+				}
+				
+				return Promise.resolve(res);
+			})
+	}
+
 	
 	refresh() {
 		// ** Refresh token function
