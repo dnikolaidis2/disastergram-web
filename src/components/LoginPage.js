@@ -25,39 +25,19 @@ export default class LoginPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.Auth = this.props.Auth;
-
-		this.updateLoggedIn = this.updateLoggedIn.bind(this);
-
-		this.state = {
-			// Assume not logged in, failsafe
-			loggedIn: false,
-		}
-
-		this.updateLoggedIn();
-
+		this.updateLoggedIn = this.props.updateLoggedIn;
 	}
 
 	
-	
-	updateLoggedIn() {
-		const status = this.Auth.isLoggedIn()
-
-		this.setState((state, props) => ({
-			loggedIn: status
-		}));
-	}
 
 	render() {
-		if (this.state.loggedIn === true ) {
+		const isLoggedIn = this.props.isLoggedIn;
+		if ( isLoggedIn === true ) {
 			return <Redirect to='/user' />
 		}
 
 		return (
 			<div className='loginpage'>
-				
-				{/* @TODO change this to 
-					"You are already Logged in" Component*/}
-				{/*this.Auth.loggedIn() ? <Redirect to='/user'/> : null*/}
 				<FlexBox>
 					<Card>
 						{LoginTitle()}

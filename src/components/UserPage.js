@@ -10,24 +10,25 @@ export default class UserPage extends React.Component {
 
 	constructor(props) {
 		super(props);
-
 		this.Auth = this.props.Auth;
+		this.updateLoggedIn = this.props.updateLoggedIn;
 
 		this.logout = this.logout.bind(this);
 	}
 
 	logout() {
-		console.log('I run!')
+		console.log('Deleting token')
 		this.Auth.logout();
-		this.forceUpdate();
+		this.updateLoggedIn();
 	}
 
 	render() {
+		const isLoggedIn = this.props.isLoggedIn;
 		return (
 			<div className='userpage'>
 				<FlexBox>
 					<h1>You are logged in!</h1>
-					{this.Auth.isLoggedIn() 
+					{isLoggedIn
 						? <LogoutBtn func={this.logout} />
 						: <Redirect to='/' />
 					}

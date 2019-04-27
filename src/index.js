@@ -35,16 +35,49 @@ class App extends React.Component {
 		super(props);
 		this.Auth = new AuthAPI('http://disastergram.nikolaidis.tech');
 
+		this.updateLoggedIn = this.updateLoggedIn.bind(this);
+
+		this.state = {
+			// Assume not logged in, failsafe
+			isLoggedIn: false
+		}
+
+	}
+
+	componentDidMount() {
+		this.updateLoggedIn();
+	}
+
+
+	updateLoggedIn() {
+		const status = this.Auth.isLoggedIn()
+		const color = status ? 'color: green':'color: red';
+		console.log('LoggedIn: %c' + status, color);
+		this.setState(() => ({ isLoggedIn: status	}));
 	}
 
 	render() {
 		const Auth = this.Auth
-		//<Route path={'/login,/'} component={LoginPage}/>
+		const isLoggedIn = this.state.isLoggedIn;
 		return (
 				<BrowserRouter>
 					<div className='App'> 
-						<Route exact path={['/','/login']} render={()=> <LoginPage Auth={Auth} />} />
-						<Route path={'/user'} render={()=> <UserPage Auth={Auth} />} />
+						<Route 
+							exact path={['/','/login']} 
+							render={()=> 
+							<LoginPage 
+								Auth={Auth} 
+								updateLoggedIn={this.updateLoggedIn} 
+								isLoggedIn={isLoggedIn}/>
+							}/>
+						<Route 
+							path={'/user'} 
+							render={()=> 
+							<UserPage 
+								Auth={Auth} 
+								updateLoggedIn={this.updateLoggedIn} 
+								isLoggedIn={isLoggedIn}/>
+							}/>
 					</div>
 				</BrowserRouter>
 			);

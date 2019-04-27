@@ -46,7 +46,7 @@ export default class Login extends React.Component {
 		this.Auth.login(this.state.username, this.state.password)
 			.then( res => {
 				// force refresh parents logged in status
-				this.props.updateLoggedIn();
+				this.updateLoggedIn();
 			})			
 		
 	}
