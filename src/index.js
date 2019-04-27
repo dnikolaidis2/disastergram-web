@@ -1,15 +1,16 @@
-// Main modules
+// ** Main modules
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 
-// API imports
-import AuthAPI from './api/authService.js';
-// Components
-import Input from './components/inputs/InputBox.jsx';
-import InputBtn from './components/inputs/InputBtn.jsx'
-import Table from './components/Table/Table.jsx'
+// ** API imports
 
+// ** Components
+import Login from './components/Login.js'
+
+
+//import Table from './components/Table/Table.jsx'
+
+// ** CSS
 import './index.css';
 
 import * as serviceWorker from './serviceWorker';
@@ -21,86 +22,19 @@ import * as serviceWorker from './serviceWorker';
    	will live under "card" component
  	2. Components: "Login", "Register", "Already logged in"
 	3. Switch between them
+	4. user page
 
 */
 
-class Login extends React.Component {
-
+class App extends React.Component {
 	constructor(props) {
-		super(props);
 
-		this.Auth = new AuthAPI('http://disastergram.nikolaidis.tech:5000');
 
-		this.state = {
-			username: "",
-			password: ""
-		};
-
-		this.handleUsernameChange = this.handleUsernameChange.bind(this);
-		this.handlePasswordChange = this.handlePasswordChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	// Do some basic Validation
-	// @TODO expand
-	validateForm() {
-		return this.state.username.length > 0 && this.state.password.length > 0;
-	}
+}
 
-	// @TODO Probably can migrate these two functions
-	handleUsernameChange(username) {
-		this.setState({username: username});
-	}
 
-	handlePasswordChange(password) {
-		this.setState({password: password});
-	}
-
-	handleSubmit(e){
-		if (this.Auth.login(this.state.username, this.state.password))
-			alert('You are logged in!');
-		// alert('You sumbitted: ' + this.state.username + this.state.password);
-		e.preventDefault();
-	}
-
-	render() {
-		const username = this.state.username;
-		const password = this.state.password;
-
-		return (
-			<div id='login'>
-				{LoginTitle()}
-				<form 
-					autoComplete="off" 
-					onSubmit={this.handleSubmit}>
-
-					<Input 
-						id={1}
-						value={username}
-						onValueChange={this.handleUsernameChange}
-						type="text"
-						label="Username"
-						locked={false}
-						active={false}
-						/>
-					<Input 
-						onUser
-						id={2}
-						value={password}
-						onValueChange={this.handlePasswordChange}
-						type="password"
-						label="Password"
-						locked={false}
-						active={false}
-						/>
-					<InputBtn />
-
-				</form>
-			</div>
-		);
-	}
-
-};
 
 
 // TEST CLASS -- REMOVE
@@ -133,34 +67,33 @@ class Login extends React.Component {
 // 	}
 // }
 
-class TestList extends React.Component {
-	constructor (props) {
-		super(props);
+// class TestList extends React.Component {
+// 	constructor (props) {
+// 		super(props);
 
-		this.state = {
-			pubkey: props.pubkey || "",
-		}
-	}
+// 		this.state = {
+// 			pubkey: props.pubkey || "",
+// 		}
+// 	}
 
-	componentDidMount() {
-		axios.get('http://192.168.1.150:5000/auth/pubkey',{crossDomain: true})
-			.then(res => {
-				const pubkey = res.data.public_key;
-				this.setState({ pubkey });
-			})
-	}
+// 	componentDidMount() {
+// 		axios.get('http://192.168.1.150:5000/auth/pubkey',{crossDomain: true})
+// 			.then(res => {
+// 				const pubkey = res.data.public_key;
+// 				this.setState({ pubkey });
+// 			})
+// 	}
 
-	render() {
-		const pubkey = this.state.pubkey;
+// 	render() {
+// 		const pubkey = this.state.pubkey;
 
-		return (
-			<div id="testlist">
-					<p>Public Key: {pubkey}</p>
-			</div>
-		)
-	}
-}
-
+// 		return (
+// 			<div id="testlist">
+// 					<p>Public Key: {pubkey}</p>
+// 			</div>
+// 		)
+// 	}
+// }
 
 
 function FlexBox(props) {
@@ -169,7 +102,14 @@ function FlexBox(props) {
 			{props.children}
 		</div>
 	);
+}
 
+function Card(props) {
+	return (
+		<div className="card">
+			{props.children}
+		</div>
+	);
 }
 
 
@@ -194,10 +134,10 @@ const titleStyle = {
 };
 
 
-{/*"#f49511"*/}
 const titleDisaster = {
 	color: "purple",//"#e51d1d",
 	//textShadow: "0px 0px 10px #9f0000",
+	//"#f49511"
 	textShadow:"0px 3px 5px #585858",
 	fontSize: "30px",
 	fontWeight: "100",
@@ -210,7 +150,10 @@ const titleDisaster = {
 
 ReactDOM.render(
 	<FlexBox>
-		<Login />
+		<Card>
+			{LoginTitle()}
+			<Login />
+		</Card>
 	</FlexBox>,
 	document.getElementById('root')
 );

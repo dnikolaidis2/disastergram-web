@@ -30,12 +30,17 @@ export default class AuthAPI {
 
 		return axios.post(`/auth/login`,
 			{headers: {...headers}},
-			{crossDomain: true}, 
-		 	data)
+		 	{data: {...data}})
 			.then( res => {
-				// Save toke useing localstorage
-				this.setToken(res.token);
-				return true;
+				// Save token useing localstorage
+				this.setToken(res.data.token);
+				
+				if (process.env.NODE_ENV!=='development') {
+					console.log('Token received!');
+					console.log(res.data.token);
+				}
+				
+				return Promise.resolve(res);
 			})
 	}
 
@@ -108,8 +113,7 @@ export default class AuthAPI {
   	// Set up headers for all requests
 		const headers = {
 	    'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Content-Type': 'application/json'
     };
 
     if (this.loggedIn()) {
