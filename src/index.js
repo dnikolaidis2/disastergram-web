@@ -1,10 +1,14 @@
 // ** Main modules
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, browserHistory} from 'react-router';
+import {BrowserRouter, Route } from 'react-router-dom';
+
+// ** API imports
+import AuthAPI from './api/authService.js';
 
 // ** Components
 import LoginPage from './components/LoginPage.js'
+import UserPage from './components/UserPage.js'
 
 // ** CSS
 import './index.css';
@@ -20,12 +24,29 @@ import * as serviceWorker from './serviceWorker';
 	3. Switch between them
 	4. user page
 
+
+
+	**** @TODO!IMPORTANT Will need to fix Routing on NGINX ****
+
 */
 
 class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.Auth = new AuthAPI('http://disastergram.nikolaidis.tech');
+
+	}
+
 	render() {
+		const Auth = this.Auth
+		//<Route path={'/login,/'} component={LoginPage}/>
 		return (
-				<LoginPage />
+				<BrowserRouter>
+					<div className='App'> 
+						<Route exact path={['/','/login']} render={()=> <LoginPage Auth={Auth} />} />
+						<Route path={'/user'} render={()=> <UserPage Auth={Auth} />} />
+					</div>
+				</BrowserRouter>
 			);
 	}
 
@@ -37,8 +58,6 @@ ReactDOM.render(
 	<App />,
 	document.getElementById('root')
 );
-
-
 
 
 

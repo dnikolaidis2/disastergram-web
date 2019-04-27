@@ -66,7 +66,7 @@ export default class AuthAPI {
 	}
 
 
-	loggedIn() {
+	isLoggedIn() {
 		//** Check if the user is alrea<dy logged in
 
 		// Get token from localStorage
@@ -116,7 +116,7 @@ export default class AuthAPI {
       'Content-Type': 'application/json'
     };
 
-    if (this.loggedIn()) {
+    if (this.isLoggedIn()) {
     	headers['Authorization'] = 'Bearer ' + this.getToken();
     }
 

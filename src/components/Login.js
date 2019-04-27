@@ -1,8 +1,7 @@
 // ** Main modules
 import React from 'react';
 
-// ** API imports
-import AuthAPI from './../api/authService.js';
+
 
 // ** Components
 import Input from './inputs/InputBox.jsx';
@@ -13,7 +12,8 @@ export default class Login extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.Auth = new AuthAPI('http://disastergram.nikolaidis.tech');
+		this.Auth = this.props.Auth;
+		this.updateLoggedIn = this.props.updateLoggedIn;
 
 		this.state = {
 			username: "",
@@ -41,14 +41,14 @@ export default class Login extends React.Component {
 	}
 
 	handleSubmit(e){
+		e.preventDefault();
+
 		this.Auth.login(this.state.username, this.state.password)
 			.then( res => {
-			})
+				// force refresh parents logged in status
+				this.props.updateLoggedIn();
+			})			
 		
-		if (this.Auth.loggedIn()) {
-			alert('test passed!');
-		}
-		e.preventDefault();
 	}
 
 	render() {

@@ -1,5 +1,13 @@
+.loginpage {
+  height: 100%;
 
-.flexbox {
+  background-image: url('../images/login/background.jpeg');
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+
+.loginpage > .flexbox {
   height:100%;
   display: flex;
   justify-content: flex-end;
@@ -8,6 +16,7 @@
   flex-wrap: wrap;
   padding: 0px 15%;
 }
+
 
 .card {
    padding: 20px 0px;

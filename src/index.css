@@ -12,13 +12,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /*background: linear-gradient(to top right, #000099 0%, #990099 100%);*/
-  background: linear-gradient(to top, #cc0000 0%, #000000 100%);
-  background: linear-gradient(to bottom, #66ffff 0%, #33ccff 100%);
-  background-image: url('images/login/background.jpeg');
-  background-attachment: fixed;
-  background-position: center center;
 }
 
 code {
@@ -29,4 +22,9 @@ code {
 #root{
   height:100%;
 }
+
+#root > div{
+  height:100%;
+}
+
 
