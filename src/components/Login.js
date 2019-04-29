@@ -111,6 +111,12 @@ export default class Login extends React.Component {
 	render() {
 		const { username, password, confpass, erCPass, erPass, isRegistering } = this.state;
 
+		const isVisible = {
+			height: isRegistering ? '56px' : '0px',
+			visibility: isRegistering ? 'visible' : 'hidden',
+			opacity: isRegistering ? '1' : 0
+		}
+
 		return (
 			<div id='login'>
 				<form 
@@ -138,22 +144,21 @@ export default class Login extends React.Component {
 						active={false}
 						error={erPass}
 						/>
-						{ isRegistering && 
-							<Input 
-								onUser
-								id={3}
-								value={confpass}
-								onValueChange={this.handleConfPassChange}
-								type="password"
-								label="Confirm Password"
-								locked={false}
-								active={false}
-								error={erCPass}
-							/>
-						}
+					<Input 
+						onUser
+						id={3}
+						value={confpass}
+						onValueChange={this.handleConfPassChange}
+						style={{...isVisible}}
+						type="password"
+						label="Confirm Password"
+						locked={false}
+						active={false}
+						error={erCPass}
+					/>
 					<InputBtn />
 				</form>
-				<p className='registerPrompt' onClick={this.handleRegisterChange}>Do you want to register Instead?</p>
+				<p className='registerPrompt' onClick={this.handleRegisterChange}>Do you want to register?</p>
 			</div>
 		);
 	}

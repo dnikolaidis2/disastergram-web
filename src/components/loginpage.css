@@ -41,16 +41,10 @@
   margin: 0px 0px;
   color: black;
   font-weight: 400;
-  transition: all 0.5 ease-in-out;
+  transition: 0.2s color ease-in-out, 5s font-weight ease-in-out;
 }
 
 .registerPrompt:hover {
   color: purple;
-  font-weight: 400;
-  transition: all 0.3 ease-in-out;
-}
-
-.loginForm {
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
+  font-weight: 600;
 }

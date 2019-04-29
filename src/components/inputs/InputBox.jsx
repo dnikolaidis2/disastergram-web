@@ -48,7 +48,7 @@ export default class Input extends React.Component {
       "active"} ${locked && !active && "locked"}`;
 
     return (
-      <div className={fieldClassName}>
+      <div className={fieldClassName} style={this.props.style}>
         {active &&
           value &&
           predicted &&

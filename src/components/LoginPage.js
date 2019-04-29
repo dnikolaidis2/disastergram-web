@@ -77,8 +77,6 @@ function LoginTitle() {
 	);
 };
 
-
-
 const titleStyle = {
 	color: "black",
 	textShadow: "0px 3px 5px #585858",
@@ -86,7 +84,6 @@ const titleStyle = {
 	fontWeight: "100",
 	paddingLeft: "0px"
 };
-
 
 const titleDisaster = {
 	color: "purple",//"#e51d1d",
