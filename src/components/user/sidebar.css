@@ -25,13 +25,17 @@
 
 .sidebar__title {
 	padding:  10px 0px 15px 0px;
-	border-bottom: 1px solid gray;
+	border-bottom: 2px solid #ccc;
 }
 
 .sidebar__list {
 	transition: 0.3s max-height ease-in-out, 0.3s opacity ease-in-out,  0.2s visibility  ease-in-out;
  	max-height: 0;
   overflow: hidden;
+
+  -webkit-box-shadow: inset 0px -139px 42px -143px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px -139px 42px -143px rgba(0,0,0,0.75);
+	box-shadow: inset 0px -139px 42px -143px rgba(0,0,0,0.75);
 }
 
 .sidebar__item, .dropdown-btn{
@@ -39,9 +43,9 @@
 	padding-left: 12px;
 	text-align: left;
 	border: none;
-	background: none;
 	font-size: 16px;
 	font-family: inherit;
+	background-color: #ddd;
 }
 
 .sidebar__item:hover {
@@ -55,6 +59,7 @@
 
 .dropdown-btn {
 	width: 100%;
+	background: none;
 }
 
 .dropdown-btn.active {

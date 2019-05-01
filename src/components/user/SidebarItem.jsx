@@ -10,6 +10,7 @@ export default class SidebarItem extends React.Component {
 			item: this.props.item,
 			isActive: this.props.isActive,
 			id: this.props.id,
+			listName: this.props.listName,
 		}
 
 		this.toggleActive = this.toggleActive.bind(this);
@@ -20,7 +21,7 @@ export default class SidebarItem extends React.Component {
 
 	toggleActive() {
 		this.setState({isActive: true});
-		this.handleActivate(this.state.id);
+		this.handleActivate(this.state.id, this.state.listName);
 		this.setState({});
 	}
 
