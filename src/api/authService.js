@@ -86,8 +86,6 @@ export default class AuthAPI {
 				this.setToken(res.token);
 				return true;
 			})
-			
-
 	}
 
 

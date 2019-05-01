@@ -4,6 +4,7 @@ import React from 'react';
 
 // ** Components
 import SidebarItem from './SidebarItem.jsx'
+import DropdownBtn from './DropdownBtn.jsx'
 
 // ** CSS
 import './sidebar.css'
@@ -17,16 +18,28 @@ export default class Sidebar extends React.Component {
 
 		this.state = {
 			galleries: [
-				{name: 'Gallery 1', id: '1', isActive: false},
-				{name: 'Gallery 2', id: '2', isActive: false},
-				{name: 'Gallery 3', id: '3', isActive: false},
-				{name: 'Gallery 4', id: '4', isActive: false},
-				{name: 'Gallery 5', id: '5', isActive: false},
-		]}
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
+			],
+			friends: [
+				{name: 'Bob', id: '1', isActive: false},
+				{name: 'Jacob', id: '2', isActive: false},
+				{name: 'Sally', id: '3', isActive: false},
+				{name: 'Agamemnon', id: '4', isActive: false},
+			],
+			isGalVisible : false,
+			isFriendsVisible: false,
+
+		}
 
 		this.logout = this.logout.bind(this);
 		this.handleActivate = this.handleActivate.bind(this);
-		this.listGalleries = this.listGalleries.bind(this);
+		this.getListModule = this.getListModule.bind(this);
+		this.toggleGalleries = this.toggleGalleries.bind(this);
+		this.toggleFriends = this.toggleFriends.bind(this);
 	}
 
 	logout() {
@@ -35,15 +48,32 @@ export default class Sidebar extends React.Component {
 		this.updateLoggedIn();
 	}
 
-	listGalleries(gals) {
+	toggleGalleries(){
+		this.setState({isGalVisible : !this.state.isGalVisible});
+	}
+
+	toggleFriends(){
+		this.setState({isFriendsVisible : !this.state.isFriendsVisible});
+	}
+
+	getListModule(listName, list, isVisible) {
+		const height = 50 * Object.keys(list).length + 'px';
+
+		const visStyle = {
+			maxHeight: isVisible ? height : '0px',
+			visibility: isVisible ? 'visible' : 'hidden',
+			opacity: isVisible ? '1' : 0
+		}
+
 		return (
-			<div className='sidebar__list'>
-				{gals.map((gal) => 
+			<div className='sidebar__list' style={visStyle}>
+				{list.map((item) => 
 					<SidebarItem 
-						key={gal.id}
-						item={gal.name}
-						id={gal.id}
-						isActive={gal.isActive} 
+						key={item.id}
+						item={item.name}
+						id={item.id}
+						isActive={item.isActive} 
+						listName={listName}
 						handleActivate={this.handleActivate}
 						/>
 				)}
@@ -51,18 +81,22 @@ export default class Sidebar extends React.Component {
 		);
 	}
 
-	handleActivate(id){
-		let gals = this.state.galleries;
 
-		gals.forEach( item => {
+	handleActivate(id, listName){
+		const list = this.state[listName];
+		list.forEach( item => {
 					item.isActive = (item.id === id ? true : false);
 				});
 
-		this.setState({galleries: gals});
+		this.setState({[listName]: list});
 	}
 
+
 	render() {
-		const galleries = this.state.galleries;
+		const gals = this.state.galleries;
+		const isGalVisible = this.state.isGalVisible;
+		const friends = this.state.friends;
+		const isFriendsVisible = this.state.isFriendsVisible;
 
 		return (
 			<div className='sidebar-bg'>
@@ -70,38 +104,13 @@ export default class Sidebar extends React.Component {
 					<div className='sidebar__title'>
 						<h2>{this.Auth.getUser()}</h2>
 					</div>
-					{this.listGalleries(galleries)}
+					<DropdownBtn text='Friends' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
+					{this.getListModule('friends', friends, isFriendsVisible)}
+					<DropdownBtn text='Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
+					{this.getListModule('galleries', gals, isGalVisible)}
 				</div>
 			</div>
 		);
 	}
 
 }
-
-
-// function listGalleries(gals) {
-
-// 	return (
-// 		<div className='sidebar__list'>
-// 			{gals.map((gal) => 
-// 				<SidebarItem 
-// 					item={gal} 
-// 					isActive={false} 
-// 					handleActivate={this.handleActivate}
-// 					/>)
-// 			}
-// 		</div>
-// 	);
-
-
-
-//{gals.map((gal) => listItem(gal) )}	
-
-
-// function listItem(item) {
-// 	return (
-// 		<div className='sidebar__item' onClick={toggleItem()} key={item.id}>
-// 			{item.name}
-// 		</div>
-// 	)
-// }

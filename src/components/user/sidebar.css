@@ -9,8 +9,8 @@
   background-image: url('../../images/user/low_res.png');
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-position: 0% 90%;
-}
+  background-position: 0% 85%;
+	}
 
 .sidebar {
 	position: inherit;
@@ -28,17 +28,36 @@
 	border-bottom: 1px solid gray;
 }
 
-.sidebar__item {
-	padding: 7px 0px 7px 12px;
-	padding-left: 12px;
+.sidebar__list {
+	transition: 0.3s max-height ease-in-out, 0.3s opacity ease-in-out,  0.2s visibility  ease-in-out;
+ 	max-height: 0;
+  overflow: hidden;
 }
 
-.sidebar__item:hover{
+.sidebar__item, .dropdown-btn{
+	padding: 7px 0px 7px 12px;
+	padding-left: 12px;
+	text-align: left;
+	border: none;
+	background: none;
+	font-size: 16px;
+	font-family: inherit;
+}
+
+.sidebar__item:hover {
 	background-color: #ddd;
 }
 
 .sidebar__item.active {
 	background-color: #777;
 	color: white;
+}
 
+.dropdown-btn {
+	width: 100%;
+}
+
+.dropdown-btn.active {
+	background-color: #523d5c;
+	color: white;
 }
