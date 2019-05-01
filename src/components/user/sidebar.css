@@ -1,0 +1,44 @@
+
+
+
+.sidebar-bg {
+	left: 0;
+	height: 100%;
+	width: 100%;
+  background-color: white;
+  background-image: url('../../images/user/low_res.png');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: 0% 90%;
+}
+
+.sidebar {
+	position: inherit;
+	height: 100%;
+}
+
+.sidebar__title > h2 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+}
+
+.sidebar__title {
+	padding:  10px 0px 15px 0px;
+	border-bottom: 1px solid gray;
+}
+
+.sidebar__item {
+	padding: 7px 0px 7px 12px;
+	padding-left: 12px;
+}
+
+.sidebar__item:hover{
+	background-color: #ddd;
+}
+
+.sidebar__item.active {
+	background-color: #777;
+	color: white;
+
+}

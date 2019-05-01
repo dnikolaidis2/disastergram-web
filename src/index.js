@@ -49,7 +49,8 @@ class App extends React.Component {
 	}
 
 	render() {
-		const Auth = this.Auth
+		const Auth = this.Auth;
+		const updateLoggedIn = this.updateLoggedIn;
 		const isLoggedIn = this.state.isLoggedIn;
 		return (
 				<BrowserRouter>
@@ -59,7 +60,7 @@ class App extends React.Component {
 							render={()=> 
 							<LoginPage 
 								Auth={Auth} 
-								updateLoggedIn={this.updateLoggedIn} 
+								updateLoggedIn={updateLoggedIn} 
 								isLoggedIn={isLoggedIn}/>
 							}/>
 						<Route 

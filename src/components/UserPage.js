@@ -2,6 +2,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+// ** Components
+import Sidebar from './user/Sidebar.jsx'
+
 // ** CSS
 import './userpage.css';
 
@@ -23,14 +26,20 @@ export default class UserPage extends React.Component {
 	}
 
 	render() {
+		const Auth = this.Auth;
 		const isLoggedIn = this.props.isLoggedIn;
+		const updateLoggedIn = this.updateLoggedIn;
+
 		return (
 			<div className='userpage'>
 				
-				<Split direction='left' percent='20%'>
-						<h1>This is the left pane</h1>
+				<Split direction='left' percent='15%'>
+					<Sidebar
+						Auth={Auth}
+						updateLoggedIn={updateLoggedIn} 
+						isLoggedIn={isLoggedIn}/>
 				</Split>
-				<Split direction='right' percent='80%'>
+				<Split direction='right' percent='85%'>
 						<h1>You are logged in!</h1>
 						{isLoggedIn
 							? <LogoutBtn func={this.logout} />
@@ -52,7 +61,7 @@ function Split(props) {
 	const style = {width: props.percent};
 
 	return (
-		<div className={'flexbox split ' + props.direction} style={style}>
+		<div className={'split ' + props.direction} style={style}>
 			{props.children}
 		</div>
 		);

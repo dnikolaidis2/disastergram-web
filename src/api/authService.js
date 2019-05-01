@@ -32,8 +32,9 @@ export default class AuthAPI {
 			{headers: {...headers}},
 		 	{data: {...data}})
 			.then( res => {
-				// Save token useing localstorage
+				// Save token using localstorage
 				this.setToken(res.data.token);
+				this.setUser(username);
 				
 				if (process.env.NODE_ENV ==='development') {
 					console.log('Token received!');
@@ -91,7 +92,7 @@ export default class AuthAPI {
 
 
 	isLoggedIn() {
-		//** Check if the user is alrea<dy logged in
+		//** Check if the user is already logged in
 
 		// Get token from localStorage
 		const token = this.getToken();
@@ -102,6 +103,9 @@ export default class AuthAPI {
 
 
 	isTokenExpired(token) {
+		if (process.env.NODE_ENV === 'development')
+			return false;
+
 		try {
 			// Decode jwt token
 			const decoded = decode(token);
@@ -126,6 +130,17 @@ export default class AuthAPI {
       //** Retrieve the user token from localStorage
       return localStorage.getItem('id_token');
   }
+
+	setUser(username) {
+		//** Save username to localStorage
+    localStorage.setItem('username', username);
+	}
+
+	getUser() {
+      //** Retrieve the username from localStorage
+      return localStorage.getItem('username');
+  }
+
 
   logout() {
       //** Clear user token and profile data from localStorage
