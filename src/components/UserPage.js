@@ -33,18 +33,15 @@ export default class UserPage extends React.Component {
 		return (
 			<div className='userpage'>
 				
-				<Split direction='left' percent='15%'>
+				<Split direction='left' percent='20%'>
 					<Sidebar
 						Auth={Auth}
 						updateLoggedIn={updateLoggedIn} 
 						isLoggedIn={isLoggedIn}/>
 				</Split>
-				<Split direction='right' percent='85%'>
+				<Split direction='right' percent=''>
 						<h1>You are logged in!</h1>
-						{isLoggedIn
-							? <LogoutBtn func={this.logout} />
-							: <Redirect to='/' />
-						}
+						{!isLoggedIn && <Redirect to='/' />}
 				</Split>
 
 
@@ -57,9 +54,7 @@ export default class UserPage extends React.Component {
 
 // Split layout t
 function Split(props) {
-
 	const style = {width: props.percent};
-
 	return (
 		<div className={'split ' + props.direction} style={style}>
 			{props.children}
@@ -71,7 +66,7 @@ function Split(props) {
 function LogoutBtn(props) {
 	return (
 			<button 
-				className='logout'
+				className='logoutBtn'
 				type='button'
 				onClick={props.func}>
 					Logout

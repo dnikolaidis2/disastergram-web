@@ -4,11 +4,14 @@
   background-color: white;
   background-attachment: fixed;
   background-position: center center;
+  display: flex;
+  flex-direction:  row;
+  justify-content: center;
 }
 
 
-.logout {
-	-webkit-transition-duration: 0.4s; /* Safari */
+.logoutBtn {
+  -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   background-color: black;
   border: none;
@@ -23,8 +26,8 @@
 }
 
 
-.logout:hover {
-	background-color: gray;
+.logoutBtn:hover {
+  background-color: gray;
   color: white;
   font-weight: 500;
 }
@@ -33,17 +36,9 @@
 /* Split the screen in half */
 .split {
   height: 100%;
-  position: fixed;
   z-index: 1;
   top: 0;
-  overflow-x: hidden;
-}
-
-.split{
-  height:100%;
   display: flex;
-  flex-direction:  column;
-  justify-content: center;
   align-items:center;
 }
 
@@ -51,11 +46,18 @@
 .left {
   left: 0;
   height: 100%;
+  max-width: 230px;
+  min-width: 150px;
   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.4);
 }
 
-/* Control the right sside */
+/* Control the right side */
 .right {
   right: 0;
+  flex: 1;
+  justify-content: center;
 }
 
+.split.right > h1 {
+  text-align: center;
+}

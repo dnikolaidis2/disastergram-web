@@ -23,6 +23,46 @@ export default class Sidebar extends React.Component {
 				{name: 'Cars', id: '3', isActive: false},
 				{name: 'Animals', id: '4', isActive: false},
 				{name: 'Architecture', id: '5', isActive: false},
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
+				{name: 'Trees', id: '1', isActive: false},
+				{name: 'Mountains', id: '2', isActive: false},
+				{name: 'Cars', id: '3', isActive: false},
+				{name: 'Animals', id: '4', isActive: false},
+				{name: 'Architecture', id: '5', isActive: false},
 			],
 			friends: [
 				{name: 'Bob', id: '1', isActive: false},
@@ -36,6 +76,7 @@ export default class Sidebar extends React.Component {
 		}
 
 		this.logout = this.logout.bind(this);
+		this.updateLoggedIn = this.props.updateLoggedIn;
 		this.handleActivate = this.handleActivate.bind(this);
 		this.getListModule = this.getListModule.bind(this);
 		this.toggleGalleries = this.toggleGalleries.bind(this);
@@ -56,7 +97,8 @@ export default class Sidebar extends React.Component {
 		this.setState({isFriendsVisible : !this.state.isFriendsVisible});
 	}
 
-	getListModule(listName, list, isVisible) {
+	getListModule(listName, isVisible) {
+		const list = this.state[listName];
 		const height = 50 * Object.keys(list).length + 'px';
 
 		const visStyle = {
@@ -93,24 +135,39 @@ export default class Sidebar extends React.Component {
 
 
 	render() {
-		const gals = this.state.galleries;
 		const isGalVisible = this.state.isGalVisible;
-		const friends = this.state.friends;
 		const isFriendsVisible = this.state.isFriendsVisible;
 
 		return (
 			<div className='sidebar-bg'>
-				<div className='sidebar'>
+				<div className='sidebar__top'>
 					<div className='sidebar__title'>
 						<h2>{this.Auth.getUser()}</h2>
 					</div>
-					<DropdownBtn text='Friends' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
-					{this.getListModule('friends', friends, isFriendsVisible)}
-					<DropdownBtn text='Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
-					{this.getListModule('galleries', gals, isGalVisible)}
+					<div className='sidebar__container'>
+						<DropdownBtn text='Friends' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
+						{this.getListModule('friends', isFriendsVisible)}
+						<DropdownBtn text='Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
+						{this.getListModule('galleries', isGalVisible)}
+					</div>
+				</div>
+				<div className='sidebar__bottom'>
+					<LogoutBtn func={this.logout} />
 				</div>
 			</div>
 		);
 	}
 
+}
+
+
+function LogoutBtn(props) {
+	return (
+			<button 
+				className='logoutBtn'
+				type='button'
+				onClick={props.func}>
+					Logout
+			</button>
+		)
 }
