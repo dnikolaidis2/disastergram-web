@@ -39,7 +39,8 @@ export default class UserPage extends React.Component {
 						updateLoggedIn={updateLoggedIn} 
 						isLoggedIn={isLoggedIn}/>
 				</Split>
-				<Split direction='right' percent=''>
+				<Split direction='right'>
+						<div className='top-banner'/>
 						<h1>You are logged in!</h1>
 						{!isLoggedIn && <Redirect to='/' />}
 				</Split>
@@ -54,7 +55,7 @@ export default class UserPage extends React.Component {
 
 // Split layout t
 function Split(props) {
-	const style = {width: props.percent};
+	const style = {width: props.percent || 'auto'};
 	return (
 		<div className={'split ' + props.direction} style={style}>
 			{props.children}

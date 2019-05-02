@@ -15,7 +15,7 @@ export default class DropdownBtn extends React.Component {
 
 	render(){
 		const text = this.props.text;
-		const className = 'dropdown-btn ' + (this.props.isActive ? 'active':'');
+		const className = 'dropdown-btn noSelect ' + (this.props.isActive ? 'active':'');
 	
 		return (
 			

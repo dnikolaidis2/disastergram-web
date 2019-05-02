@@ -23,46 +23,6 @@ export default class Sidebar extends React.Component {
 				{name: 'Cars', id: '3', isActive: false},
 				{name: 'Animals', id: '4', isActive: false},
 				{name: 'Architecture', id: '5', isActive: false},
-				{name: 'Trees', id: '1', isActive: false},
-				{name: 'Mountains', id: '2', isActive: false},
-				{name: 'Cars', id: '3', isActive: false},
-				{name: 'Animals', id: '4', isActive: false},
-				{name: 'Architecture', id: '5', isActive: false},
-				{name: 'Trees', id: '1', isActive: false},
-				{name: 'Mountains', id: '2', isActive: false},
-				{name: 'Cars', id: '3', isActive: false},
-				{name: 'Animals', id: '4', isActive: false},
-				{name: 'Architecture', id: '5', isActive: false},
-				{name: 'Trees', id: '1', isActive: false},
-				{name: 'Mountains', id: '2', isActive: false},
-				{name: 'Cars', id: '3', isActive: false},
-				{name: 'Animals', id: '4', isActive: false},
-				{name: 'Architecture', id: '5', isActive: false},
-				{name: 'Trees', id: '1', isActive: false},
-				{name: 'Mountains', id: '2', isActive: false},
-				{name: 'Cars', id: '3', isActive: false},
-				{name: 'Animals', id: '4', isActive: false},
-				{name: 'Architecture', id: '5', isActive: false},
-				{name: 'Trees', id: '1', isActive: false},
-				{name: 'Mountains', id: '2', isActive: false},
-				{name: 'Cars', id: '3', isActive: false},
-				{name: 'Animals', id: '4', isActive: false},
-				{name: 'Architecture', id: '5', isActive: false},
-				{name: 'Trees', id: '1', isActive: false},
-				{name: 'Mountains', id: '2', isActive: false},
-				{name: 'Cars', id: '3', isActive: false},
-				{name: 'Animals', id: '4', isActive: false},
-				{name: 'Architecture', id: '5', isActive: false},
-				{name: 'Trees', id: '1', isActive: false},
-				{name: 'Mountains', id: '2', isActive: false},
-				{name: 'Cars', id: '3', isActive: false},
-				{name: 'Animals', id: '4', isActive: false},
-				{name: 'Architecture', id: '5', isActive: false},
-				{name: 'Trees', id: '1', isActive: false},
-				{name: 'Mountains', id: '2', isActive: false},
-				{name: 'Cars', id: '3', isActive: false},
-				{name: 'Animals', id: '4', isActive: false},
-				{name: 'Architecture', id: '5', isActive: false},
 			],
 			friends: [
 				{name: 'Bob', id: '1', isActive: false},
@@ -141,13 +101,11 @@ export default class Sidebar extends React.Component {
 		return (
 			<div className='sidebar-bg'>
 				<div className='sidebar__top'>
-					<div className='sidebar__title'>
-						<h2>{this.Auth.getUser()}</h2>
-					</div>
+					{userPageTitle(this.Auth.getUser())}
 					<div className='sidebar__container'>
 						<DropdownBtn text='Friends' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
 						{this.getListModule('friends', isFriendsVisible)}
-						<DropdownBtn text='Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
+						<DropdownBtn text='My Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
 						{this.getListModule('galleries', isGalVisible)}
 					</div>
 				</div>
@@ -170,4 +128,16 @@ function LogoutBtn(props) {
 					Logout
 			</button>
 		)
+}
+
+function userPageTitle(user){
+	return (
+
+		<div className='sidebar__title'>
+			<h2 className='sidebar__logo'>D</h2>
+			<h2 className='sidebar__disgram'>Disastergram</h2>
+			<h3 className='sidebar__username'>{user}</h3>
+		</div>
+		);
+
 }

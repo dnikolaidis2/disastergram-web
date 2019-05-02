@@ -27,7 +27,7 @@ export default class SidebarItem extends React.Component {
 
 	getClassName() {
 		const isActive = this.props.isActive && 'active';
-		return 'sidebar__item ' + isActive;
+		return 'sidebar__item noSelect ' + isActive;
 	}
 
 

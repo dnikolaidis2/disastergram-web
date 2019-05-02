@@ -21,6 +21,12 @@ export default class AuthAPI {
 	login(username, password) {
 		//** Get a token from the auth server
 
+		if(process.env.NODE_ENV ==='development'){
+			this.setToken('no-token');
+			this.setUser('UserName')
+			return Promise.resolve(null);
+		}
+
 		const headers = this.getHeaders();
 
 		const data = {
