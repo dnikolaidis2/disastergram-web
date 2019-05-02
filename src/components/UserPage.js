@@ -3,7 +3,8 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 // ** Components
-import Sidebar from './user/Sidebar.jsx'
+import Sidebar from './user/Sidebar'
+import UserBody from './user/UserBody'
 
 // ** CSS
 import './userpage.css';
@@ -63,15 +64,3 @@ function Split(props) {
 		);
 }
 
-
-function LogoutBtn(props) {
-	return (
-			<button 
-				className='logoutBtn'
-				type='button'
-				onClick={props.func}>
-					Logout
-			</button>
-		)
-
-}

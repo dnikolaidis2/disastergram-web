@@ -1,0 +1,5 @@
+{
+	"name":"userbody",
+	"private":"true",
+	"main":"./UserBody.js"
+}
