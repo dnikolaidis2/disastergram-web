@@ -2,21 +2,84 @@
 #userbody {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-x: hidden;
+}
 
+.top-banner { 
+  flex: 1;
+  min-height: 300px;
+  max-height: 300px;
+  height: 300px;
+  position: relative;
+
+}
+
+.top-banner_image {
+  background-image: url('../../../images/user/main_lowblur.jpg');
+  background-image: url('../../../images/user/header.jpg');
+  background-position: 40% 62%;
+  background-size: cover;
+  /* background-position: center; */
+  height:100%;
+  width:100%;
+}
+
+.top-banner_title {
+  position: absolute;
+  font-size: 100px;
+  margin: 0px;
+  font-family: 'Raleway',serif;
+  font-weight: 300;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.userbody__container {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.top-banner {
-  flex: 1;
-  max-height: 300px;
+.gal-showcase {
+  padding: 0px;
+  margin: 40px 0px;
+  /* border: 2px solid red; */
+  width: 90%;
+  max-width: 880px;
+  background-color: #232323;
+  background-origin: content-box;
 }
 
-.top-banner_image {
-  background-image: url('../../../images/login/background.jpeg');
-  background-position: center;
-  height:100%;
-  width:100%;
+.gal-showcase__title {
+  padding-left: 20px;
+  margin: 10px 0px;
+  font-weight: 400;
+  color: white;
+}
 
+.gal-showcase__body {
+  /* border: 2px solid black; */
+  height: 180px;
+  background-color: white;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: flex-start;
+  overflow: hidden;
+}
+
+.thumbnail {
+  margin: 15px 10px;
+  height: 150px;
+  width: 150px;
+  background-color: gray;
+  border-radius: 5px;
 
 }
