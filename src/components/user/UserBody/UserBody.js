@@ -31,6 +31,7 @@ export default class UserBody extends React.Component {
     this.GalleryShowcase = this.GalleryShowcase.bind(this);
     this.Thumbnails = this.Thumbnails.bind(this);
     this.Thumbnail = this.Thumbnail.bind(this);
+    this.alertT = this.alertT.bind(this);
 
   }
 
@@ -48,8 +49,8 @@ export default class UserBody extends React.Component {
 	  let galleryName = 'Gallery Name';
 
 	  return (
-	    <article className='gal-showcase card '>
-	      <h3 className='gal-showcase__title'>
+	    <article className='gal-showcase card noSelect '>
+	      <h3 className='gal-showcase__title noSelect'>
 	        {galleryName}
 	      </h3>
 	      <section className='gal-showcase__body'>
@@ -69,8 +70,12 @@ export default class UserBody extends React.Component {
 
 	Thumbnail(photo){
 	  return(
-	    <div className='thumbnail'></div>
+	    <div className='thumbnail' ></div>
 	  );
+	}
+
+	alertT(txt) {
+		alert(txt);
 	}
 
   render() {

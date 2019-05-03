@@ -54,10 +54,15 @@
 /* Control the right side */
 .right {
   right: 0;
-  flex: 1;
+  flex: 1 0;
   justify-content: center;
 }
 
 .split.right > h1 {
   text-align: center;
 }
+
+@media only screen and (max-device-width : 768px) {
+  .left {
+    display: none;
+  }
