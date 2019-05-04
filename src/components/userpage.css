@@ -48,7 +48,7 @@
   height: 100%;
   max-width: 230px;
   min-width: 150px;
-  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.4); */
 }
 
 /* Control the right side */

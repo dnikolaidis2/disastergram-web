@@ -113,7 +113,7 @@ export default class Sidebar extends React.Component {
     const isFriendsVisible = this.state.isFriendsVisible;
 
     return (
-      <div className='sidebar-bg'>
+      <nav className='sidebar-bg'>
         <div className='sidebar__top'>
           {userPageTitle(this.Auth.getUser())}
           <div className='sidebar__container'>
@@ -126,7 +126,7 @@ export default class Sidebar extends React.Component {
         <div className='sidebar__bottom'>
           <LogoutBtn func={this.logout} />
         </div>
-      </div>
+      </nav>
     );
   }
 
@@ -147,7 +147,7 @@ function LogoutBtn(props) {
 function userPageTitle(user){
   return (
 
-    <div className='sidebar__title'>
+    <div className='sidebar__title noSelect'>
       <h2 className='sidebar__logo'>D</h2>
       <h2 className='sidebar__disgram'>Disastergram</h2>
       <h3 className='sidebar__username'>{user}</h3>

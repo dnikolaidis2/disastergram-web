@@ -40,8 +40,6 @@ export default class UserPage extends React.Component {
         <Split direction='right'>
           <UserBody Auth={Auth} />
         </Split>
-
-
       </div>
     );
   }
@@ -49,7 +47,7 @@ export default class UserPage extends React.Component {
 }
 
 
-// Split layout t
+// Split layout
 function Split(props) {
   const style = {width: props.percent || 'auto'};
   return (

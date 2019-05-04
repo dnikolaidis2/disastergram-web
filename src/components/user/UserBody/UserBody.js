@@ -2,6 +2,10 @@
 import React from 'react';
 //import { Redirect } from 'react-router-dom';
 
+// ** Components
+import ImageCard from './ImageCard'
+
+
 import './userbody.css';
 
 export default class UserBody extends React.Component {
@@ -25,19 +29,20 @@ export default class UserBody extends React.Component {
         {id: 10, name: 'img10name', url: 'http::/10234' },
         {id: 11, name: 'img11name', url: 'http::/11234' },
       ],
+      isHidden: false,
     }
 
     this.TopBanner = this.TopBanner.bind(this);
     this.GalleryShowcase = this.GalleryShowcase.bind(this);
     this.Thumbnails = this.Thumbnails.bind(this);
     this.Thumbnail = this.Thumbnail.bind(this);
-    this.alertT = this.alertT.bind(this);
+    this.onThumbClick = this.onThumbClick.bind(this);
 
   }
 
   TopBanner() {
 		return (
-			<picture className='top-banner'>
+			<picture className='top-banner noSelect'>
 				<div className='top-banner_image'/>
 				<h1 className='top-banner_title'>Disastergram</h1>
 			</picture>    
@@ -50,7 +55,7 @@ export default class UserBody extends React.Component {
 
 	  return (
 	    <article className='gal-showcase card noSelect '>
-	      <h3 className='gal-showcase__title noSelect'>
+	      <h3 className='gal-showcase__title select'>
 	        {galleryName}
 	      </h3>
 	      <section className='gal-showcase__body'>
@@ -64,22 +69,23 @@ export default class UserBody extends React.Component {
 		const photos = this.state.photos;
 
 	  return photos.map( photo => {
-	    return this.Thumbnail(photo);
+	    return this.Thumbnail(photo.id);
 	  });
 	}
 
-	Thumbnail(photo){
+	Thumbnail(id){
 	  return(
-	    <div className='thumbnail' ></div>
+	    <div key={id} className='thumbnail' onClick={this.onThumbClick}></div>
 	  );
 	}
 
-	alertT(txt) {
-		alert(txt);
+	onThumbClick(){
+		this.setState({isHidden: !this.state.isHidden})
+		console.log('isHidden:' + !this.state.isHidden)
 	}
 
   render() {
-    const photos = this.state.photos;
+  	const isHidden = this.state.isHidden;
 
     return(
       <div id='userbody'>
@@ -90,10 +96,10 @@ export default class UserBody extends React.Component {
 		      {this.GalleryShowcase()}
 		      {this.GalleryShowcase()}
         </div>
+        <ImageCard gal={this.GalleryShowcase} onCloseClick={this.onThumbClick} isHidden={isHidden}/>
       </div>
     );
   }
-
 
 }
 

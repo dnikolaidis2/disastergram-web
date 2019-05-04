@@ -36,4 +36,13 @@ code {
     -webkit-tap-highlight-color: transparent;
 }
 
+.select {
+    user-select: text;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    -webkit-tap-highlight-color: mediumpurple;
+}
+
 

@@ -1,0 +1,5 @@
+{
+	"name":"imageCard",
+	"private":"true",
+	"main":"./ImageCard"
+}
