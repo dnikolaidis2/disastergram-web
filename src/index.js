@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Route } from 'react-router-dom';
 
 // ** API imports
-import AuthAPI from './api/authService.js';
+import AuthAPI from './api/AuthService.js';
 
 // ** Components
 import LoginPage from './components/LoginPage.js'

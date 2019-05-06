@@ -5,6 +5,7 @@ import React from 'react';
 // ** Components
 import SidebarItem from './SidebarItem.jsx'
 import DropdownBtn from './DropdownBtn.jsx'
+import AddFriendCard from './AddFriendCard'
 
 // ** CSS
 import './sidebar.css'
@@ -14,6 +15,7 @@ export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
 
+    this.API = this.props.API;
     this.Auth = this.props.Auth;
     this.updateLoggedIn = this.props.updateLoggedIn;
 
@@ -35,6 +37,8 @@ export default class Sidebar extends React.Component {
       ,
       isGalVisible : false,
       isFriendsVisible: false,
+      addFriendVis: false,
+      addGalleryVis: false,
 
     }
 
@@ -43,6 +47,8 @@ export default class Sidebar extends React.Component {
     this.getListModule = this.getListModule.bind(this);
     this.toggleGalleries = this.toggleGalleries.bind(this);
     this.toggleFriends = this.toggleFriends.bind(this);
+    this.AddFriend = this.AddFriend.bind(this);
+    this.toggleAddFriend = this.toggleAddFriend.bind(this);
   }
 
   logout() {
@@ -71,6 +77,7 @@ export default class Sidebar extends React.Component {
 
     return (
       <div className='sidebar__list' style={visStyle}>
+        {this.AddFriend()}
         {list.map((item) => 
           <SidebarItem 
             key={item.id}
@@ -107,10 +114,29 @@ export default class Sidebar extends React.Component {
     this.setState({[listName]: list});
   }
 
+  // --- Add friend
+
+  AddFriend() {
+    const className = 'sidebar__item'
+    //<i className='fa fa-plus'></i>
+    return(
+      <React.Fragment>
+        <p className={className} onClick={this.toggleAddFriend}>
+          + Add Friend
+        </p>
+        <AddFriendCard API={this.API} isVisible={this.state.addFriendVis}  onCloseClick={this.toggleAddFriend}/>
+      </React.Fragment>
+    );
+  }
+
+  toggleAddFriend() {
+    this.setState({addFriendVis: !this.state.addFriendVis})
+  }
+
+
 
   render() {
-    const isGalVisible = this.state.isGalVisible;
-    const isFriendsVisible = this.state.isFriendsVisible;
+    const {isGalVisible, isFriendsVisible} = this.state;
 
     return (
       <nav className='sidebar-bg'>
@@ -131,7 +157,6 @@ export default class Sidebar extends React.Component {
   }
 
 }
-
 
 function LogoutBtn(props) {
   return (

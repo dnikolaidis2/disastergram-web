@@ -1,0 +1,5 @@
+{
+	"name":"AddFriendCard",
+	"private":"true",
+	"main":"./AddFriendCard.jsx"
+}

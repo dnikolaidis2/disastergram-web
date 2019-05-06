@@ -2,6 +2,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+// ** API imports
+import API from './../api/ApiService.js';
+
 // ** Components
 import Sidebar from './user/Sidebar'
 import UserBody from './user/UserBody'
@@ -17,6 +20,8 @@ export default class UserPage extends React.Component {
     this.Auth = this.props.Auth;
     this.updateLoggedIn = this.props.updateLoggedIn;
 
+    this.API = new API('http://disastergram.nikolaidis.tech/api', this.Auth);
+
     this.logout = this.logout.bind(this);
   }
 
@@ -27,6 +32,7 @@ export default class UserPage extends React.Component {
   }
 
   render() {
+    const API = this.API;
     const Auth = this.Auth;
     const isLoggedIn = this.props.isLoggedIn;
     const updateLoggedIn = this.updateLoggedIn;
@@ -35,10 +41,10 @@ export default class UserPage extends React.Component {
       <div className='userpage'>
         {!isLoggedIn && <Redirect to='/' />}
         <Split direction='left' percent='20%'>
-          <Sidebar Auth={Auth} updateLoggedIn={updateLoggedIn} isLoggedIn={isLoggedIn}/>
+          <Sidebar API={API} Auth={Auth} updateLoggedIn={updateLoggedIn} isLoggedIn={isLoggedIn}/>
         </Split>
         <Split direction='right'>
-          <UserBody Auth={Auth} />
+          <UserBody API={API} Auth={Auth} />
         </Split>
       </div>
     );

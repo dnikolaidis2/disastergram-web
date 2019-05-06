@@ -46,3 +46,22 @@ code {
 }
 
 
+.closebtn {
+  margin: 10px 40px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+}
+
+.closebtn:hover {
+  color: #ddd;
+}
+
+.light-weight {
+  font-weight: 200;
+}
