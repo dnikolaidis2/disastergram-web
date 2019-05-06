@@ -21,11 +21,11 @@ export default class AuthAPI {
 	login(username, password) {
 		//** Get a token from the auth server
 
-		if(process.env.NODE_ENV ==='development'){
-			this.setToken('no-token');
-			this.setUser('UserName')
-			return Promise.resolve(null);
-		}
+		// if(process.env.NODE_ENV ==='development'){
+		// 	this.setToken('no-token');
+		// 	this.setUser('UserName')
+		// 	return Promise.resolve(null);
+		// }
 
 		const headers = this.getHeaders();
 
@@ -107,8 +107,8 @@ export default class AuthAPI {
 
 
 	isTokenExpired(token) {
-		if (process.env.NODE_ENV === 'development')
-			return false;
+		// if (process.env.NODE_ENV === 'development')
+		// 	return false;
 
 		try {
 			// Decode jwt token
