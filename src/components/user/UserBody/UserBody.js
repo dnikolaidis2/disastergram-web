@@ -29,7 +29,7 @@ export default class UserBody extends React.Component {
         {id: 10, name: 'img10name', url: 'http::/10234' },
         {id: 11, name: 'img11name', url: 'http::/11234' },
       ],
-      isHidden: false,
+      isHidden: true,
     }
 
     this.TopBanner = this.TopBanner.bind(this);

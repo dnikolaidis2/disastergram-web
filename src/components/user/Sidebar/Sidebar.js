@@ -145,11 +145,14 @@ function LogoutBtn(props) {
 }
 
 function userPageTitle(user){
+
+	const hrStyle = {width: '85%', 'borderColor': '#555555', 'borderStyle':'solid'};
+
   return (
 
     <div className='sidebar__title noSelect'>
-      <h2 className='sidebar__logo'>D</h2>
       <h2 className='sidebar__disgram'>Disastergram</h2>
+      <hr style={hrStyle}></hr>
       <h3 className='sidebar__username'>{user}</h3>
     </div>
     );

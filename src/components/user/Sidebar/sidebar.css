@@ -49,7 +49,8 @@ h2{
 }
 
 .sidebar__logo {
-  color: #995cd6;
+  /* color: #995cd6; */
+  color: white;
   font-weight: 400;
   width: 120px;
   height: 120px;
@@ -57,12 +58,13 @@ h2{
 }
 
 .sidebar__disgram{
+  /* color: #995cd6; */
   color: #995cd6;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .sidebar__username {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 
@@ -122,6 +124,7 @@ h2{
 .sidebar__item:hover {
   background-color: rgba(70%, 70%, 70%, 0.2);
 }
+
 
 .sidebar__item.active {
   /* background-color:  rgba(100%, 100%, 100%, 0.8); */
