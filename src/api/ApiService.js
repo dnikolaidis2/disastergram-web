@@ -110,5 +110,50 @@ export default class API {
 				console.log(er)
 			})
 	}
+
+	unfollowFriend(username) {
+		const {headers, userToken} = this.state;
+
+		return axios.delete(`/api/user/unfollow`, 
+				{data: {
+					token: userToken,
+					username: username
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development')
+					if(res.status === 200){
+						console.log('API: (200) DELETE friend:' + username);
+					}
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+	}
+
+	deleteGallery(id) {
+		const {headers, userToken} = this.state;
+
+		return axios.delete(`/api/user/gallery`, 
+				{data: {
+					token: userToken,
+					gallery_id: id
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development')
+					if(res.status === 200){
+						console.log('API: (200) DELETE gallery:' + id);
+					}
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+
+	}
  
 }

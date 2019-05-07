@@ -87,10 +87,12 @@ export default class AddCard extends React.Component {
 					className='add-card__container noSelect' 
 					style={contVisStyle}
 					onClick={this.onCloseClick}>
-						<button className='closebtn' onClick={this.onCloseClick}><i className='fa fa-times light-weight'></i></button>
+						<button className='closebtn' onClick={this.onCloseClick}>
+							<i className='fa fa-times light-weight'></i>
+						</button>
 
 						<article className='add-card card' style={visStyle} onClick={this.stopClickPropagation}>
-							<h2 className='add-card__title'>Add {reqType === 'friend' ? 'Friend' : 'Gallery'}</h2>
+							<h2 className='add-card__title'> Add {reqType === 'friend' ? 'Friend' : 'Gallery'}</h2>
 							<form
 								className='add-card__form'
 								autoComplete='off'

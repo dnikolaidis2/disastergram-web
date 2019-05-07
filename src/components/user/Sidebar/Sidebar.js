@@ -34,17 +34,27 @@ export default class Sidebar extends React.Component {
     }
 
     this.logout = this.logout.bind(this);
+    
+    //--- UI
     this.handleActivate = this.handleActivate.bind(this);
     this.getListModule = this.getListModule.bind(this);
     this.toggleGalleries = this.toggleGalleries.bind(this);
     this.toggleFriends = this.toggleFriends.bind(this);
+    
+    // --- ADDs
     this.AddFriend = this.AddFriend.bind(this);
     this.toggleAddFriend = this.toggleAddFriend.bind(this);
     this.AddGallery = this.AddGallery.bind(this);
     this.toggleAddGallery = this.toggleAddGallery.bind(this);
 
+    // --- GETS
     this.getFriends = this.getFriends.bind(this);
     this.getGalleries = this.getGalleries.bind(this);
+
+    // --- DELETES
+    this.unfollowFriend = this.unfollowFriend.bind(this);
+    this.deleteGallery = this.deleteGallery.bind(this);
+
   }
 
   // --- Data fetching ---
@@ -81,7 +91,7 @@ export default class Sidebar extends React.Component {
 
   }
 
-  async getFriends(makeCancelable) {
+  async getFriends() {
 
     // var cancelablePromise;
     // this.setState({friendsPromise: cancelablePromise});
@@ -112,7 +122,7 @@ export default class Sidebar extends React.Component {
     this.setState({lists:{...this.state.lists, friends}})
   }
 
-  async getGalleries(makeCancelable) {
+  async getGalleries() {
 
     // var cancelablePromise;
     // this.setState({galleriesPromise: cancelablePromise});
@@ -171,7 +181,7 @@ export default class Sidebar extends React.Component {
 
     if (list.length === 0){
       const visStyle = {
-        maxHeight: isVisible ? '26px' : '0px',
+        maxHeight: isVisible ? '33px' : '0px',
         visibility: isVisible ? 'visible' : 'hidden',
         opacity: isVisible ? '1' : 0
       }
@@ -182,7 +192,7 @@ export default class Sidebar extends React.Component {
         );
     }
 
-    let height = 33 + (33 * Object.keys(list).length) + 'px';
+    let height = 33 + (36 * Object.keys(list).length) + 'px';
     const visStyle = {
       maxHeight: isVisible ? height : '0px',
       visibility: isVisible ? 'visible' : 'hidden',
@@ -201,12 +211,12 @@ export default class Sidebar extends React.Component {
             isActive={item.isActive} 
             listName={listName}
             handleActivate={this.handleActivate}
+            deleteItem={listName === 'friends' ? this.unfollowFriend : this.deleteGallery}
             />
         )}
       </div>
     );
   }
-
 
   handleActivate(id, listName) {
     const lists = this.state.lists
@@ -232,7 +242,7 @@ export default class Sidebar extends React.Component {
   // --- Add friend
 
   AddFriend() {
-    const className = 'sidebar__item'
+    const className = 'sidebar__item_container'
     //<i className='fa fa-plus'></i>
     return(
       <React.Fragment>
@@ -256,7 +266,7 @@ export default class Sidebar extends React.Component {
   // --- Add Galleries
 
   AddGallery() {
-    const className = 'sidebar__item'
+    const className = 'sidebar__item_container'
     return(
       <React.Fragment>
         <p className={className} onClick={this.toggleAddGallery}>
@@ -274,6 +284,29 @@ export default class Sidebar extends React.Component {
 
   toggleAddGallery() {
     this.setState({addGalleryVis: !this.state.addGalleryVis})
+  }
+
+  // --- Unfollow Friend
+
+  //@TODO implement
+  unfollowFriend(username) {
+    this.API.unfollowFriend(username)
+      .then ( res => {
+        if(typeof res !== 'undefined'){
+          this.getFriends();
+        }
+      });
+  }
+
+  // --- Delete Gallery
+
+  deleteGallery(id) {
+    this.API.deleteGallery(id)
+      .then ( res => {
+        if(typeof res !== 'undefined'){
+          this.getGalleries();
+        }
+      });
   }
 
 
