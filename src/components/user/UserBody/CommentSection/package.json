@@ -1,0 +1,5 @@
+{
+	"name":"CommentSection",
+	"private":"true",
+	"main":"./CommentSection.jsx"
+}

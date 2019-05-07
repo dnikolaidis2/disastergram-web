@@ -112,7 +112,8 @@ h2{
 
 .sidebar__item {
   padding-left: 24px;
-  margin: 0px
+  margin: 0px;
+  transition: 0.1s background-color ease-in-out;
 }
 
 
@@ -123,6 +124,7 @@ h2{
 
 .sidebar__item:hover {
   background-color: rgba(70%, 70%, 70%, 0.2);
+  transition: 0s background-color ease-in-out;
 }
 
 

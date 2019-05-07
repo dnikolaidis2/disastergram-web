@@ -90,7 +90,7 @@ export default class UserBody extends React.Component {
     return(
       <div id='userbody'>
         {this.TopBanner()}
-        <div className='userbody__container'>
+        <div className='userbody__container noSelect'>
 		      {this.GalleryShowcase()}
 		      {this.GalleryShowcase()}
 		      {this.GalleryShowcase()}

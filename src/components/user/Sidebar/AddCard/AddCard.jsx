@@ -13,6 +13,8 @@ export default class AddCard extends React.Component {
 
 		this.API = this.props.API;
 
+		this.updateParent = this.props.updateParent;
+
 		this.onCloseClick = this.onCloseClick.bind(this);
 		this.stopClickPropagation = this.stopClickPropagation.bind(this);
 		this.handleSumbit = this.handleSumbit.bind(this);
@@ -20,7 +22,7 @@ export default class AddCard extends React.Component {
 
 		this.state = {
 			isVisible: this.props.isVisible || false,
-			parameter: '',
+			param: '',
 			reqType: this.props.reqType,
 		}
 	}
@@ -33,16 +35,23 @@ export default class AddCard extends React.Component {
 		e.preventDefault();
 
 		const { param, reqType } = this.state;
+		this.onCloseClick();
 
 		if (reqType === 'friend') {
 			this.API.addFriend(param)
 				.then ( res => {
-					console.log('Friend added (jsx)');
+					if(typeof res !== 'undefined'){
+						console.log('Friend added (jsx)');
+						this.updateParent();
+					}
 				})
 		} else {
 			this.API.addGallery(param)
 				.then ( res => {
-					console.log('Gallery added (jsx)');
+					if(typeof res !== 'undefined'){
+						console.log('Gallery added (jsx)');
+						this.updateParent();
+					}
 				})
 		}
 	}

@@ -16,27 +16,7 @@ export default class API {
 	    	'Content-Type': 'application/json'
 			}
 		}
-
-
 	}
-
-  // makeCancelable(promise) {
-  //   let hasCanceled_ = false;
-
-  //   const wrappedPromise = new Promise ((reslove,reject) => {
-  //     promise.then(
-  //       val => hasCanceled_ ? reject({isCanceled: true}) : resolve(val),
-  //       error => hasCanceled_ ? reject({isCanceled: true}) : reject(error)
-  //     );
-  //   });
-
-  //   return {
-  //     promise: wrappedPromise,
-  //     cancel() {
-  //       hasCanceled_ = true;
-  //     },
-  //   };
-  // };
 
 	addFriend(username) {
 		const {headers, userToken} = this.state;
@@ -56,6 +36,9 @@ export default class API {
 				
 				return Promise.resolve(res);
 			})
+			.catch( er => {
+				console.log(er)
+			})
 
 	}
 
@@ -72,10 +55,15 @@ export default class API {
 		 	{data: {...data}})
 			.then( res => {
 				if (process.env.NODE_ENV ==='development' && res.status === 203) {
-					console.log('API: added gallery: ' + galName);
+					if(res.status === 201)
+						console.log('API: POST gallery: 201. Created: ' + galName);
+					if(res.status === 200)
+						console.log('API: POST gallery: 200. Already exists: ' + galName);
 				}
-				
 				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
 			})
 	}
 
@@ -90,16 +78,20 @@ export default class API {
 			)
 			.then( res => {
 				if (process.env.NODE_ENV ==='development' && res.status === 201)
-					console.log('API: GET all friends: 201');
+					console.log('API: GET all friends: 200');
 				return Promise.resolve(res);
 			})
+			.catch( er => {
+				console.log(er)
+			})
+
 	}
 
 
 	getGalleries() {
 		const {headers, username, userToken} = this.state;
 
-		const url = `/api/user/${username}/galleries`
+		// const url = `/api/user/${username}/galleries`
 
 		return axios.get(`/api/user/${username}/galleries`, 
 				{params: {
@@ -108,11 +100,15 @@ export default class API {
 				{headers: {...headers}},
 			)
 			.then( res => {
-				if (process.env.NODE_ENV ==='development' && res.status === 200)
-					console.log('API: GET all galleries: 200');
+				if (process.env.NODE_ENV ==='development')
+					if(res.status === 200){
+						console.log('API: GET all galleries: 200.');
+					}
 				return Promise.resolve(res);
 			})
+			.catch( er => {
+				console.log(er)
+			})
 	}
-
  
 }

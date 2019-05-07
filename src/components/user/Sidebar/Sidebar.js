@@ -20,16 +20,10 @@ export default class Sidebar extends React.Component {
     this.updateLoggedIn = this.props.updateLoggedIn;
 
     this.state = {
-      lists : [],
-      // lists: 
-      //   {galleries : [
-      //     {username: 'Trees', id: '1', isActive: false},
-      //     {username: 'Mountains', id: '2', isActive: false},
-      //     {username: 'Cars', id: '3', isActive: false},
-      //     {username: 'Animals', id: '4', isActive: false},
-      //     {username: 'Architecture', id: '5', isActive: false}
-      //   ]
-      // },
+      lists : {
+        friends: [],
+        galleries: []
+      },
       friendsPromise: null,
       galleriesPromise: null,
       isGalVisible : false,
@@ -50,6 +44,7 @@ export default class Sidebar extends React.Component {
     this.toggleAddGallery = this.toggleAddGallery.bind(this);
 
     this.getFriends = this.getFriends.bind(this);
+    this.getGalleries = this.getGalleries.bind(this);
   }
 
   // --- Data fetching ---
@@ -86,46 +81,60 @@ export default class Sidebar extends React.Component {
 
   }
 
-  getFriends(makeCancelable) {
+  async getFriends(makeCancelable) {
 
-    var cancelablePromise;
-    this.setState({friendsPromise: cancelablePromise});
-    cancelablePromise = makeCancelable(
-        this.API.getFriends()
-      );
+    // var cancelablePromise;
+    // this.setState({friendsPromise: cancelablePromise});
+    // cancelablePromise = makeCancelable(
+    //     this.API.getFriends()
+    //   );
 
 
-    cancelablePromise
-      .promise
-      .then( res => {
-          let friends = res.data['Followed users'];
-          this.setState({lists:{...this.state.lists, friends}})
-      });
+    // cancelablePromise
+    //   .promise
+    //   .then( res => {
+    //     if(typeof res !== 'undefined') {
+    //       console.log(res.status);
+    //       if (res.status === 204){
+    //         console.log('No friends found');
+    //       }
 
-    // let res = await this.API.getFriends();
-    // let friends = res.data['Followed users'];
-    // this.setState({lists:{...this.state.lists, friends}})
+    //       let friends = res.data['Followed users'];
+    //       this.setState({lists:{...this.state.lists, friends}})
+    //     }
+    //   });
+
+    let friends;
+    let res = await this.API.getFriends();
+    if(typeof res !== 'undefined') {
+      friends = res.data['Followed users'];
+    }
+    this.setState({lists:{...this.state.lists, friends}})
   }
 
-  getGalleries(makeCancelable) {
+  async getGalleries(makeCancelable) {
 
-    var cancelablePromise;
-    this.setState({galleriesPromise: cancelablePromise});
-    cancelablePromise = makeCancelable(
-      this.API.getGalleries()
-    );
+    // var cancelablePromise;
+    // this.setState({galleriesPromise: cancelablePromise});
+    // cancelablePromise = makeCancelable(
+    //   this.API.getGalleries()
+    // );
 
+    // cancelablePromise
+    //   .promise
+    //   .then( res => {
+    //     if(typeof res !== 'undefined') {
+    //       let galleries = res.data['Galleries'];
+    //       this.setState({lists:{...this.state.lists, galleries}})
+    //     }
+    //   });
 
-    cancelablePromise
-      .promise
-      .then( res => {
-          let galleries = res.data['Galleries'];
-          this.setState({lists:{...this.state.lists, galleries}})
-      });
-
-    // let res = await this.API.getGalleries();
-    // let galleries = res.data['Galleries'];
-    // this.setState({lists:{...this.state.lists, galleries}})
+    let galleries;
+    let res = await this.API.getGalleries();
+    if(typeof res !== 'undefined') {
+      galleries = res.data['Galleries'];
+      this.setState({lists:{...this.state.lists, galleries}})
+    }
   }
 
 
@@ -140,24 +149,29 @@ export default class Sidebar extends React.Component {
 
   // --- UI ---
 
-  toggleGalleries(){
-    this.setState({isGalVisible : !this.state.isGalVisible});
-  }
-
   toggleFriends(){
+    // if(!this.state.isFriendsVisible)
+    //   this.getFriends();
     this.setState({isFriendsVisible : !this.state.isFriendsVisible});
   }
 
+  toggleGalleries(){
+    // if(!this.state.isGalVisible)
+    //   this.getGalleries();
+    this.setState({isGalVisible : !this.state.isGalVisible});
+  }
+
+
   getListModule(listName, isVisible) {
-    const list = this.state.lists[listName];
+    let list = this.state.lists[listName];
 
     if (typeof list === 'undefined') {
-      return;
+      list = [];
     }
 
     if (list.length === 0){
       const visStyle = {
-        maxHeight: isVisible ? '33px' : '33px',
+        maxHeight: isVisible ? '26px' : '0px',
         visibility: isVisible ? 'visible' : 'hidden',
         opacity: isVisible ? '1' : 0
       }
@@ -168,11 +182,12 @@ export default class Sidebar extends React.Component {
         );
     }
 
-    let height = 50 * Object.keys(list).length + 'px';
+    let height = 33 + (33 * Object.keys(list).length) + 'px';
     const visStyle = {
       maxHeight: isVisible ? height : '0px',
       visibility: isVisible ? 'visible' : 'hidden',
-      opacity: isVisible ? '1' : 0
+      opacity: isVisible ? '1' : '0',
+      height: height,
     }
 
     return (
@@ -181,7 +196,7 @@ export default class Sidebar extends React.Component {
         {list.map((item) => 
           <SidebarItem 
             key={item.id}
-            item={item.username}
+            item={item.username || item.galleryname}
             id={item.id}
             isActive={item.isActive} 
             listName={listName}
@@ -224,8 +239,12 @@ export default class Sidebar extends React.Component {
         <p className={className} onClick={this.toggleAddFriend}>
           + Add Friend
         </p>
-        <AddCard API={this.API} isVisible={this.state.addFriendVis} 
-          onCloseClick={this.toggleAddFriend} reqType={'friend'}/>
+        <AddCard 
+          API={this.API} 
+          isVisible={this.state.addFriendVis} 
+          onCloseClick={this.toggleAddFriend}
+          updateParent={this.getFriends}
+          reqType={'friend'}/>
       </React.Fragment>
     );
   }
@@ -243,8 +262,12 @@ export default class Sidebar extends React.Component {
         <p className={className} onClick={this.toggleAddGallery}>
           + Add Gallery
         </p>
-        <AddCard API={this.API} isVisible={this.state.addGalleryVis} 
-          onCloseClick={this.toggleAddGallery} reqType={'gallery'}/>
+        <AddCard 
+          API={this.API}
+          isVisible={this.state.addGalleryVis} 
+          onCloseClick={this.toggleAddGallery}
+          updateParent={this.getGalleries}
+          reqType={'gallery'}/>
       </React.Fragment>
     );
   }
