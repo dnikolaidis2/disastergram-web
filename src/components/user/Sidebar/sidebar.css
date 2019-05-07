@@ -85,7 +85,7 @@ h2{
 
 .sidebar__list {
   transition: 0.3s max-height ease-in-out, 0.3s opacity ease-in-out,  0.2s visibility  ease-in-out;
-  max-height: 0;
+/*   max-height: 0; */
   overflow-x:hidden;
   scrollbar-width:none;
 

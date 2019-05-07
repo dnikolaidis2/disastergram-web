@@ -20,7 +20,7 @@ export default class UserPage extends React.Component {
     this.Auth = this.props.Auth;
     this.updateLoggedIn = this.props.updateLoggedIn;
 
-    this.API = new API('http://disastergram.nikolaidis.tech/api', this.Auth);
+    this.API = new API('http://disastergram.nikolaidis.tech', this.Auth);
 
     this.logout = this.logout.bind(this);
   }
