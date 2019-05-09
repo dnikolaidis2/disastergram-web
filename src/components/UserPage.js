@@ -38,15 +38,19 @@ export default class UserPage extends React.Component {
     const updateLoggedIn = this.updateLoggedIn;
 
     return (
-      <div className='userpage'>
-        {!isLoggedIn && <Redirect to='/' />}
-        <Split direction='left' percent='20%'>
-          <Sidebar API={API} Auth={Auth} updateLoggedIn={updateLoggedIn} isLoggedIn={isLoggedIn}/>
-        </Split>
-        <Split direction='right'>
-          <UserBody API={API} Auth={Auth} />
-        </Split>
-      </div>
+      <React.Fragment>
+      {!isLoggedIn
+        ? <Redirect to='/' />
+        : <div className='userpage'>
+            <Split direction='left' percent='20%'>
+              <Sidebar API={API} Auth={Auth} updateLoggedIn={updateLoggedIn} isLoggedIn={isLoggedIn}/>
+            </Split>
+            <Split direction='right'>
+              <UserBody API={API} Auth={Auth} />
+            </Split>
+          </div>
+      }
+      </React.Fragment>
     );
   }
 
