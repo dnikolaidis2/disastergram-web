@@ -100,7 +100,7 @@ export default class AuthAPI {
 
 		// Get token from localStorage
 		const token = this.getToken();
-		
+
 		// if token is not empty AND is NOT expired, return TRUE
 		return !!token && !this.isTokenExpired(token);
 	}
@@ -114,10 +114,13 @@ export default class AuthAPI {
 			// Decode jwt token
 			const decoded = decode(token);
 			
-			if (decoded.exp < Date.now() / 1000)
+			if (decoded.exp < Date.now() / 1000) {
+				console.log('Expired token')
 				return true;
-			else
+			}
+			else{
 				return false;
+			}
 
 		}
 		catch (err) {

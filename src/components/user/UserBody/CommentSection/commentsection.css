@@ -2,20 +2,22 @@
 	position: relative;
 	z-index: 2;
 	transition: top 1s;
+	height: auto;
 
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
-	transition: 
-		0.2s height ease-out,
+/* 	transition: 
+		0.2s max-height ease-out,
 	 	0.4s opacity ease-in-out, 
 	 	0.4s visibility  ease-in-out,
-	 	0s margin ease-in-out;
+	 	0s margin ease-in-out; */
+	flex: 1 1 100%;
 }
 
 .comment-section__container{
 	position: relative;
-	margin: 10px 0px 20px 0px;
+	margin: 10px 0px 5px 0px;
 	z-index: -1;
 	/* top: -40px; */
 /* 	transition: 
@@ -31,7 +33,7 @@
 	flex-direction: column;
 	margin: 0px 10px 10px 10px;
 	padding: 10px;
-	background-color: #eeeeee;
+	background-color: rgba(255,255,255, 0.9);
 	border-radius: 7px;
 /* 	transition: 
 		0.4s height ease-in-out; */

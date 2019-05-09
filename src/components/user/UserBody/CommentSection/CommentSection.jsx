@@ -14,16 +14,16 @@ export default class CommentSection extends React.Component {
 		this.state = {
 			isVisible : this.props.isVisible,
 			comments: [
-				{username: 'Bob', text: 'This is the most beautiful gallery.'},
-				{username: 'Karen', text: 'But this isn\'t a gallery... it\'s an image!!'},
-				{username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{username: 'Jacob', text: 'Yeah karen, go kys.'},
+				{id: 1, username: 'Bob', text: 'This is the most beautiful gallery.'},
+				{id: 2, username: 'Karen', text: 'But this isn\'t a gallery... it\'s an image!!'},
+				{id: 3, username: 'Bob', text: 'Stfu Karen. No one likes youStfu Karen. No one likes youStfu Karen. No one likes youStfu Karen. No one likes youStfu Karen. No one likes you'},
+				{id: 4, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
+				{id: 5, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
+				{id: 6, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
+				{id: 7, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
+				{id: 8, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
+				{id: 9, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
+				{id: 10, username: 'Jacob', text: 'Yeah karen, go kys.'},
 			],
 		}
 
@@ -36,7 +36,7 @@ export default class CommentSection extends React.Component {
 	}
 
 	async getComments(type, id) {
-		var comments, res;
+		var res;
 		
 		if (type === 'gallery') {
 			res = await this.API.getGalComments(id);
@@ -46,7 +46,7 @@ export default class CommentSection extends React.Component {
 		}
 
 		if (typeof res !== 'undefined') {
-			comments = res.data['Comments']
+			// const comments = res.data['Comments']
 		}
 
 		// this.setState({comments: comments})
@@ -54,7 +54,7 @@ export default class CommentSection extends React.Component {
 
 	showComment(comment){
 		return (
-			<div className='comment select'>
+			<div className='comment select' key={comment.id}>
 				<p className='comment__username'>{comment.username}:</p>
 				<p className='comment__text'>{comment.text}</p>
 			</div>
@@ -66,13 +66,13 @@ export default class CommentSection extends React.Component {
 		const comments = this.state.comments;
 		const isVisible = this.props.isVisible;
 
+		let height = (75 * Object.keys(comments).length) +'px';
+
 		const visStyle = {
-      height: isVisible ? '290px' : '0px',
-      // visibility: isVisible ? 'visible' : 'hidden',
-      // opacity: isVisible ? '1' : '0',
+      maxHeight: isVisible ? height : '0px',
       transition: isVisible
-      	? '0.4s height ease-in-out, 5s opacity, 5s visibility'
-				: '0.4s height ease-in-out, 0s opacity, 0s visibility',
+      	? '0.4s max-height ease-in-out, 0.4s height ease-in-out, 5s opacity, 5s visibility'
+				: '0.4s max-height ease-in-out, 0.4s height ease-in-out, 0s opacity, 0s visibility',
 			}
 
 		const visStyle2 = {
