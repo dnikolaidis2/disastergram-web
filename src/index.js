@@ -58,18 +58,18 @@ class App extends React.Component {
 						<Route 
 							exact path={['/','/login']} 
 							render={()=> 
-							<LoginPage 
-								Auth={Auth} 
-								updateLoggedIn={updateLoggedIn} 
-								isLoggedIn={isLoggedIn}/>
+								<LoginPage 
+									Auth={Auth} 
+									updateLoggedIn={updateLoggedIn} 
+									isLoggedIn={isLoggedIn}/>
 							}/>
 						<Route 
-							path={'/user'} 
+							path={['/user', '/gallery']} 
 							render={()=> 
-							<UserPage 
-								Auth={Auth} 
-								updateLoggedIn={this.updateLoggedIn} 
-								isLoggedIn={isLoggedIn}/>
+								<UserPage 
+									Auth={Auth} 
+									updateLoggedIn={this.updateLoggedIn} 
+									isLoggedIn={isLoggedIn}/>
 							}/>
 					</div>
 				</BrowserRouter>

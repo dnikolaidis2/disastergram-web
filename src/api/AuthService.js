@@ -12,13 +12,13 @@ export default class AuthAPI {
 		
 
 		// Binding our methods to our object
-		this.login = this.login.bind(this);
-		this.refresh = this.refresh.bind(this);	
+		this._login = this._login.bind(this);
+		this._refresh = this._refresh.bind(this);	
 		this.getHeaders = this.getHeaders.bind(this);	
 		this.getToken = this.getToken.bind(this);	
 	}
 
-	login(username, password) {
+	_login(username, password) {
 		//** Get a token from the auth server
 
 		// if(process.env.NODE_ENV ==='development'){
@@ -46,12 +46,29 @@ export default class AuthAPI {
 					console.log('Token received!');
 					console.log(res.data.token);
 				}
-				
+
 				return Promise.resolve(res);
 			})
 	}
 
-	register(username, password) {
+	_getID(){
+		const headers = this.getHeaders();
+		const username = this.getUser();
+
+		return axios.get(`/auth/user/${username}`,
+			{headers: {...headers}})
+			.then( res => {
+				// Save token using localstorage
+				this.setID(res.data.id);
+				if (process.env.NODE_ENV ==='development') {
+					console.log('ID received!');
+					console.log(res.data.id);
+				}
+				return Promise.resolve(res);
+			})
+	}
+
+	_register(username, password) {
 		//** Get a token from the auth server
 
 		const headers = this.getHeaders();
@@ -76,7 +93,7 @@ export default class AuthAPI {
 	}
 
 	
-	refresh() {
+	_refresh() {
 		// ** Refresh token function
 
 		const token = this.getToken();
@@ -147,6 +164,17 @@ export default class AuthAPI {
       //** Retrieve the username from localStorage
       return localStorage.getItem('username');
   }
+
+	setID(ID) {
+    localStorage.setItem('userID', ID);
+	}
+
+	getID() {
+      return localStorage.getItem('userID');
+  }
+
+
+
 
 
   logout() {

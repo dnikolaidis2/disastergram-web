@@ -9,6 +9,7 @@ export default class API {
 
 		this.state = {
 			username: this.Auth.getUser(),
+			user_id: this.Auth.getID(),
 			userToken:  this.Auth.getToken(),
 			headers: {
 				Accept: 'application/json',
@@ -128,11 +129,11 @@ export default class API {
 	}
 
 	getGalleries() {
-		const {headers, username, userToken} = this.state;
+		const {headers, user_id, userToken} = this.state;
 
 		// const url = `/api/user/${username}/galleries`
 
-		return axios.get(`/api/user/${username}/galleries`, 
+		return axios.get(`/api/user/${user_id}/galleries`, 
 				{params: {
 					token: userToken
 				}},

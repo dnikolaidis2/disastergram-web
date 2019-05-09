@@ -73,18 +73,18 @@ export default class Login extends React.Component {
 		if (!this.validateForm())
 			return;
 
-
 		const { username, password, isRegistering } = this.state;
 
 		if(isRegistering) {
-			this.Auth.register(username, password)
+			this.Auth._register(username, password)
 			.then( res => {
 				
 				if (res.status === 201)
 					// If succesfully registered, then
 
-					this.Auth.login(username, password)
+					this.Auth._login(username, password)
 						.then( res => {
+							this.Auth._getID();
 							// force refresh parents logged in status
 							this.updateLoggedIn();
 						})			
@@ -93,15 +93,14 @@ export default class Login extends React.Component {
 			return;
 		}
 
-		// 
-		this.Auth.login(username, password)
+		// If not Registering
+		this.Auth._login(username, password)
 			.then( res => {
 				// force refresh parents logged in status
 				this.updateLoggedIn();
 			})		
 
-		
-		
+		this.Auth._getID();
 	}
 
 	handleRegisterChange(){

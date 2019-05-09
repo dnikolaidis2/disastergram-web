@@ -1,0 +1,34 @@
+#gallerybody {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+ 	align-items: center;
+  
+  overflow-x: hidden;
+
+}
+
+.gallery__header {
+	margin: 50px 30px 10px 30px;
+	width: 80%;
+
+
+	display: flex;
+	flex-direction: column;
+	justify-items: flex-start;
+	align-items: flex-start;
+}
+
+.gallery__title {
+	margin-bottom: 10px;
+	font-family: Raleway;
+	font-weight: 500;
+}
+
+.gallery__author {
+	margin-left: 10px;
+	font-weight: 400;
+	color: #995cd6;
+}

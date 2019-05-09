@@ -1,6 +1,6 @@
 // ** Main modules
 import React from 'react';
-//import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // ** Components
 import SidebarItem from './SidebarItem.jsx'
@@ -18,6 +18,7 @@ export default class Sidebar extends React.Component {
     this.API = this.props.API;
     this.Auth = this.props.Auth;
     this.updateLoggedIn = this.props.updateLoggedIn;
+    this.gotoGallery = this.props.gotoGallery;
 
     this.state = {
       lists : {
@@ -114,12 +115,14 @@ export default class Sidebar extends React.Component {
     //     }
     //   });
 
-    let friends;
+    let friends = [];
     let res = await this.API.getFriends();
     if (typeof res !== 'undefined') {
       friends = res.data['Followed users'];
+      this.setState({lists:{...this.state.lists, friends}})
     }
-    this.setState({lists:{...this.state.lists, friends}})
+
+    this.setState({lists:{...this.state.lists, friends: []}})
   }
 
   async getGalleries() {
@@ -206,7 +209,9 @@ export default class Sidebar extends React.Component {
         {list.map((item) => 
           <SidebarItem 
             key={item.id}
-            item={item.username || item.galleryname}
+            curUser={this.Auth.getUser()}
+            curUrl={this.props.url}
+            itemName={item.username || item.galleryname}
             id={item.id}
             isActive={item.isActive} 
             listName={listName}
@@ -221,17 +226,24 @@ export default class Sidebar extends React.Component {
   handleActivate(id, listName) {
     const lists = this.state.lists
 
+    console.log('in handleActivate')
+    console.log('listName: '+listName)
+    console.log('id:' + id)
     // Iterate through all lists
     // For all other lists, set all inactive
     for (var list in lists) {
       if (list !== listName)
         this.activate(-1, list)
     }
+
     this.activate(id, listName);
+    this.gotoGallery(id)
     
   }
 
   activate(id, listName) {
+    console.log('listName: '+listName)
+    console.log('id:' + id)
     const list = this.state.lists[listName];
     list.forEach( item => {
           item.isActive = (item.id === id ? true : false);
@@ -352,11 +364,11 @@ function userPageTitle(user){
 
   return (
 
-    <div className='sidebar__title noSelect'>
+    <Link  to={`/user/myprofile`} className='sidebar__title noSelect'>
       <h2 className='sidebar__disgram'>Disastergram</h2>
       <hr style={hrStyle}></hr>
       <h3 className='sidebar__username'>{user}</h3>
-    </div>
+    </Link>
     );
 
 }

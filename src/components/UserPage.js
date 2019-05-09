@@ -1,6 +1,6 @@
 // ** Main modules
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
 // ** API imports
 import API from './../api/ApiService.js';
@@ -8,6 +8,7 @@ import API from './../api/ApiService.js';
 // ** Components
 import Sidebar from './user/Sidebar'
 import UserBody from './user/UserBody'
+import GalleryBody from './user/UserBody/GalleryBody.jsx'
 
 // ** CSS
 import './userpage.css';
@@ -22,7 +23,16 @@ export default class UserPage extends React.Component {
 
     this.API = new API('http://disastergram.nikolaidis.tech', this.Auth);
 
+    this.state = {
+      currModule : 'user',
+      curUser: this.Auth.getUser(),
+      curUserID: this.Auth.getID(),
+      galleryName : 'Gallery Name'
+    }
+
+
     this.logout = this.logout.bind(this);
+    this.gotoGallery = this.gotoGallery.bind(this);
   }
 
   logout() {
@@ -31,11 +41,18 @@ export default class UserPage extends React.Component {
     this.updateLoggedIn();
   }
 
+  gotoGallery(galleryName) {
+    this.setState({currModule: 'gallery', galleryName : galleryName})
+
+  }
+
   render() {
     const API = this.API;
     const Auth = this.Auth;
     const isLoggedIn = this.props.isLoggedIn;
     const updateLoggedIn = this.updateLoggedIn;
+
+    const {currModule, curUser, galleryName } = this.state;
 
     return (
       <React.Fragment>
@@ -43,10 +60,32 @@ export default class UserPage extends React.Component {
         ? <Redirect to='/' />
         : <div className='userpage'>
             <Split direction='left' percent='20%'>
-              <Sidebar API={API} Auth={Auth} updateLoggedIn={updateLoggedIn} isLoggedIn={isLoggedIn}/>
+              <Sidebar 
+                API={API} 
+                Auth={Auth} 
+                updateLoggedIn={updateLoggedIn} 
+                isLoggedIn={isLoggedIn}
+                gotoGallery={this.gotoGallery}
+                url={'/user'}/>
             </Split>
             <Split direction='right'>
-              <UserBody API={API} Auth={Auth} />
+              <Route
+                path={['/user', '/user/myprofile']}
+                render={(props) =>
+                  <UserBody 
+                    {...props}
+                    API={API} 
+                    Auth={Auth} 
+                    user={curUser}/>
+                  }/>
+              <Route
+                path={`/user/gallery/:galID`}
+                render={(props) =>
+                  <GalleryBody 
+                    {...props}
+                    API={API} 
+                    galleryName={galleryName}/>
+                }/>
             </Split>
           </div>
       }
