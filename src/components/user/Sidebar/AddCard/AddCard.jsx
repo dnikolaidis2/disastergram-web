@@ -35,6 +35,7 @@ export default class AddCard extends React.Component {
 		e.preventDefault();
 
 		const { param, reqType } = this.state;
+		this.setState({param: ''})
 		this.onCloseClick();
 
 		if (reqType === 'friend') {

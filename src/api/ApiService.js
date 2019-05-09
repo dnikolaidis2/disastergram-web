@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 export default class API {
 
 	constructor(domain, Auth) {
@@ -16,7 +15,15 @@ export default class API {
 	    	'Content-Type': 'application/json'
 			}
 		}
+
+		this.updateLocalStorage = this.updateLocalStorage.bind(this)
 	}
+
+	updateLocalStorage(name, item) {
+		localStorage.setItem(name, item);
+	}
+
+	// *** Friends
 
 	addFriend(username) {
 		const {headers, userToken} = this.state;
@@ -30,8 +37,10 @@ export default class API {
 			{headers: {...headers}},
 		 	{data: {...data}})
 			.then( res => {
-				if (process.env.NODE_ENV ==='development' && res.status === 203) {
-					console.log('API: added user: ' + username);
+				if (process.env.NODE_ENV ==='development') {
+					if(res.status < 400){
+						console.log('API: ('+res.status+') POST Added user: ' + username);
+					}
 				}
 				
 				return Promise.resolve(res);
@@ -41,6 +50,57 @@ export default class API {
 			})
 
 	}
+
+
+	getFriends() {
+		const {headers, userToken} = this.state;
+
+		return axios.get('/api/user/friends', 
+				{params: {
+					token: userToken
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API: ('+res.status+') GET all friends: 200');
+					}
+				}
+				// No need for this atm
+				// this.updateLocalStorage('friends', res.data['Followed users']);
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+
+	}
+
+	unfollowFriend(username) {
+		const {headers, userToken} = this.state;
+
+		return axios.delete(`/api/user/unfollow`, 
+				{data: {
+					token: userToken,
+					username: username
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development')
+					if(res.status < 400){
+						console.log('API: ('+res.status+') DELETE friend:' + username);
+					}
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+	}
+
+	// *** Galleries
 
 	addGallery(galName) {
 		const {headers, userToken} = this.state;
@@ -67,27 +127,6 @@ export default class API {
 			})
 	}
 
-	getFriends() {
-		const {headers, userToken} = this.state;
-
-		return axios.get('/api/user/friends', 
-				{params: {
-					token: userToken
-				}},
-				{headers: {...headers}},
-			)
-			.then( res => {
-				if (process.env.NODE_ENV ==='development' && res.status === 201)
-					console.log('API: GET all friends: 200');
-				return Promise.resolve(res);
-			})
-			.catch( er => {
-				console.log(er)
-			})
-
-	}
-
-
 	getGalleries() {
 		const {headers, username, userToken} = this.state;
 
@@ -100,10 +139,14 @@ export default class API {
 				{headers: {...headers}},
 			)
 			.then( res => {
-				if (process.env.NODE_ENV ==='development')
-					if(res.status === 200){
-						console.log('API: GET all galleries: 200.');
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API: ('+res.status+') GET all galleries.');
 					}
+				}
+
+				// this.updateLocalStorage('galleries', res.data['Galleries']);
+
 				return Promise.resolve(res);
 			})
 			.catch( er => {
@@ -111,27 +154,6 @@ export default class API {
 			})
 	}
 
-	unfollowFriend(username) {
-		const {headers, userToken} = this.state;
-
-		return axios.delete(`/api/user/unfollow`, 
-				{data: {
-					token: userToken,
-					username: username
-				}},
-				{headers: {...headers}},
-			)
-			.then( res => {
-				if (process.env.NODE_ENV ==='development')
-					if(res.status === 200){
-						console.log('API: (200) DELETE friend:' + username);
-					}
-				return Promise.resolve(res);
-			})
-			.catch( er => {
-				console.log(er)
-			})
-	}
 
 	deleteGallery(id) {
 		const {headers, userToken} = this.state;
@@ -155,5 +177,36 @@ export default class API {
 			})
 
 	}
+
+	// *** Gal Comments
+
+	getGalComments(galID) {
+		const {headers, userToken} = this.state;
+
+
+		return axios.get(`/api/gallery/${galID}/comments`, 
+				{params: {
+					token: userToken
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API:('+ res.status +') GET comments. (galID: '+ galID +')');
+					}
+				}
+
+				// this.updateLocalStorage('galleries', res.data['Galleries']);
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+
+	}
+
+
  
 }

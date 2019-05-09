@@ -1,6 +1,10 @@
 import React from 'react';
 //import { Redirect } from 'react-router-dom';
 
+// *** Components
+import CommentSection from './../CommentSection'
+
+// *** CSS
 import './imagecard.css'
 
 export default class ImageCard  extends React.Component {
@@ -13,9 +17,9 @@ export default class ImageCard  extends React.Component {
 				title: 'A beautiful Bridge',
 				id: '1234',
 			},			
-			isHidden: this.props.isHidden || true,
+			isVisible: this.props.isVisible || false,
 		}
-		this.gal = this.props.gal;
+		this.API = this.props.API;
 
 		this.onCloseClick = this.onCloseClick.bind(this);
 		this.stopClickPropagation = this.stopClickPropagation.bind(this);
@@ -25,7 +29,7 @@ export default class ImageCard  extends React.Component {
 
 	onCloseClick() {
 		this.props.onCloseClick();
-		console.log('isHidden: true')
+		console.log('isVisible: true')
 
 	}
 
@@ -34,7 +38,7 @@ export default class ImageCard  extends React.Component {
 	}
 
 	// -- Submodules
-s
+
 	infoTab() {
 		const image = this.state.image;
 
@@ -49,11 +53,13 @@ s
 
 	render() {
 		const imgsrc = 'https://images.unsplash.com/photo-1508904186271-c9c83ae788cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1250&q=80'
-		const isHidden = this.props.isHidden;
+		const isVisible = this.props.isVisible;
+
+		const hrStyle = {width: '96%', 'borderColor': '#dddddd', 'borderStyle':'solid'};
 
 		return (
 			<React.Fragment>
-				{!isHidden && 
+				{isVisible && 
 				<div className='image-card__container noSelect' onClick={this.onCloseClick}>
 					<button className='image-card__closebtn' onClick={this.onCloseClick}><i className='fa fa-times'></i></button>
 
@@ -62,14 +68,8 @@ s
 							{this.infoTab()}
 							<img className='image-card__image' alt='Post' src={imgsrc}></img>
 						</picture>
-
-
-						{this.gal()}
-						{this.gal()}
-						{this.gal()}
-						{this.gal()}
-						{this.gal()}
-						{this.gal()}
+						<hr style={hrStyle}/>
+						<CommentSection API={this.API} type='gallery' id='e2dff1c1-223d-4956-ab7e-c509f4dc306a'/>
 					</article>
 				</div>
 				}
@@ -77,5 +77,11 @@ s
 		)
 	}
 
+						// {this.gal()}
+						// {this.gal()}
+						// {this.gal()}
+						// {this.gal()}
+						// {this.gal()}
+						// {this.gal()}
 
 }

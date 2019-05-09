@@ -116,7 +116,7 @@ export default class Sidebar extends React.Component {
 
     let friends;
     let res = await this.API.getFriends();
-    if(typeof res !== 'undefined') {
+    if (typeof res !== 'undefined') {
       friends = res.data['Followed users'];
     }
     this.setState({lists:{...this.state.lists, friends}})

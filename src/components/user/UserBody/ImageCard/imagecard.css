@@ -9,6 +9,8 @@
   right: 0;
   bottom: 0;
 
+  z-index: 20;
+
   display: flex;
   justify-content: center;
   overflow: auto;
@@ -32,9 +34,10 @@
 
 
 .image-card {
-	margin-top: 30px;
+
+	margin: 30px 0px;
 	position: absolute;
-	padding: 0px 0px 30px 0px; 
+	padding: 0px 0px 10px 0px; 
 	width: 70%;
 	top: 0;
   left: 50%;
@@ -52,7 +55,7 @@
 
 .image-container {
 	margin-top: 0px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	border-radius: inherit;
 
 }

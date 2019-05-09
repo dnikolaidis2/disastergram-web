@@ -1,0 +1,57 @@
+.comment-section {
+	position: relative;
+	z-index: 2;
+	transition: top 1s;
+
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	transition: 
+		0.2s height ease-out,
+	 	0.4s opacity ease-in-out, 
+	 	0.4s visibility  ease-in-out,
+	 	0s margin ease-in-out;
+}
+
+.comment-section__container{
+	position: relative;
+	margin: 10px 0px 20px 0px;
+	z-index: -1;
+	/* top: -40px; */
+/* 	transition: 
+		0.4s top ease-in-out,
+		0.2s height ease-in-out,
+		0.2s opacity, 
+		0.2s visibility, 
+		0s margin ease-in-out; */
+}
+
+.comment {
+	display: flex;
+	flex-direction: column;
+	margin: 0px 10px 10px 10px;
+	padding: 10px;
+	background-color: #eeeeee;
+	border-radius: 7px;
+/* 	transition: 
+		0.4s height ease-in-out; */
+
+}
+
+.comment__username, .comment__text {
+	margin: 0px 5px 0px 0px;
+}
+
+.comment__username {
+	font-weight: 500;
+	text-align: left;
+	width: 5%;
+}
+
+.comment__username:hover {
+	color: #995cd6;
+}
+
+.comment__text {
+
+}
