@@ -29,8 +29,6 @@ export default class ImageCard  extends React.Component {
 
 	onCloseClick() {
 		this.props.onCloseClick();
-		console.log('isVisible: true')
-
 	}
 
 	stopClickPropagation(event) {
@@ -69,19 +67,11 @@ export default class ImageCard  extends React.Component {
 							<img className='image-card__image' alt='Post' src={imgsrc}></img>
 						</picture>
 						<hr style={hrStyle}/>
-						<CommentSection API={this.API} type='gallery' id='e2dff1c1-223d-4956-ab7e-c509f4dc306a'/>
+						<CommentSection API={this.API} type='image' id='e2dff1c1-223d-4956-ab7e-c509f4dc306a' isVisible={true}/>
 					</article>
 				</div>
 				}
 			</React.Fragment>
 		)
 	}
-
-						// {this.gal()}
-						// {this.gal()}
-						// {this.gal()}
-						// {this.gal()}
-						// {this.gal()}
-						// {this.gal()}
-
 }

@@ -5,6 +5,8 @@ import React from 'react';
 // ** Components
 
 import GalleryShowcase from './GalleryShowcase'
+import ImageCard from './ImageCard'
+
 
 
 import './userbody.css';
@@ -18,17 +20,16 @@ export default class UserBody extends React.Component {
     this.API = this.props.API;
 
     this.state = {
-
-      imageCardVis: false,
-      id1: false,
-      id2: false,
-      id3: false,
-      id4: false
-      
+      imageCardVis: false,      
     }
 
     this.TopBanner = this.TopBanner.bind(this);
+    this.handleThumbclick = this.handleThumbclick.bind(this);
 
+  }
+
+  handleThumbclick(){
+    this.setState({imageCardVis: !this.state.imageCardVis})
   }
 
   TopBanner() {
@@ -42,15 +43,21 @@ export default class UserBody extends React.Component {
 
 
   render() {
+    const imageCardVis = this.state.imageCardVis;
+
     return(
       <div id='userbody'>
         {this.TopBanner()}
         <div className='userbody__container noSelect'>
-					<GalleryShowcase/>
-					<GalleryShowcase/>
-					<GalleryShowcase/>
-					<GalleryShowcase/>
+					<GalleryShowcase onThumbClick={this.handleThumbclick}/>
+					<GalleryShowcase onThumbClick={this.handleThumbclick}/>
+					<GalleryShowcase onThumbClick={this.handleThumbclick}/>
+					<GalleryShowcase onThumbClick={this.handleThumbclick}/>
         </div>
+        <ImageCard 
+          API={this.API} 
+          onCloseClick={this.handleThumbclick} 
+          isVisible={imageCardVis}/>
       </div>
     );
   }

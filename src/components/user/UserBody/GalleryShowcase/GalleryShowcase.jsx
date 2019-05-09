@@ -4,7 +4,6 @@ import React from 'react';
 
 // ** Components
 import CommentSection from './../CommentSection'
-import ImageCard from './../ImageCard'
 
 
 // ** CSS
@@ -15,6 +14,8 @@ import './galleryshowcase.css'
 export default class GalleryShowcase extends React.Component {
 	constructor(props){
 		super(props);
+
+		this.onThumbClick = this.props.onThumbClick;
 
 		this.state = {
       images: [
@@ -37,7 +38,7 @@ export default class GalleryShowcase extends React.Component {
 		this.toggleComments = this.toggleComments.bind(this);
     this.Thumbnails = this.Thumbnails.bind(this);
     this.Thumbnail = this.Thumbnail.bind(this);
-    this.onThumbClick = this.onThumbClick.bind(this);
+    this.handleThumbClick = this.handleThumbClick.bind(this);
 
   }
 
@@ -51,13 +52,12 @@ export default class GalleryShowcase extends React.Component {
 
 	Thumbnail(id){
 	  return(
-	    <div key={id} className='thumbnail' onClick={this.onThumbClick}></div>
+	    <div key={id} className='thumbnail' onClick={this.handleThumbClick}></div>
 	  );
 	}
 
-	onThumbClick(){
-		this.setState({imageCardVis: !this.state.imageCardVis})
-		console.log('imageCardVis:' + !this.state.imageCardVis)
+	handleThumbClick(){
+		this.onThumbClick(/*Pass data to parent*/);
 	}
 
 	toggleComments() {
@@ -68,7 +68,6 @@ export default class GalleryShowcase extends React.Component {
 
 	  let galleryName = 'Gallery Name';
 	  const isVis = this.state.isCommmentsVisible;
-	  const imageCardVis = this.state.imageCardVis;
 
 	  const expandMoreStyle = {
   	  'WebkitTransform': isVis ? 'rotate(180deg)': 'rotate(0deg)',
@@ -90,7 +89,6 @@ export default class GalleryShowcase extends React.Component {
 	        {this.Thumbnails()}
 	      </section>
 				<CommentSection API={this.API} type='gallery' id='e2dff1c1-223d-4956-ab7e-c509f4dc306a' isVisible={isVis}/>
-				<ImageCard API={this.API} onCloseClick={this.onThumbClick} isVisible={imageCardVis}/>
 	    </article>
 	  );
 	}

@@ -64,7 +64,7 @@ export default class API {
 			.then( res => {
 				if (process.env.NODE_ENV ==='development'){
 					if(res.status < 400){
-						console.log('API: ('+res.status+') GET all friends: 200');
+						console.log('API: ('+res.status+') GET all friends');
 					}
 				}
 				// No need for this atm

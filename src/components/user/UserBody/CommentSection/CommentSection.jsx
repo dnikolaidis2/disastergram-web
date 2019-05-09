@@ -25,12 +25,21 @@ export default class CommentSection extends React.Component {
 				{id: 9, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
 				{id: 10, username: 'Jacob', text: 'Yeah karen, go kys.'},
 			],
+			commentStyle : {
+				style : {
+					backgroundColor: 'white' //default 
+				}
+			}
 		}
 
+
 		this.getComments = this.getComments.bind(this);
+		this.determinAnimStyle = this.determinAnimStyle.bind(this);
+		this.setStyle = this.setStyle.bind(this);
 	}
 
 	componentDidMount(){
+		this.setStyle(this.props.type);
 		//this.getComments(this.props.type, this.props.id);
 
 	}
@@ -52,37 +61,68 @@ export default class CommentSection extends React.Component {
 		// this.setState({comments: comments})
 	}
 
+	setStyle(type){
+		var commentStyle = {};
+		if(type === 'image'){
+			commentStyle = {
+				style : {
+					backgroundColor: '#eeeeee' 
+				}
+			}
+			console.log('style set')
+			this.setState({commentStyle})
+		}
+
+
+
+	}
+
 	showComment(comment){
+		let commentStyle = this.state.commentStyle
+
 		return (
-			<div className='comment select' key={comment.id}>
+			<div className='comment select' key={comment.id} style={commentStyle.style}>
 				<p className='comment__username'>{comment.username}:</p>
 				<p className='comment__text'>{comment.text}</p>
 			</div>
 		)
 	}
 
-
-	render() {
+	determinAnimStyle(x){
 		const comments = this.state.comments;
 		const isVisible = this.props.isVisible;
 
-		let height = (75 * Object.keys(comments).length) +'px';
 
-		const visStyle = {
-      maxHeight: isVisible ? height : '0px',
-      transition: isVisible
-      	? '0.4s max-height ease-in-out, 0.4s height ease-in-out, 5s opacity, 5s visibility'
-				: '0.4s max-height ease-in-out, 0.4s height ease-in-out, 0s opacity, 0s visibility',
-			}
-
-		const visStyle2 = {
-      top: isVisible ? '0px' : '-280px',
-    	visibility: isVisible ? 'visible' : 'hidden',
-      opacity: isVisible ? '1' : '0',
-    	transition: isVisible 
-    		? '0.4s top ease-in-out, opacity 0s ease-in-out 0s, visibility 0s ease-in-out 0s' 
-    		: '0.4s top ease-in-out, opacity 0s ease-in-out 0.5s, visibility 0s ease-in-out 0.5s',
+		switch(x) {
+			case 'section':
+				const height = (75 * Object.keys(comments).length) +'px';
+				const visStyle = {
+		      maxHeight: isVisible ? height : '0px',
+		      transition: isVisible
+		      	? '0.4s max-height ease-in-out, 0.4s height ease-in-out, 5s opacity, 5s visibility'
+						: '0.4s max-height ease-in-out, 0.4s height ease-in-out, 0s opacity, 0s visibility',
+				}
+				return visStyle;
+			case 'container':
+				const visStyle2 = {
+		      top: isVisible ? '0px' : '-280px',
+		    	visibility: isVisible ? 'visible' : 'hidden',
+		      opacity: isVisible ? '1' : '0',
+		    	transition: isVisible 
+		    		? '0.4s top ease-in-out, opacity 0s ease-in-out 0s, visibility 0s ease-in-out 0s' 
+		    		: '0.4s top ease-in-out, opacity 0s ease-in-out 0.5s, visibility 0s ease-in-out 0.5s',
+				}
+				return visStyle2;
+			default:
+				return;
 		}
+	}
+
+	render() {
+		const comments = this.state.comments;
+		let visStyle = this.determinAnimStyle('section');
+		let visStyle2 = this.determinAnimStyle('container')
+
 
 		return(
 			<section className='comment-section' style={visStyle}>
