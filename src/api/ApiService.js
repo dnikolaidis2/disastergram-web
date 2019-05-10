@@ -24,7 +24,7 @@ export default class API {
 		localStorage.setItem(name, item);
 	}
 
-	// *** Friends
+	// *** FRIENDS ***
 
 	addFriend(username) {
 		const {headers, userToken, user_id} = this.state;
@@ -101,7 +101,7 @@ export default class API {
 			})
 	}
 
-	// *** Galleries
+	// *** GALLERIES ***
 
 	addGallery(galName) {
 		const {headers, userToken} = this.state;
@@ -179,7 +179,7 @@ export default class API {
 
 	}
 
-	// *** Gal Comments
+	// *** GAL COMMENTS ***
 
 	getGalComments(galID) {
 		const {headers, userToken} = this.state;
@@ -205,9 +205,29 @@ export default class API {
 			.catch( er => {
 				console.log(er)
 			})
-
 	}
 
+	// *** IMAGES	***
 
+	uploadImage(image, gall_id){
+		const headers = { 
+			headers: {'content-type': 'multipart/form-data'}
+		};
+
+		var formData = new FormData();
+		formData.append('file',image);
+		formData.append('token', this.state.userToken)
+
+		axios.post(`/api/user/gallery/${gall_id}/upload`,
+				formData,
+				headers
+			)
+      .then((response) => {
+        console.log("The file is successfully uploaded");
+      })
+      .catch((error) => {
+      	console.log('An error occured while uploading!')	
+  		});
+	}
  
 }

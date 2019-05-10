@@ -15,18 +15,29 @@ export default class GalleryBody extends React.Component {
 
 		this.state = {
 			galleryName: 'Naughty Stuff I did in Rome',
+      // galleryID: 
 			author: 'Naughtious Maximus',
 			imageCardVis: false,
+      file: null,
 		}
 
     this.handleThumbclick = this.handleThumbclick.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
 	}
 
   handleThumbclick(){
     this.setState({imageCardVis: !this.state.imageCardVis})
   }
 
+  onChange(e){
+    this.setState({file:e.target.files[0]});
+  }
 
+  onFormSubmit(e){
+     e.preventDefault();
+     this.API.uploadImage(this.state.file)
+  }
 
   render(){
     const  imageCardVis = this.state.imageCardVis;
@@ -51,6 +62,14 @@ export default class GalleryBody extends React.Component {
   				<div>by<span className='gallery__author'>{author}</span></div>
   			</header>
 				<hr style={hrStyle}/>
+
+        <form onSubmit={this.onFormSubmit}>
+            <h1>File Upload</h1>
+            <input type="file" name="image" onChange= {this.onChange} />
+            <button type="submit">Upload</button>
+        </form>
+
+
 				<ImageCard 
           API={this.API} 
           onCloseClick={this.handleThumbclick} 
