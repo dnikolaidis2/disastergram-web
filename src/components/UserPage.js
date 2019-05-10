@@ -27,12 +27,16 @@ export default class UserPage extends React.Component {
       currModule : 'user',
       curUser: this.Auth.getUser(),
       curUserID: this.Auth.getID(),
-      galleryName : 'Gallery Name'
+      galleryName : ''
     }
 
 
     this.logout = this.logout.bind(this);
     this.gotoGallery = this.gotoGallery.bind(this);
+  }
+
+  componentDidMount(){
+    this.updateLoggedIn();
   }
 
   logout() {
@@ -52,12 +56,24 @@ export default class UserPage extends React.Component {
     const isLoggedIn = this.props.isLoggedIn;
     const updateLoggedIn = this.updateLoggedIn;
 
+    const { match } = this.props;
+
     const {currModule, curUser, galleryName } = this.state;
+
+    console.log(isLoggedIn)
+    console.log(this.props)
+    console.log(this.props.location)
+
+    const currUrl = this.props.location.pathname;
+    console.log(currUrl)
 
     return (
       <React.Fragment>
       {!isLoggedIn
-        ? <Redirect to='/' />
+        ? <Redirect to={{
+            pathname: `/`, 
+            state: {url: currUrl}
+          }} />
         : <div className='userpage'>
             <Split direction='left' percent='20%'>
               <Sidebar 
@@ -66,7 +82,7 @@ export default class UserPage extends React.Component {
                 updateLoggedIn={updateLoggedIn} 
                 isLoggedIn={isLoggedIn}
                 gotoGallery={this.gotoGallery}
-                url={'/user'}/>
+                url={match.url}/>
             </Split>
             <Split direction='right'>
               <Route
@@ -79,7 +95,7 @@ export default class UserPage extends React.Component {
                     user={curUser}/>
                   }/>
               <Route
-                path={`/user/gallery/:galID`}
+                path={`${match.url}/gallery/:galID`}
                 render={(props) =>
                   <GalleryBody 
                     {...props}

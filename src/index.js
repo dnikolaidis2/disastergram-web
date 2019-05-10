@@ -46,6 +46,7 @@ class App extends React.Component {
 		const color = status ? 'color: green':'color: red';
 		console.log('LoggedIn: %c' + status, color);
 		this.setState(() => ({ isLoggedIn: status	}));
+		return status;
 	}
 
 	render() {
@@ -57,16 +58,18 @@ class App extends React.Component {
 					<div className='App'> 
 						<Route 
 							exact path={['/','/login']} 
-							render={()=> 
-								<LoginPage 
+							render={(props)=> 
+								<LoginPage
+									{...props} 
 									Auth={Auth} 
 									updateLoggedIn={updateLoggedIn} 
 									isLoggedIn={isLoggedIn}/>
 							}/>
 						<Route 
-							path={['/user', '/gallery']} 
-							render={()=> 
+							path={['/user', '/user/myprofile']} 
+							render={(props)=> 
 								<UserPage 
+									{...props}
 									Auth={Auth} 
 									updateLoggedIn={this.updateLoggedIn} 
 									isLoggedIn={isLoggedIn}/>

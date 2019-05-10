@@ -56,9 +56,8 @@ export default class SidebarItem extends React.Component {
     const className = 'sidebar__item ' + (this.props.isActive ? 'active':'');
 
     return (
-        <Link 
-          to={{
-            pathname: `${curUrl}/${urlTag}/${id}`,
+        <Link to={{
+            pathname: `${curUrl}/${urlTag}/${itemName}`,
             state: {id: id, itemName: itemName, username: username}
           }} 
 

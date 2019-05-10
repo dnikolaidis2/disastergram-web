@@ -31,9 +31,16 @@ export default class LoginPage extends React.Component {
 	
 
 	render() {
+		console.log(this.props)
 		const isLoggedIn = this.props.isLoggedIn;
+		
+
 		if ( isLoggedIn === true ) {
-			return <Redirect to='/user' />
+			let url = '/user';
+			if(typeof this.props.location.state !== 'undefined')
+				url = this.props.location.state.url;
+			
+			return <Redirect to={{pathname:`${url}`}} />
 		}
 
 		return (

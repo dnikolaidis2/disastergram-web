@@ -27,10 +27,10 @@ export default class API {
 	// *** Friends
 
 	addFriend(username) {
-		const {headers, userToken} = this.state;
+		const {headers, userToken, user_id} = this.state;
 
 		const data = {
-			username: username,
+			username: user_id,
 			token: userToken
 		}
 

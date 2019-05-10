@@ -48,7 +48,7 @@
 
 .gal-showcase__body {
   /* border: 2px solid black; */
-  position: relate;
+  position: relative;
   height: 180px;
   background-color: white;
   border-bottom-left-radius: inherit;

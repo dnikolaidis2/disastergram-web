@@ -18,11 +18,8 @@ export default class GalleryBody extends React.Component {
 			author: 'Naughtious Maximus',
 			imageCardVis: false,
 		}
-	}
 
-	componentDidMount (){
-		const { id, itemName, username } = this.props.location.state;
-		this.setState({id, galleryName: itemName, author: username})
+    this.handleThumbclick = this.handleThumbclick.bind(this);
 	}
 
   handleThumbclick(){
@@ -32,8 +29,15 @@ export default class GalleryBody extends React.Component {
 
 
   render(){
+    const  imageCardVis = this.state.imageCardVis;
 
-  	const { imageCardVis, galleryName, author } = this.state;
+    let {galleryName, author} = this.state;
+
+    if(typeof this.props.location.state !== 'undefined'){
+  	  galleryName = this.props.location.state.itemName;
+      author = this.props.location.state.username;
+    }
+
   	const hrStyle = {
   		width: '80%', 
   		borderColor: '#ccc',
