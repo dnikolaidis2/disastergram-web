@@ -94,11 +94,20 @@ a {
 
 
 .js_start {
-  justify-items: flex-start;
+  justify-content: flex-start;
 }
 
 .js_center {
-  justify-items: center;
+  justify-content: center;
+}
+
+.js_between {
+  justify-content: space-between;
+}
+
+
+.al_start {
+  align-items: flex-start;
 }
 
 .al_center {

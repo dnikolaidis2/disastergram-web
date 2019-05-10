@@ -57,19 +57,18 @@ export default class SidebarItem extends React.Component {
 
     return (
         <Link to={{
-            pathname: `${curUrl}/${urlTag}/${itemName}`,
+            pathname: `${curUrl}/${urlTag}/${id}`,
             state: {id: id, itemName: itemName, username: username}
           }} 
 
-          className='sidebar__item_container'>
+          className='sidebar__item_container fl al_center js_between'>
           <span className={className} onClick={this.toggleActive}>
             {itemName}
           </span>
-          <span className='sidebar__item_delete'>
-            <i className='material-icons md-18' onClick={this.deleteItem}>close</i>
-          </span>
+          <i className='sidebar__item_delete material-icons md-18' onClick={this.deleteItem}>close</i>
         </Link>
     )
   }
+          // <span className='sidebar__item_delete'>
 
 }

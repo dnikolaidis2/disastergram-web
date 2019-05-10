@@ -58,7 +58,7 @@ export default class UserPage extends React.Component {
 
     const { match } = this.props;
 
-    const {currModule, curUser, galleryName } = this.state;
+    const {curUser, galleryName } = this.state;
 
     console.log(isLoggedIn)
     console.log(this.props)

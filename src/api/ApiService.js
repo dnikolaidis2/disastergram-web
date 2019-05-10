@@ -27,10 +27,10 @@ export default class API {
 	// *** FRIENDS ***
 
 	addFriend(username) {
-		const {headers, userToken, user_id} = this.state;
+		const {headers, userToken} = this.state;
 
 		const data = {
-			username: user_id,
+			username: username,
 			token: userToken
 		}
 
@@ -129,11 +129,11 @@ export default class API {
 	}
 
 	getGalleries() {
-		const {headers, user_id, userToken} = this.state;
+		const {headers, username, userToken} = this.state;
 
 		// const url = `/api/user/${username}/galleries`
 
-		return axios.get(`/api/user/${user_id}/galleries`, 
+		return axios.get(`/api/user/${username}/galleries`, 
 				{params: {
 					token: userToken
 				}},
@@ -155,14 +155,39 @@ export default class API {
 			})
 	}
 
+	getGallery(galID) {
+		const {headers, userToken} = this.state;
+
+		// const url = `/api/user/${username}/galleries`
+
+		return axios.get(`/api/user/gallery/${galID}`, 
+				{params: {
+					token: userToken
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API: ('+res.status+') GET all galleries.');
+					}
+				}
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+				// return Promise.resolve(res);
+			})
+	}
+
+
 
 	deleteGallery(id) {
 		const {headers, userToken} = this.state;
 
-		return axios.delete(`/api/user/gallery`, 
+		return axios.delete(`/api/user/gallery/${id}`, 
 				{data: {
 					token: userToken,
-					gallery_id: id
 				}},
 				{headers: {...headers}},
 			)

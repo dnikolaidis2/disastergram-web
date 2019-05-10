@@ -18,13 +18,13 @@ export default class DropdownBtn extends React.Component {
 		const text = this.props.text;
 		const className = 'dropdown-btn noSelect ' + (isActive ? 'active':'');
 		
-	  const expandMoreStyle = {
-  	  'WebkitTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
-			'MozTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
-			'OTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
-			'msTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
-			transform: isActive ? 'rotate(180deg)': 'rotate(0deg)',
-	  }
+	  // const expandMoreStyle = {
+  	//   'WebkitTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
+			// 'MozTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
+			// 'OTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
+			// 'msTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
+			// transform: isActive ? 'rotate(180deg)': 'rotate(0deg)',
+	  // }
 
 		return (
 			// ** DEPRECATED AS BUTTON **

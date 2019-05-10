@@ -251,10 +251,11 @@ export default class Sidebar extends React.Component {
   // <i className="material-icons">person_add</i> 
   AddFriend() {
     const className = 'sidebar__item_container fl fl_row al_center'
+    const addStyle = {color: '#888'}
     //<i className='fa fa-plus'></i>
     return(
       <React.Fragment>
-        <p className={className} onClick={this.toggleAddFriend}>
+        <p className={className} style={addStyle} onClick={this.toggleAddFriend}>
           + Add Friend
         </p>
         <AddCard 
@@ -275,9 +276,10 @@ export default class Sidebar extends React.Component {
   //<i className="material-icons">add_to_photos</i> 
   AddGallery() {
     const className = 'sidebar__item_container fl fl_row al_center'
+    const addStyle = {color: '#888'}
     return(
       <React.Fragment>
-        <p className={className} onClick={this.toggleAddGallery}>
+        <p className={className} style={addStyle} onClick={this.toggleAddGallery}>
           + Add Gallery
         </p>
         <AddCard 

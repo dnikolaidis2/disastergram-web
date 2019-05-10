@@ -14,21 +14,52 @@
 	margin: 50px 30px 10px 30px;
 	width: 80%;
 
-
-	display: flex;
-	flex-direction: column;
-	justify-items: flex-start;
-	align-items: flex-start;
+	justify-content: space-between;
 }
 
-.gallery__title {
+.gallery_title {
+
+}
+
+.gallery__galname {
 	margin-bottom: 10px;
 	font-family: Raleway;
-	font-weight: 500;
+	font-size: 2em;
+	font-weight: 600;
+	text-align: left;
+
 }
 
 .gallery__author {
 	margin-left: 10px;
 	font-weight: 400;
 	color: #995cd6;
+}
+
+
+/* *** Image Upload Form *** */
+
+.image-upload__container {
+	/* border: 2px solid red; */
+	width: 80%;
+}
+
+.gallery__toggle-up-btn {
+	margin-right: 40px;
+	background: #1bb76e;
+	border-radius: 6px;
+	border-width: 0px;
+	padding: 10px;
+	color: white;
+	font-size: 0.9em;
+	font-weight: 600;
+	font-family: Raleway;
+
+	transition: background-color 0.2s ease-in-out;
+
+}
+
+.gallery__toggle-up-btn:hover {
+	background-color: #21de86;
+
 }
