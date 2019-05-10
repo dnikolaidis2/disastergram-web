@@ -16,14 +16,14 @@
   transition:0.2s opacity ease-in-out,  0.2s visibility  ease-in-out;
 }
 
-.add-card__closebtn {
-}
 
 .add-card {
-	transition: 0.2s max-height ease-in-out, 0.2s opacity ease-in-out,  0.2s visibility  ease-in-out;
+	padding: 20px 10px;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	transition: 0.2s max-height ease-in-out, 0.2s opacity ease-in-out,  0.2s visibility  ease-in-out;
 }
 
 .add-card__title {

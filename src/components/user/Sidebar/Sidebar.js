@@ -27,8 +27,8 @@ export default class Sidebar extends React.Component {
       },
       friendsPromise: null,
       galleriesPromise: null,
-      isGalVisible : false,
-      isFriendsVisible: false,
+      isGalVisible : true,
+      isFriendsVisible: true,
       addFriendVis: false,
       addGalleryVis: false,
 
@@ -163,15 +163,11 @@ export default class Sidebar extends React.Component {
   // --- UI ---
 
   toggleFriends(){
-    // if(!this.state.isFriendsVisible)
-    //   this.getFriends();
-    this.setState({isFriendsVisible : !this.state.isFriendsVisible});
+    // this.setState({isFriendsVisible : !this.state.isFriendsVisible});
   }
 
   toggleGalleries(){
-    // if(!this.state.isGalVisible)
-    //   this.getGalleries();
-    this.setState({isGalVisible : !this.state.isGalVisible});
+    // this.setState({isGalVisible : !this.state.isGalVisible});
   }
 
 
@@ -184,18 +180,18 @@ export default class Sidebar extends React.Component {
 
     if (list.length === 0){
       const visStyle = {
-        maxHeight: isVisible ? '33px' : '0px',
+        maxHeight: isVisible ? '38px' : '0px',
         visibility: isVisible ? 'visible' : 'hidden',
         opacity: isVisible ? '1' : 0
       }
       return (
           <div className='sidebar__list' style={visStyle}>
-            {listName === 'friends' ? this.AddFriend() : this.AddGallery()}s
+            {listName === 'friends' ? this.AddFriend() : this.AddGallery()}
           </div>
         );
     }
 
-    let height = 33 + (36 * Object.keys(list).length) + 'px';
+    let height = 38 + (36 * Object.keys(list).length) + 'px';
     const visStyle = {
       maxHeight: isVisible ? height : '0px',
       visibility: isVisible ? 'visible' : 'hidden',
@@ -252,9 +248,9 @@ export default class Sidebar extends React.Component {
   }
 
   // --- Add friend
-
+  // <i className="material-icons">person_add</i> 
   AddFriend() {
-    const className = 'sidebar__item_container'
+    const className = 'sidebar__item_container fl fl_row al_center'
     //<i className='fa fa-plus'></i>
     return(
       <React.Fragment>
@@ -276,9 +272,9 @@ export default class Sidebar extends React.Component {
   }
 
   // --- Add Galleries
-
+  //<i className="material-icons">add_to_photos</i> 
   AddGallery() {
-    const className = 'sidebar__item_container'
+    const className = 'sidebar__item_container fl fl_row al_center'
     return(
       <React.Fragment>
         <p className={className} onClick={this.toggleAddGallery}>
@@ -360,15 +356,17 @@ function LogoutBtn(props) {
 
 function userPageTitle(user){
 
-	const hrStyle = {width: '85%', 'borderColor': '#555555', 'borderStyle':'solid'};
-
+	const hrStyle = {width: '85%', 'borderColor': '#888', 'borderStyle':'solid', 'borderWidth': '0.5px'};
   return (
 
-    <Link  to={`/user/myprofile`} className='sidebar__title noSelect'>
-      <h2 className='sidebar__disgram'>Disastergram</h2>
+    <div className='sidebar__title noSelect'>
       <hr style={hrStyle}></hr>
-      <h3 className='sidebar__username'>{user}</h3>
-    </Link>
+      <header className='sidebar__header fl js_center al_center fl_column'>
+        <h2 className='sidebar__disgram'>Disastergram</h2>
+        <Link to={`/user/myprofile`} className='sidebar__username'>{user}</Link>
+      </header>
+      <hr style={hrStyle}></hr>
+    </div>
     );
 
 }

@@ -14,16 +14,26 @@ export default class DropdownBtn extends React.Component {
 	}
 
 	render(){
+		const isActive = this.props.isActive;
 		const text = this.props.text;
-		const className = 'dropdown-btn noSelect ' + (this.props.isActive ? 'active':'');
-	
-		return (
-			
+		const className = 'dropdown-btn noSelect ' + (isActive ? 'active':'');
+		
+	  const expandMoreStyle = {
+  	  'WebkitTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
+			'MozTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
+			'OTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
+			'msTransform': isActive ? 'rotate(180deg)': 'rotate(0deg)',
+			transform: isActive ? 'rotate(180deg)': 'rotate(0deg)',
+	  }
 
-			<button className={className} onClick={this.handleClick}>
-				{text} <i className='fa fa-caret-down'></i>
-			</button>
+		return (
+			// ** DEPRECATED AS BUTTON **
+			// Simply a text div now
+
+			<div className={className} onClick={this.handleClick}>
+				{text}
+			</div>
 		);
 	}
-
+	// <i className="material-icons" style={expandMoreStyle}>expand_more</i>
 }

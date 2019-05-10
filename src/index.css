@@ -75,3 +75,32 @@ a {
 .light-weight {
   font-weight: 200;
 }
+
+
+/* Flex classes */
+
+.fl {
+  display: flex;
+}
+
+
+.fl_row {
+  flex-direction: row;
+}
+
+.fl_column {
+  flex-direction: column;
+}
+
+
+.js_start {
+  justify-items: flex-start;
+}
+
+.js_center {
+  justify-items: center;
+}
+
+.al_center {
+  align-items: center;
+}
