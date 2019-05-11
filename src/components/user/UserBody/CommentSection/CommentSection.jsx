@@ -3,6 +3,7 @@ import React from 'react';
 
 // *** CSS
 import './commentsection.css'
+import Input from './../../../inputs/InputBox.jsx';
 
 
 export default class CommentSection extends React.Component {
@@ -31,17 +32,20 @@ export default class CommentSection extends React.Component {
 				}
 			},
 			loading: true,
+			commentToAdd: '',
 		}
 
 
 		this.getComments = this.getComments.bind(this);
 		this.determineAnimStyle = this.determineAnimStyle.bind(this);
 		this.setStyle = this.setStyle.bind(this);
+		this.handleCommentChange = this.handleCommentChange.bind(this);
+		this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
 	}
 
 	componentDidMount(){
 		this.setStyle(this.props.type);
-		this.getComments(this.props.type, this.props.id);
+		// this.getComments(this.props.type, this.props.id);
 
 	}
 
@@ -66,7 +70,6 @@ export default class CommentSection extends React.Component {
         this.setState({comments: [], loading:false});
         return;
       }
-      // else
       this.setState({comments, loading:false});
 		}
 	}
@@ -117,14 +120,8 @@ export default class CommentSection extends React.Component {
 
 	determineAnimStyle(x){
 		const comments = this.state.comments;
-		let height;
 
-		if (typeof comments === 'undefined'){
-			height = '75px';
-		}
-		else{
-			height = (75 * Object.keys(comments).length) +'px';
-		}
+		let height = 95 + (75 * Object.keys(comments).length) +'px';
 
 		const isVisible = this.props.isVisible;
 
@@ -153,7 +150,28 @@ export default class CommentSection extends React.Component {
 		}
 	}
 
+	// *** Comment Handling ***
+
+	handleCommentChange(commentToAdd) {
+		this.setState({commentToAdd: commentToAdd});
+	}
+
+	handleCommentSubmit(e){
+		e.preventDefault();
+
+		this.API.addGalComment(this.props.id, this.state.commentToAdd)
+			.then( res => {
+				if(typeof res !== 'undefined'){
+					if(res.status < 400){
+						this.getComments();
+						console.log('Comment added!');
+					}
+				}
+			})
+	}
+
 	render() {
+		const commentToAdd = this.state.commentToAdd;
 		const loading = this.state.loading;
 		const comments = this.state.comments;
 		let visStyle = this.determineAnimStyle('section');
@@ -163,11 +181,28 @@ export default class CommentSection extends React.Component {
 		return(
 			<section className='comment-section' style={visStyle}>
 				<div className='comment-section__container' style={visStyle2}>
-				{!loading &&
-					comments.map( comment => {
-						return this.showComment(comment, visStyle2);
-					})
-				}
+					{loading &&
+						comments.map( comment => {
+							return this.showComment(comment, visStyle2);
+						})
+					}
+					<div className='comment-section__add'>
+						<form
+							className='comment-section__add__form fl js_center al_center'
+							autoComplete='off'
+							onSubmit={this.handleCommentSubmit}>
+							<Input
+								id={1}
+								class='comment-section__add__field'
+								value={commentToAdd}
+								onValueChange={this.handleCommentChange}
+								type="text"
+								label={'Add a comment...'}
+								locked={false}
+								active={false}/>
+							<input className='commentAdd-Btn' type="submit" value="Submit"/>
+						</form>
+					</div>
 				</div>
 			</section>
 		)

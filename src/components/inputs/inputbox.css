@@ -86,11 +86,6 @@
   transition-delay: 0s;
 }
 
-.field.active input:-moz-placeholder {
-  color: rgba(255, 255, 255, 0);
-  transition-delay: 0s;
-}
-
 
 .field input + label {
   position: absolute;

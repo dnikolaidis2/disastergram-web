@@ -44,7 +44,7 @@ export default class Input extends React.Component {
 
     const { type, active, error, label, id } = this.state;
     const { predicted, locked } = this.props;
-    const fieldClassName = `field ${(locked ? active : active || value) &&
+    const fieldClassName = `${this.props.class} field ${(locked ? active : active || value) &&
       "active"} ${locked && !active && "locked"}`;
 
     return (

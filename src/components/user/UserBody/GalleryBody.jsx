@@ -61,7 +61,6 @@ export default class GalleryBody extends React.Component {
       this.getGalInfo(this.props.match.params.galID);
       this.setState({loading: false})
       if(this.props.location.pathname === prevProps.location.pathname){
-        alert('hmm')
       }
     }
   }
@@ -156,7 +155,7 @@ export default class GalleryBody extends React.Component {
                   </section>
                   { sameUser &&
                     <p className='gallery__toggle-up-btn fl al_center' onClick={this.toggleFileUpload}>
-                        <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>UPLOAD NEW
+                        <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
                     </p>
                   }
           			</header>

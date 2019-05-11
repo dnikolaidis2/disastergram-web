@@ -75,28 +75,29 @@ function Card(props) {
 
 function LoginTitle() {
 	return ( 
-		<p id='loginTitle'>
-			<span style={titleStyle}>Welcome to </span>
-			<span style={titleDisaster}>disaster</span>
-			<span style={titleStyle}>gram</span>
-		</p>
+		<header id='loginTitle'>
+			<h3 style={titleStyle}>Welcome to</h3>
+			<span style={titleDisaster}>Disastergram</span>
+		</header>
 	);
 };
 
 const titleStyle = {
 	color: "black",
-	textShadow: "0px 3px 5px #585858",
-	fontSize: "30px",
-	fontWeight: "100",
+	// textShadow: "0px 3px 5px #585858",
+	fontSize: "22px",
+	fontWeight: "400",
+	fontFamily: "Raleway",
 	paddingLeft: "0px"
 };
 
 const titleDisaster = {
-	color: "purple",//"#e51d1d",
+	color: "#995cd6",//"#e51d1d",
 	//textShadow: "0px 0px 10px #9f0000",
 	//"#f49511"
-	textShadow:"0px 3px 5px #585858",
-	fontSize: "30px",
+	textShadow:"0px 3px 9px 0px #585858",
+	fontSize: "40px",
+	fontFamily: "Pacifico",
 	fontWeight: "100",
 	background: "white",
 	borderRadius: "5px",

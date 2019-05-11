@@ -220,8 +220,8 @@ export default class API {
 		const {headers, userToken} = this.state;
 
 
-		return axios.post(`/api/user/gallery/${galID}/comments`, 
-				{params: {
+		return axios.post(`/api/user/gallery/${galID}/comment`, 
+				{data: {
 					token: userToken,
 					body: text,
 				}},

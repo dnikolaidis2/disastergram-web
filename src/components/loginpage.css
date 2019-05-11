@@ -18,6 +18,10 @@
   padding: 0px 15%;
 }
 
+#loginTitle > h3 {
+  margin: 0px;
+}
+
 .card {
   padding: 30px 10px;
   width: 400px;
@@ -40,6 +44,7 @@
   margin: 0px 0px;
   color: black;
   font-weight: 400;
+  font-family: 'Raleway';
   transition: 0.2s color ease-in-out, 5s font-weight ease-in-out;
 }
 
