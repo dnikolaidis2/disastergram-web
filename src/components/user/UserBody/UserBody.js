@@ -20,28 +20,19 @@ export default class UserBody extends React.Component {
     this.API = this.props.API;
 
     this.state = {
-      imageCardVis: false,      
+      imageCardVis: false,
+      galleries: this.props.galleries || [],
     }
 
     this.TopBanner = this.TopBanner.bind(this);
     this.handleThumbclick = this.handleThumbclick.bind(this);
 
   }
-
-  componentDidMount() {
-    this.getGalleries()
-  }
-
-
-  async getGalleries() {
-
-    let galleries;
-    let res = await this.API.getGalleries();
-    if(typeof res !== 'undefined') {
-      galleries = res.data['Galleries'];
-      this.setState({galleries})
-    }
-  }
+  
+  // shouldComponentUpdate(nextProps) {
+  //     const difGalleries = this.props.galleries !== nextProps.galleries;
+  //     return difGalleries;
+  // }
 
   handleThumbclick(){
     this.setState({imageCardVis: !this.state.imageCardVis})
@@ -58,16 +49,23 @@ export default class UserBody extends React.Component {
 
 
   render() {
-    const imageCardVis = this.state.imageCardVis;
+    const { imageCardVis } = this.state;
+    const galleries = this.props.galleries;
+    const username = this.API.getUser();
 
     return(
       <div id='userbody'>
         {this.TopBanner()}
         <div className='userbody__container noSelect'>
-					<GalleryShowcase onThumbClick={this.handleThumbclick}/>
-					<GalleryShowcase onThumbClick={this.handleThumbclick}/>
-					<GalleryShowcase onThumbClick={this.handleThumbclick}/>
-					<GalleryShowcase onThumbClick={this.handleThumbclick}/>
+          {
+            galleries.map( (gal) => {
+              return <GalleryShowcase 
+                key={gal.id} 
+                onThumbClick={this.handleThumbclick} 
+                gallery={gal}
+                username={username}/>
+            })
+          }
         </div>
         <ImageCard 
           API={this.API} 

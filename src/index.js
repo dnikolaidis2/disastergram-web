@@ -43,8 +43,8 @@ class App extends React.Component {
 
 	updateLoggedIn() {
 		const status = this.Auth.isLoggedIn()
-		const color = status ? 'color: green':'color: red';
-		console.log('LoggedIn: %c' + status, color);
+		// const color = status ? 'color: green':'color: red';
+		// console.log('LoggedIn: %c' + status, color);
 		this.setState(() => ({ isLoggedIn: status	}));
 		return status;
 	}

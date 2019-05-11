@@ -48,8 +48,6 @@ export default class GalleryBody extends React.Component {
 
   componentDidUpdate(prevProps) {
 
-    console.log(prevProps.location)
-    console.log(this.props.location)
     if( typeof this.props.match.params === undefined ){
       this.setState({redirectFlag: true})
       return;

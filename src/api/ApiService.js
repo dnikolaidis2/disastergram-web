@@ -18,10 +18,20 @@ export default class API {
 		}
 
 		this.updateLocalStorage = this.updateLocalStorage.bind(this)
+		this.getUser = this.getUser.bind(this)
+		this.getUserID = this.getUserID.bind(this)
 	}
 
 	updateLocalStorage(name, item) {
 		localStorage.setItem(name, item);
+	}
+
+	getUser(){
+		return this.state.username;
+	}
+
+	getUserID(){
+		return this.state.user_id;
 	}
 
 	// *** FRIENDS ***

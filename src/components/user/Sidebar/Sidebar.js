@@ -19,11 +19,12 @@ export default class Sidebar extends React.Component {
     this.Auth = this.props.Auth;
     this.updateLoggedIn = this.props.updateLoggedIn;
     this.gotoGallery = this.props.gotoGallery;
+    this.refreshGalleries = this.props.refreshGalleries;
 
     this.state = {
       lists : {
         friends: [],
-        galleries: []
+        galleries: this.props.galleries || [],
       },
       friendsPromise: null,
       galleriesPromise: null,
@@ -80,8 +81,8 @@ export default class Sidebar extends React.Component {
     };
 
 
-    this.getFriends(makeCancelable);
-    this.getGalleries(makeCancelable);
+    // this.getFriends(makeCancelable);
+    // this.getGalleries(makeCancelable);
   }
 
   componentWillUnmount(){
@@ -89,7 +90,18 @@ export default class Sidebar extends React.Component {
       this.state.friendsPromise.cancel();
       this.state.galleriesPromise.cancel();
     }
+  }
 
+  componentDidUpdate(prevProps){
+    let gal = this.props.galleries
+    if(gal === prevProps.galleries)
+      return;
+
+    this.setState((state, props) => ({
+      lists:{
+        ...this.state.lists, galleries:gal
+      }
+    }));
   }
 
   async getFriends() {
@@ -121,13 +133,13 @@ export default class Sidebar extends React.Component {
       friends = res.data['Followed users'];
       this.setState({lists:{...this.state.lists, friends}})
     }
-    // else {
-    //   this.setState({lists:{...this.state.lists, friends: []}})
-    // }
+    else {
+      this.setState({lists:{...this.state.lists, friends: []}})
+    }
 
   }
 
-  async getGalleries() {
+  getGalleries() {
 
     // var cancelablePromise;
     // this.setState({galleriesPromise: cancelablePromise});
@@ -144,12 +156,14 @@ export default class Sidebar extends React.Component {
     //     }
     //   });
 
-    let galleries;
-    let res = await this.API.getGalleries();
-    if(typeof res !== 'undefined') {
-      galleries = res.data['Galleries'];
-      this.setState({lists:{...this.state.lists, galleries}})
-    }
+    // let galleries;
+    // let res = await this.API.getGalleries();
+    // if(typeof res !== 'undefined') {
+    //   galleries = res.data['Galleries'];
+    //   this.setState({lists:{...this.state.lists, galleries}})
+    // }
+
+    this.refreshGalleries();
   }
 
 
@@ -225,9 +239,6 @@ export default class Sidebar extends React.Component {
   handleActivate(id, listName) {
     const lists = this.state.lists
 
-    console.log('in handleActivate')
-    console.log('listName: '+listName)
-    console.log('id:' + id)
     // Iterate through all lists
     // For all other lists, set all inactive
     for (var list in lists) {
@@ -241,8 +252,7 @@ export default class Sidebar extends React.Component {
   }
 
   activate(id, listName) {
-    console.log('listName: '+listName)
-    console.log('id:' + id)
+
     const list = this.state.lists[listName];
     list.forEach( item => {
           item.isActive = (item.id === id ? true : false);
@@ -317,7 +327,7 @@ export default class Sidebar extends React.Component {
     this.API.deleteGallery(id)
       .then ( res => {
         if(typeof res !== 'undefined'){
-          this.getGalleries();
+          this.refreshGalleries();
         }
       });
   }

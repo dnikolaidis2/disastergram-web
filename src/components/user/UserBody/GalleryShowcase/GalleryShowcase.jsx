@@ -1,6 +1,6 @@
 // ** Main modules
 import React from 'react';
-//import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // ** Components
 import CommentSection from './../CommentSection'
@@ -65,8 +65,8 @@ export default class GalleryShowcase extends React.Component {
 	}
 
 	render() {
-
-	  let galleryName = 'Gallery Name';
+	  const { galleryname, id } = this.props.gallery;
+	  const username = this.props.username;
 	  const isVis = this.state.isCommmentsVisible;
 
 	  const expandMoreStyle = {
@@ -80,9 +80,13 @@ export default class GalleryShowcase extends React.Component {
 	  return (
 	    <article className='gal-showcase card noSelect '>
 	    	<header className='gal-showcase__header'>
-		      <h3 className='gal-showcase__title select'>
-		        {galleryName}
-		      </h3>
+		      <Link exact to={{
+		      		pathname: `/user/gallery/${id}`,
+            	state: {id: id, itemName: galleryname, username: username}
+		      	}}
+		      	className='gal-showcase__title select'>
+		        {galleryname}
+		      </Link>
 		      <p className='gal-showcase__commentbtn' onClick={this.toggleComments}>Comments <i className="material-icons" style={expandMoreStyle}>expand_more</i></p>
 	    	</header>
 	      <section className='gal-showcase__body'>
