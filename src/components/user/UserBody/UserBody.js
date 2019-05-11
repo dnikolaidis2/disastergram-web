@@ -29,9 +29,21 @@ export default class UserBody extends React.Component {
 
   }
   
-  // shouldComponentUpdate(nextProps) {
-  //     const difGalleries = this.props.galleries !== nextProps.galleries;
-  //     return difGalleries;
+  // *** TODO CHANGE FOR OTHER USERS ***
+
+  // async getGalleries(username) {
+  //   let galleries = [];
+  //
+  //   let res = await this.API.getGalleries();
+  //
+  //   if(typeof res !== 'undefined') {
+  //     galleries = res.data['Galleries'];
+  //     if(res.status === 204){
+  //       this.setState({galleries: [], loading:false})
+  //       return
+  //     }
+  //     this.setState({galleries, loading:false})
+  //   }
   // }
 
   handleThumbclick(){
@@ -64,7 +76,7 @@ export default class UserBody extends React.Component {
                 onThumbClick={this.handleThumbclick} 
                 gallery={gal}
                 username={username}
-                API={this.API}/>
+              API={this.API}/>
             })
           }
         </div>

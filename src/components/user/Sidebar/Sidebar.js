@@ -371,17 +371,16 @@ function LogoutBtn(props) {
 
 function userPageTitle(user){
 
-	const hrStyle = {width: '85%', 'borderColor': '#888', 'borderStyle':'solid', 'borderWidth': '0.5px'};
+	// const hrStyle = {width: '85%', 'borderColor': '#888', 'borderStyle':'solid', 'borderWidth': '0.5px'};
   return (
-
     <div className='sidebar__title noSelect'>
-      <hr style={hrStyle}></hr>
       <header className='sidebar__header fl js_center al_center fl_column'>
         <h2 className='sidebar__disgram'>Disastergram</h2>
         <Link to={`/user/myprofile`} className='sidebar__username'>{user}</Link>
       </header>
-      <hr style={hrStyle}></hr>
     </div>
-    );
+  );
+      // <hr style={hrStyle}></hr>
+      // <hr style={hrStyle}></hr>
 
 }
