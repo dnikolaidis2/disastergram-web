@@ -43,8 +43,9 @@
 .sidebar__disgram{
   /* color: #995cd6; */
   color: #995cd6;
-  font-weight: 400;
   font-size: 1.7em;
+  font-family: 'Pacifico';
+  font-weight: 500;
   margin-bottom: 5px;
 }
 

@@ -45,15 +45,18 @@
 }
 
 .comment__username {
+	font-family: 'Roboto';
 	font-weight: 500;
 	text-align: left;
 	width: 5%;
 }
 
-.comment__username:hover {
+.comment_s_username:hover {
 	color: #995cd6;
 }
 
 .comment__text {
+	font-family: 'Roboto';
+	font-weight: 400;
 
 }

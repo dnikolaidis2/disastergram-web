@@ -88,7 +88,7 @@ export default class GalleryShowcase extends React.Component {
 	      <section className='gal-showcase__body'>
 	        {this.Thumbnails()}
 	      </section>
-				<CommentSection API={this.API} type='gallery' id='e2dff1c1-223d-4956-ab7e-c509f4dc306a' isVisible={isVis}/>
+				<CommentSection API={this.API} type='galshowcase' id='e2dff1c1-223d-4956-ab7e-c509f4dc306a' isVisible={isVis}/>
 	    </article>
 	  );
 	}

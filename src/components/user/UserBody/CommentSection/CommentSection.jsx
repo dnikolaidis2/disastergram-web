@@ -65,14 +65,31 @@ export default class CommentSection extends React.Component {
 		var commentStyle = {};
 		if(type === 'image'){
 			commentStyle = {
-				style : {
+				container : {
 					backgroundColor: '#eeeeee' 
-				}
-			}
-			console.log('style set')
-			this.setState({commentStyle})
-		}
+				},
+				username: {
 
+				},
+				text: {
+					color: '#555'
+				},
+			}
+			this.setState({commentStyle})
+		} 
+		else if (type = 'galshowcase')
+			commentStyle = {
+				container : {
+					backgroundColor: '#eeeeee' 
+				},
+				username: {
+
+				},
+				text: {
+					color: '#555'
+				},
+			}
+			this.setState({commentStyle})
 
 
 	}
@@ -81,9 +98,9 @@ export default class CommentSection extends React.Component {
 		let commentStyle = this.state.commentStyle
 
 		return (
-			<div className='comment select' key={comment.id} style={commentStyle.style}>
-				<p className='comment__username'>{comment.username}:</p>
-				<p className='comment__text'>{comment.text}</p>
+			<div className='comment select' key={comment.id} style={commentStyle.container}>
+				<p className='comment__username' style={commentStyle.username}>{comment.username}:</p>
+				<p className='comment__text' style={commentStyle.text}>{comment.text}</p>
 			</div>
 		)
 	}
