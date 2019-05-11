@@ -86,7 +86,7 @@ export default class UserPage extends React.Component {
             </Split>
             <Split direction='right'>
               <Route
-                path={['/user', '/user/myprofile']}
+                path={[`${match.url}`, `${match.url}/myprofile`]}
                 render={(props) =>
                   <UserBody 
                     {...props}

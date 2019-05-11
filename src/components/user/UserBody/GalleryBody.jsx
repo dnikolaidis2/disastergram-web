@@ -22,6 +22,7 @@ export default class GalleryBody extends React.Component {
       isFileUpVis: false,
       redirectFlag: false,
       sameUser: true,
+      loading: true,
 		}
 
     this.getGalInfo = this.getGalInfo.bind(this);
@@ -48,7 +49,7 @@ export default class GalleryBody extends React.Component {
   componentDidUpdate(prevProps) {
 
     if( typeof this.props.match.params === undefined ){
-      this.setState({redirectFlag: false})
+      this.setState({redirectFlag: true})
       return;
     }
 
@@ -58,6 +59,10 @@ export default class GalleryBody extends React.Component {
 
     if (this.props.match.params.galID !== prevProps.match.params.galID) {
       this.getGalInfo(this.props.match.params.galID);
+      if(this.props.location === prevProps.location){
+        this.setState({loading: false})
+        alert('hmm')
+      }
     }
   }
 
@@ -73,7 +78,8 @@ export default class GalleryBody extends React.Component {
         this.setState({
           galleryName: res.data.Gallery[0].galleryname,
           author: res.data.Gallery[0].username,
-          author_id: res.data.Gallery[0].user_id
+          author_id: res.data.Gallery[0].user_id,
+          loading: false,
         })
         if(res.data.username === this.API.Auth.getUser())
           this.setState({sameUser: true})
@@ -119,7 +125,7 @@ export default class GalleryBody extends React.Component {
   render(){
     const  imageCardVis = this.state.imageCardVis;
 
-    let {galleryName, author, sameUser, redirectFlag } = this.state;
+    let {galleryName, author, sameUser, redirectFlag, loading } = this.state;
 
     if(typeof this.props.location.state !== 'undefined'){
   	  // let galleryName = this.props.location.state.itemName;
@@ -130,34 +136,40 @@ export default class GalleryBody extends React.Component {
     }
 
   	const hrStyle = {
+      position: 'relative',
   		width: '80%', 
   		borderColor: '#ccc',
   		borderStyle:'solid'
   	};
+    console.log(loading)
 
   	return(
       <React.Fragment>
         {redirectFlag
           ?<Redirect to={`/user`}/>
-          :<div id='gallerybody'>
-      			<header className='gallery__header fl fl_row al_center'>
-              <section className='gallery__title'>
-      				  <h2 className='gallery__galname'>{galleryName}</h2>
-      				  <div>by<span className='gallery__author'>{author}</span></div>
-              </section>
-              { sameUser &&
-                <p className='gallery__toggle-up-btn fl al_center' onClick={this.toggleFileUpload}>
-                    <i class="material-icons" style={{'padding-right':'5px'}}>control_point</i>UPLOAD NEW
-                </p>
-              }
-      			</header>
-    				<hr style={hrStyle}/>
-            {this.uploadForm()}
-    				<ImageCard 
-              API={this.API} 
-              onCloseClick={this.handleThumbclick} 
-              isVisible={imageCardVis}/>
-      		</div>
+          :<React.Fragment>
+            {!loading &&
+              <div id='gallerybody' >
+          			<header className='gallery__header fl fl_row al_center'>
+                  <section className='gallery__title'>
+          				  <h2 className='gallery__galname'>{galleryName}</h2>
+          				  <div>by<span className='gallery__author'>{author}</span></div>
+                  </section>
+                  { sameUser &&
+                    <p className='gallery__toggle-up-btn fl al_center' onClick={this.toggleFileUpload}>
+                        <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>UPLOAD NEW
+                    </p>
+                  }
+          			</header>
+        				<hr style={hrStyle}/>
+                {this.uploadForm()}
+        				<ImageCard 
+                  API={this.API} 
+                  onCloseClick={this.handleThumbclick} 
+                  isVisible={imageCardVis}/>
+          		</div>
+            }
+          </React.Fragment>
         }
       </React.Fragment>
   	);
