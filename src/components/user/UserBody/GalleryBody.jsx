@@ -48,6 +48,8 @@ export default class GalleryBody extends React.Component {
 
   componentDidUpdate(prevProps) {
 
+    console.log(prevProps.location)
+    console.log(this.props.location)
     if( typeof this.props.match.params === undefined ){
       this.setState({redirectFlag: true})
       return;
@@ -59,8 +61,8 @@ export default class GalleryBody extends React.Component {
 
     if (this.props.match.params.galID !== prevProps.match.params.galID) {
       this.getGalInfo(this.props.match.params.galID);
-      if(this.props.location === prevProps.location){
-        this.setState({loading: false})
+      this.setState({loading: false})
+      if(this.props.location.pathname === prevProps.location.pathname){
         alert('hmm')
       }
     }
@@ -141,7 +143,6 @@ export default class GalleryBody extends React.Component {
   		borderColor: '#ccc',
   		borderStyle:'solid'
   	};
-    console.log(loading)
 
   	return(
       <React.Fragment>

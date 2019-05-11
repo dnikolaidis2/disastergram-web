@@ -1,6 +1,6 @@
 // ** Main modules
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 // ** API imports
 import API from './../api/ApiService.js';
@@ -59,13 +59,7 @@ export default class UserPage extends React.Component {
     const { match } = this.props;
 
     const {curUser, galleryName } = this.state;
-
-    console.log(isLoggedIn)
-    console.log(this.props)
-    console.log(this.props.location)
-
     const currUrl = this.props.location.pathname;
-    console.log(currUrl)
 
     return (
       <React.Fragment>
@@ -85,23 +79,25 @@ export default class UserPage extends React.Component {
                 url={match.url}/>
             </Split>
             <Split direction='right'>
-              <Route
-                path={[`${match.url}`, `${match.url}/myprofile`]}
-                render={(props) =>
-                  <UserBody 
-                    {...props}
-                    API={API} 
-                    Auth={Auth} 
-                    user={curUser}/>
+              <Switch>
+                <Route
+                  exact path={[`${match.url}`, `${match.url}/myprofile`]}
+                  render={(props) =>
+                    <UserBody 
+                      {...props}
+                      API={API} 
+                      Auth={Auth} 
+                      user={curUser}/>
+                    }/>
+                <Route
+                  path={`${match.url}/gallery/:galID`}
+                  render={(props) =>
+                    <GalleryBody 
+                      {...props}
+                      API={API} 
+                      galleryName={galleryName}/>
                   }/>
-              <Route
-                path={`${match.url}/gallery/:galID`}
-                render={(props) =>
-                  <GalleryBody 
-                    {...props}
-                    API={API} 
-                    galleryName={galleryName}/>
-                }/>
+              </Switch>
             </Split>
           </div>
       }

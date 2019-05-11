@@ -31,7 +31,6 @@ export default class LoginPage extends React.Component {
 	
 
 	render() {
-		console.log(this.props)
 		const isLoggedIn = this.props.isLoggedIn;
 		
 
