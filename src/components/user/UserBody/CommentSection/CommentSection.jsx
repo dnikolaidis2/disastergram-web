@@ -29,7 +29,8 @@ export default class CommentSection extends React.Component {
 				style : {
 					backgroundColor: 'white' //default 
 				}
-			}
+			},
+			loading: true,
 		}
 
 
@@ -40,25 +41,34 @@ export default class CommentSection extends React.Component {
 
 	componentDidMount(){
 		this.setStyle(this.props.type);
-		//this.getComments(this.props.type, this.props.id);
+		this.getComments(this.props.type, this.props.id);
 
 	}
 
 	async getComments(type, id) {
 		var res;
-		
-		if (type === 'gallery') {
+	
+		// Get Appropriate data from server	
+		if (type === 'gallery' || type === 'galshowcase') {
 			res = await this.API.getGalComments(id);
 		}
 		else if (type === 'image') {
 			res = await this.API.getImageComments(id);
 		}
 
-		if (typeof res !== 'undefined') {
-			// const comments = res.data['Comments']
-		}
 
-		// this.setState({comments: comments})
+		// Handle response
+		if (typeof res !== 'undefined') {
+			const comments = res.data['comments'];
+
+			// If no comments
+      if(res.status === 204){
+        this.setState({comments: [], loading:false});
+        return;
+      }
+      // else
+      this.setState({comments, loading:false});
+		}
 	}
 
 	setStyle(type){
@@ -107,12 +117,20 @@ export default class CommentSection extends React.Component {
 
 	determineAnimStyle(x){
 		const comments = this.state.comments;
+		let height;
+
+		if (typeof comments === 'undefined'){
+			height = '75px';
+		}
+		else{
+			height = (75 * Object.keys(comments).length) +'px';
+		}
+
 		const isVisible = this.props.isVisible;
 
 
 		switch(x) {
 			case 'section':
-				const height = (75 * Object.keys(comments).length) +'px';
 				const visStyle = {
 		      maxHeight: isVisible ? height : '0px',
 		      transition: isVisible
@@ -136,6 +154,7 @@ export default class CommentSection extends React.Component {
 	}
 
 	render() {
+		const loading = this.state.loading;
 		const comments = this.state.comments;
 		let visStyle = this.determineAnimStyle('section');
 		let visStyle2 = this.determineAnimStyle('container')
@@ -144,7 +163,7 @@ export default class CommentSection extends React.Component {
 		return(
 			<section className='comment-section' style={visStyle}>
 				<div className='comment-section__container' style={visStyle2}>
-				{
+				{!loading &&
 					comments.map( comment => {
 						return this.showComment(comment, visStyle2);
 					})

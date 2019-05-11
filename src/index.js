@@ -66,7 +66,7 @@ class App extends React.Component {
 									isLoggedIn={isLoggedIn}/>
 							}/>
 						<Route 
-							path={['/user', '/user/myprofile']} 
+							path={'/user'} 
 							render={(props)=> 
 								<UserPage 
 									{...props}

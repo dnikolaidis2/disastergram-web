@@ -55,6 +55,7 @@
   right: 0;
   flex: 1 0;
   justify-content: center;
+  overflow: overlay;
 }
 
 .split.right > h1 {

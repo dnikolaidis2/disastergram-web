@@ -212,7 +212,7 @@ export default class API {
 				console.log(er)
 			})
 
-	}
+}
 
 	// *** GAL COMMENTS ***
 

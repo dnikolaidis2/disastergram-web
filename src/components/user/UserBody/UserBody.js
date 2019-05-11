@@ -63,7 +63,8 @@ export default class UserBody extends React.Component {
                 key={gal.id} 
                 onThumbClick={this.handleThumbclick} 
                 gallery={gal}
-                username={username}/>
+                username={username}
+                API={this.API}/>
             })
           }
         </div>
