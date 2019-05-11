@@ -121,8 +121,10 @@ export default class Sidebar extends React.Component {
       friends = res.data['Followed users'];
       this.setState({lists:{...this.state.lists, friends}})
     }
+    // else {
+    //   this.setState({lists:{...this.state.lists, friends: []}})
+    // }
 
-    this.setState({lists:{...this.state.lists, friends: []}})
   }
 
   async getGalleries() {
@@ -162,6 +164,7 @@ export default class Sidebar extends React.Component {
 
   // --- UI ---
 
+  // *** DEPRECATED ***
   toggleFriends(){
     // this.setState({isFriendsVisible : !this.state.isFriendsVisible});
   }

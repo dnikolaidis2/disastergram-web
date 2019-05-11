@@ -34,7 +34,7 @@ export default class CommentSection extends React.Component {
 
 
 		this.getComments = this.getComments.bind(this);
-		this.determinAnimStyle = this.determinAnimStyle.bind(this);
+		this.determineAnimStyle = this.determineAnimStyle.bind(this);
 		this.setStyle = this.setStyle.bind(this);
 	}
 
@@ -77,7 +77,7 @@ export default class CommentSection extends React.Component {
 			}
 			this.setState({commentStyle})
 		} 
-		else if (type = 'galshowcase')
+		else if (type === 'galshowcase')
 			commentStyle = {
 				container : {
 					backgroundColor: '#eeeeee' 
@@ -105,7 +105,7 @@ export default class CommentSection extends React.Component {
 		)
 	}
 
-	determinAnimStyle(x){
+	determineAnimStyle(x){
 		const comments = this.state.comments;
 		const isVisible = this.props.isVisible;
 
@@ -137,8 +137,8 @@ export default class CommentSection extends React.Component {
 
 	render() {
 		const comments = this.state.comments;
-		let visStyle = this.determinAnimStyle('section');
-		let visStyle2 = this.determinAnimStyle('container')
+		let visStyle = this.determineAnimStyle('section');
+		let visStyle2 = this.determineAnimStyle('container')
 
 
 		return(

@@ -28,6 +28,21 @@ export default class UserBody extends React.Component {
 
   }
 
+  componentDidMount() {
+    this.getGalleries()
+  }
+
+
+  async getGalleries() {
+
+    let galleries;
+    let res = await this.API.getGalleries();
+    if(typeof res !== 'undefined') {
+      galleries = res.data['Galleries'];
+      this.setState({galleries})
+    }
+  }
+
   handleThumbclick(){
     this.setState({imageCardVis: !this.state.imageCardVis})
   }

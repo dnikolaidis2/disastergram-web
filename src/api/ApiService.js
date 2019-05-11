@@ -206,11 +206,36 @@ export default class API {
 
 	// *** GAL COMMENTS ***
 
+	addGalComment(galID, text) {
+		const {headers, userToken} = this.state;
+
+
+		return axios.post(`/api/user/gallery/${galID}/comments`, 
+				{params: {
+					token: userToken,
+					body: text,
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API:('+ res.status +') ADD comments. (galID: '+ galID +')');
+					}
+				}
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+	}
+
 	getGalComments(galID) {
 		const {headers, userToken} = this.state;
 
 
-		return axios.get(`/api/gallery/${galID}/comments`, 
+		return axios.get(`/api/user/gallery/${galID}/comments`, 
 				{params: {
 					token: userToken
 				}},
