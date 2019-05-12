@@ -173,13 +173,10 @@ export default class AuthAPI {
       return localStorage.getItem('userID');
   }
 
-
-
-
-
   logout() {
       //** Clear user token and profile data from localStorage
       localStorage.removeItem('id_token');
+      localStorage.removeItem('userID');
   }
 
 

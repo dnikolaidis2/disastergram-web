@@ -216,6 +216,34 @@ export default class API {
 			})
 	}
 
+		getFeedGalleries() {
+		const {headers, username, userToken} = this.state;
+
+		// const url = `/api/user/${username}/galleries`
+
+		return axios.get(`/api/user/galleries`, 
+				{params: {
+					token: userToken
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API: ('+res.status+') GET feed galleries.');
+					}
+				}
+
+				// this.updateLocalStorage('galleries', res.data['Galleries']);
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+	}
+
+
 
 
 	deleteGallery(id) {
