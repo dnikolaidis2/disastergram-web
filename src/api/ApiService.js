@@ -214,20 +214,22 @@ export default class API {
 
 }
 
+
+
+
 	// *** GAL COMMENTS ***
 
 	addGalComment(galID, text) {
 		const {headers, userToken} = this.state;
 
 		const data = {
-			token: userToken,
 			body: text,
+			token: userToken
 		}
 
 		return axios.post(`/api/user/gallery/${galID}/comment`, 
-				{data: {...data}},
 				{headers: {...headers}},
-			)
+				{data: {...data}})
 			.then( res => {
 				if (process.env.NODE_ENV ==='development'){
 					if(res.status < 400){
@@ -241,6 +243,29 @@ export default class API {
 				console.log(er)
 			})
 	}
+
+
+		// const data = {
+		// 	username: username,
+		// 	token: userToken
+		// }
+
+		// return axios.post(`/api/user/follow`,
+		// 	{headers: {...headers}},
+		//  	{data: {...data}})
+		// 	.then( res => {
+		// 		if (process.env.NODE_ENV ==='development') {
+		// 			if(res.status < 400){
+		// 				console.log('API: ('+res.status+') POST Added user: ' + username);
+		// 			}
+		// 		}
+				
+		// 		return Promise.resolve(res);
+		// 	})
+		// 	.catch( er => {
+		// 		console.log(er)
+		// 	})
+
 
 	getGalComments(galID) {
 		const {headers, userToken} = this.state;
@@ -290,4 +315,36 @@ export default class API {
   		});
 	}
  
+
+
+ getImageComments(imID) {
+		const {headers, userToken} = this.state;
+
+		let res;
+
+		return Promise.resolve(res);
+		
+
+
+	// 	return axios.get(`/api/user/gallery/${galID}/comments`, 
+	// 			{params: {
+	// 				token: userToken
+	// 			}},
+	// 			{headers: {...headers}},
+	// 		)
+	// 		.then( res => {
+	// 			if (process.env.NODE_ENV ==='development'){
+	// 				if(res.status < 400){
+	// 					console.log('API:('+ res.status +') GET comments. (galID: '+ galID +')');
+	// 				}
+	// 			}
+
+	// 			// this.updateLocalStorage('galleries', res.data['Galleries']);
+
+	// 			return Promise.resolve(res);
+	// 		})
+	// 		.catch( er => {
+	// 			console.log(er)
+	// 		})
+	}
 }

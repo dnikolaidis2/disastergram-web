@@ -51,13 +51,13 @@ export default class CommentSection extends React.Component {
 
 	async getComments(type, id) {
 		var res;
-	
 		// Get Appropriate data from server	
 		if (type === 'gallery' || type === 'galshowcase') {
 			res = await this.API.getGalComments(id);
 		}
 		else if (type === 'image') {
 			res = await this.API.getImageComments(id);
+			// this.setState({comments: [], loading:false});
 		}
 
 
@@ -67,6 +67,7 @@ export default class CommentSection extends React.Component {
 
 			// If no comments
       if(res.status === 204){
+      	console.log('No comments found!')
         this.setState({comments: [], loading:false});
         return;
       }
@@ -111,9 +112,9 @@ export default class CommentSection extends React.Component {
 		let commentStyle = this.state.commentStyle
 
 		return (
-			<div className='comment select' key={comment.id} style={commentStyle.container}>
+			<div className='comment select' key={comment.comment_id} style={commentStyle.container}>
 				<p className='comment__username' style={commentStyle.username}>{comment.username}:</p>
-				<p className='comment__text' style={commentStyle.text}>{comment.text}</p>
+				<p className='comment__text' style={commentStyle.text}>{comment.body}</p>
 			</div>
 		)
 	}
@@ -159,15 +160,20 @@ export default class CommentSection extends React.Component {
 	handleCommentSubmit(e){
 		e.preventDefault();
 
+		this.setState({commentToAdd : ''})
 		this.API.addGalComment(this.props.id, this.state.commentToAdd)
 			.then( res => {
 				if(typeof res !== 'undefined'){
 					if(res.status < 400){
-						this.getComments();
 						console.log('Comment added!');
+						this.refreshComments();
 					}
 				}
 			})
+	}
+
+	refreshComments(){
+		this.getComments(this.props.type, this.props.id);
 	}
 
 	render() {
@@ -177,11 +183,18 @@ export default class CommentSection extends React.Component {
 		let visStyle = this.determineAnimStyle('section');
 		let visStyle2 = this.determineAnimStyle('container')
 
+		const type = this.props.type;
+
+		// 'image' means that the bg of the module is white
+		// bg is white in other cases. Change className accordingly (style changes in css file)
+		const classAddField = `comment-section__add__field ${type === 'image' ? 'whiteBG' : 'blackBG' }`;
+		// const classCont = `comment-section__container ${ type === 'image' ? 'whiteBG' : 'blackBG' }`;
+
 
 		return(
 			<section className='comment-section' style={visStyle}>
 				<div className='comment-section__container' style={visStyle2}>
-					{loading &&
+					{!loading &&
 						comments.map( comment => {
 							return this.showComment(comment, visStyle2);
 						})
@@ -193,7 +206,7 @@ export default class CommentSection extends React.Component {
 							onSubmit={this.handleCommentSubmit}>
 							<Input
 								id={1}
-								class='comment-section__add__field'
+								class={classAddField}
 								value={commentToAdd}
 								onValueChange={this.handleCommentChange}
 								type="text"

@@ -75,10 +75,14 @@
 
 }
 
+
 .comment-section__add__field{
-	background-color: rgba(255,255,255,0.9);
 	margin: 10px !important;
 	overflow: hidden;
+}
+
+.blackBG.comment-section__add__field{
+	background-color: rgba(255,255,255,0.9);
 }
 
 .comment-section__add__field:hover {

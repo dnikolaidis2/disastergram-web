@@ -15,13 +15,6 @@ import './index.css';
 
 import * as serviceWorker from './serviceWorker';
 
-
-/*** ----
-
-	**** @TODO!IMPORTANT Will need to fix Routing on NGINX ****
-
-*/
-
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -80,8 +73,6 @@ class App extends React.Component {
 	}
 
 }
-
-
 
 ReactDOM.render(
 	<App />,
