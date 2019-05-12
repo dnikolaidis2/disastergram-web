@@ -63,10 +63,10 @@ export default class API {
 	}
 
 
-	getFriends() {
+	getFollowers() {
 		const {headers, userToken} = this.state;
 
-		return axios.get('/api/user/friends', 
+		return axios.get('/api/user/followers', 
 				{params: {
 					token: userToken
 				}},
@@ -75,7 +75,33 @@ export default class API {
 			.then( res => {
 				if (process.env.NODE_ENV ==='development'){
 					if(res.status < 400){
-						console.log('API: ('+res.status+') GET all friends');
+						console.log('API: ('+res.status+') GET all users that follow you');
+					}
+				}
+				// No need for this atm
+				// this.updateLocalStorage('friends', res.data['Followed users']);
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+
+	}
+
+	getFollowing() {
+		const {headers, userToken} = this.state;
+
+		return axios.get('/api/user/following', 
+				{params: {
+					token: userToken
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API: ('+res.status+') GET all users you are following');
 					}
 				}
 				// No need for this atm
@@ -244,29 +270,6 @@ export default class API {
 			})
 	}
 
-
-		// const data = {
-		// 	username: username,
-		// 	token: userToken
-		// }
-
-		// return axios.post(`/api/user/follow`,
-		// 	{headers: {...headers}},
-		//  	{data: {...data}})
-		// 	.then( res => {
-		// 		if (process.env.NODE_ENV ==='development') {
-		// 			if(res.status < 400){
-		// 				console.log('API: ('+res.status+') POST Added user: ' + username);
-		// 			}
-		// 		}
-				
-		// 		return Promise.resolve(res);
-		// 	})
-		// 	.catch( er => {
-		// 		console.log(er)
-		// 	})
-
-
 	getGalComments(galID) {
 		const {headers, userToken} = this.state;
 
@@ -296,9 +299,9 @@ export default class API {
 	// *** IMAGES	***
 
 	uploadImage(image, gall_id){
-		const headers = { 
-			headers: {'Content-Type': 'multipart/form-data'}
-		};
+		// const headers = { 
+		// 	headers: {'Content-Type': 'multipart/form-data'}
+		// };
 
 		var formData = new FormData();
 		formData.append('file',image);
@@ -318,7 +321,7 @@ export default class API {
 
 
  getImageComments(imID) {
-		const {headers, userToken} = this.state;
+		// const {headers, userToken} = this.state;
 
 		let res;
 

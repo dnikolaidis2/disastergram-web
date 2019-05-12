@@ -21,7 +21,7 @@ export default class UserPage extends React.Component {
     this.Auth = this.props.Auth;
     this.updateLoggedIn = this.props.updateLoggedIn;
 
-    this.API = new API('http://disastergram.nikolaidis.tech', this.Auth);
+    this.API = new API('http://disastergram.network', this.Auth);
 
     this.state = {
       currModule : 'user',
@@ -60,10 +60,6 @@ export default class UserPage extends React.Component {
     }
 
   }
-
-  // _galleries(){
-  //   return this.state.galleries;
-  // }
 
   logout() {
     console.log('Deleting token')

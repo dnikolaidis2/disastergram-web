@@ -50,7 +50,7 @@ export default class Sidebar extends React.Component {
     this.toggleAddGallery = this.toggleAddGallery.bind(this);
 
     // --- GETS
-    this.getFriends = this.getFriends.bind(this);
+    this.getFollowers = this.getFollowers.bind(this);
     this.getGalleries = this.getGalleries.bind(this);
 
     // --- DELETES
@@ -81,7 +81,7 @@ export default class Sidebar extends React.Component {
     // };
 
 
-    this.getFriends();
+    this.getFollowers();
     // this.getGalleries(makeCancelable);
   }
 
@@ -104,7 +104,7 @@ export default class Sidebar extends React.Component {
     }));
   }
 
-  async getFriends() {
+  async getFollowers() {
 
     // var cancelablePromise;
     // this.setState({friendsPromise: cancelablePromise});
@@ -128,7 +128,7 @@ export default class Sidebar extends React.Component {
     //   });
 
     let friends = [];
-    let res = await this.API.getFriends();
+    let res = await this.API.getFollowers();
     if (typeof res !== 'undefined') {
       friends = res.data['Followed users'];
       this.setState({lists:{...this.state.lists, friends}})
@@ -343,7 +343,7 @@ export default class Sidebar extends React.Component {
         <div className='sidebar__top'>
           {userPageTitle(this.Auth.getUser())}
           <div className='sidebar__container'>
-            <DropdownBtn text='Friends' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
+            <DropdownBtn text='Followers' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
             {this.getListModule('friends', isFriendsVisible)}
             <DropdownBtn text='My Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
             {this.getListModule('galleries', isGalVisible)}
