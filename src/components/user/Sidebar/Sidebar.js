@@ -109,7 +109,7 @@ export default class Sidebar extends React.Component {
     // var cancelablePromise;
     // this.setState({friendsPromise: cancelablePromise});
     // cancelablePromise = makeCancelable(
-    //     this.API.getFriends()
+    //     this.API.getFollowers()
     //   );
 
 
@@ -141,27 +141,6 @@ export default class Sidebar extends React.Component {
 
   getGalleries() {
 
-    // var cancelablePromise;
-    // this.setState({galleriesPromise: cancelablePromise});
-    // cancelablePromise = makeCancelable(
-    //   this.API.getGalleries()
-    // );
-
-    // cancelablePromise
-    //   .promise
-    //   .then( res => {
-    //     if(typeof res !== 'undefined') {
-    //       let galleries = res.data['Galleries'];
-    //       this.setState({lists:{...this.state.lists, galleries}})
-    //     }
-    //   });
-
-    // let galleries;
-    // let res = await this.API.getGalleries();
-    // if(typeof res !== 'undefined') {
-    //   galleries = res.data['Galleries'];
-    //   this.setState({lists:{...this.state.lists, galleries}})
-    // }
 
     this.refreshGalleries();
   }
@@ -275,7 +254,7 @@ export default class Sidebar extends React.Component {
           API={this.API} 
           isVisible={this.state.addFriendVis} 
           onCloseClick={this.toggleAddFriend}
-          updateParent={this.getFriends}
+          updateParent={this.getFollowers}
           reqType={'friend'}/>
       </React.Fragment>
     );
@@ -316,7 +295,7 @@ export default class Sidebar extends React.Component {
     this.API.unfollowFriend(username)
       .then ( res => {
         if(typeof res !== 'undefined'){
-          this.getFriends();
+          this.getFollowers();
         }
       });
   }
@@ -352,7 +331,7 @@ export default class Sidebar extends React.Component {
         <div className='sidebar__bottom'>
           <LogoutBtn func={this.logout} />
         </div>
-      </nav>
+    </nav>
     );
   }
 
@@ -375,12 +354,16 @@ function userPageTitle(user){
   return (
     <div className='sidebar__title noSelect'>
       <header className='sidebar__header fl js_center al_center fl_column'>
-        <h2 className='sidebar__disgram'>Disastergram</h2>
-        <Link to={`/user/myprofile`} className='sidebar__username'>{user}</Link>
+        <Link to={`/feed`} className='sidebar__disgram'>Disastergram</Link>
+        <Link to={`/user/${user}`} className='sidebar__username'>{user}</Link>
       </header>
     </div>
   );
       // <hr style={hrStyle}></hr>
       // <hr style={hrStyle}></hr>
+          // <Link to={{
+          //   pathname: `${curUrl}/${urlTag}/${id}`,
+          //   state: {id: id, itemName: itemName, username: username}
+          // }} 
 
 }

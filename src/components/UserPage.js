@@ -111,14 +111,15 @@ export default class UserPage extends React.Component {
             <Split direction='right'>
               <Switch>
                 <Route
-                  exact path={[`${match.url}`, `${match.url}/myprofile`]}
+                  exact path={[`${match.url}`, `${match.url}/:userID`]}
                   render={(props) => {
                     return (!loading &&
                       <UserBody 
                         {...props}
                         API={API} 
                         Auth={Auth} 
-                        user={curUser}
+                        curUser={curUser}
+                        curURL={match.url}
                         galleries={galleries}/>)
                     }}/>
                 <Route

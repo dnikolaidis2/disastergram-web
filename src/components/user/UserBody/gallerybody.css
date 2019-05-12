@@ -1,14 +1,20 @@
-#gallerybody {
+
+.gallerybody__container {
 	width: 100%;
 	height: 100%;
-  display: flex;
-  flex-direction: column;
 
- 	align-items: center;
+}
+
+
+.gallerybody {
+	width: 100%;
+	height: 100%;
   /* overflow-x: hidden; */
   overflow-x: hidden;
 
 }
+
+
 
 .gallery__header {
 	margin: 50px 30px 10px 30px;

@@ -22,6 +22,11 @@ export default class UserBody extends React.Component {
     this.state = {
       imageCardVis: false,
       galleries: this.props.galleries || [],
+      username: '',
+      // curUser: this.props.curUser,
+      // curURL: this.props.curURL,
+      loading: true,
+      redirectFlag: false,
     }
 
     this.TopBanner = this.TopBanner.bind(this);
@@ -29,22 +34,71 @@ export default class UserBody extends React.Component {
 
   }
   
-  // *** TODO CHANGE FOR OTHER USERS ***
 
-  // async getGalleries(username) {
-  //   let galleries = [];
-  //
-  //   let res = await this.API.getGalleries();
-  //
-  //   if(typeof res !== 'undefined') {
-  //     galleries = res.data['Galleries'];
-  //     if(res.status === 204){
-  //       this.setState({galleries: [], loading:false})
-  //       return
-  //     }
-  //     this.setState({galleries, loading:false})
-  //   }
-  // }
+  async getGalleries() {
+    let galleries = [];
+    let username;
+    
+    const { curURL, curUser } = this.props;
+    console.log('Current url is : ' + curURL);
+      
+    // get user's username of whom galleries we want to display
+    if( typeof this.props.match.params !== undefined ){
+      let username = this.props.match.params.username;
+    }
+
+    // if no name in params get logged in users galleries
+    username = this.props.curUser
+    this.setState({username: username})
+
+
+    let res;
+
+    if( curURL === '/feed') {
+      res = await this.API.getFeedGalleries();
+    }
+    else if (curURL === '/user') {
+      if(curUser === username || username === ''){
+        galleries = this.props.galleries;
+        this.setState({galleries, loading: false})
+        return;
+      }
+        // If we want to get currently logged in user's galleries
+        // then get them from parent element instead;
+
+      res = await this.API.getGalleries();
+    }
+
+    if(typeof res !== 'undefined') {
+      if(res.status >= 400){
+        this.setState({redirectFlag: true})
+      }
+
+      galleries = res.data['Galleries'];
+      if(res.status === 204 || galleries.length === 0){
+        this.setState({galleries: [], loading:false})
+        return
+      }
+      this.setState({galleries, loading:false})
+    }
+  }
+
+   componentDidMount(){
+
+
+    this.getGalleries();
+
+  }
+
+  componentDidUpdate(prevProps) {
+
+    let curURL = this.props.curURL
+    if(curURL === prevProps.curURL)
+      return;
+    this.getGalleries();
+  }
+
+
 
   handleThumbclick(){
     this.setState({imageCardVis: !this.state.imageCardVis})
@@ -61,30 +115,39 @@ export default class UserBody extends React.Component {
 
 
   render() {
-    const { imageCardVis } = this.state;
-    const galleries = this.props.galleries;
+    const { imageCardVis, loading } = this.state;
+    // if(typeof this.props.match.params !== 'undefined'){
+
+    // }
+    const galleries = this.state.galleries;
     const username = this.API.getUser();
 
+    const { curURL, curUser } = this.props;
+    // console.log('Current url is : ' + curURL);
     return(
-      <div id='userbody'>
-        {this.TopBanner()}
-        <div className='userbody__container noSelect'>
-          {
-            galleries.map( (gal) => {
-              return <GalleryShowcase 
-                key={gal.id} 
-                onThumbClick={this.handleThumbclick} 
-                gallery={gal}
-                username={username}
-              API={this.API}/>
-            })
-          }
+      <React.Fragment>
+        {!loading &&
+        <div id='userbody'>
+          {this.TopBanner()}
+          <div className='userbody__container noSelect'>
+            {
+              galleries.map( (gal) => {
+                return <GalleryShowcase 
+                  key={gal.id} 
+                  onThumbClick={this.handleThumbclick} 
+                  gallery={gal}
+                  username={username}
+                API={this.API}/>
+              })
+            }
+          </div>
+          <ImageCard 
+            API={this.API} 
+            onCloseClick={this.handleThumbclick} 
+            isVisible={imageCardVis}/>
         </div>
-        <ImageCard 
-          API={this.API} 
-          onCloseClick={this.handleThumbclick} 
-          isVisible={imageCardVis}/>
-      </div>
+        }
+      </React.Fragment>
     );
   }
 }

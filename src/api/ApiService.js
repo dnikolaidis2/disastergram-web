@@ -164,6 +164,7 @@ export default class API {
 			})
 	}
 
+	// -- Get current logged in users galleries
 	getGalleries() {
 		const {headers, username, userToken} = this.state;
 
@@ -191,6 +192,7 @@ export default class API {
 			})
 	}
 
+	// -- Get info on certain gallery (through its ID).
 	getGallery(galID) {
 		const {headers, userToken} = this.state;
 
@@ -216,8 +218,9 @@ export default class API {
 			})
 	}
 
-		getFeedGalleries() {
-		const {headers, username, userToken} = this.state;
+	// -- Get galleries of users following you.
+	getFeedGalleries() {
+		const {headers, userToken} = this.state;
 
 		// const url = `/api/user/${username}/galleries`
 

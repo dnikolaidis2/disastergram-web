@@ -59,7 +59,7 @@ class App extends React.Component {
 									isLoggedIn={isLoggedIn}/>
 							}/>
 						<Route 
-							path={'/user'} 
+							path={['/user', '/feed']} 
 							render={(props)=> 
 								<UserPage 
 									{...props}

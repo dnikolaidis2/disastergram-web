@@ -32,10 +32,9 @@ export default class LoginPage extends React.Component {
 
 	render() {
 		const isLoggedIn = this.props.isLoggedIn;
-		
 
 		if ( isLoggedIn === true ) {
-			let url = '/user';
+			let url = '/feed';
 			if(typeof this.props.location.state !== 'undefined')
 				url = this.props.location.state.url;
 			

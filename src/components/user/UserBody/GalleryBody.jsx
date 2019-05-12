@@ -147,25 +147,32 @@ export default class GalleryBody extends React.Component {
           ?<Redirect to={`/user`}/>
           :<React.Fragment>
             {!loading &&
-              <div id='gallerybody' >
-          			<header className='gallery__header fl fl_row al_center'>
-                  <section className='gallery__title'>
-          				  <h2 className='gallery__galname'>{galleryName}</h2>
-          				  <div>by<span className='gallery__author'>{author}</span></div>
-                  </section>
-                  { sameUser &&
-                    <p className='gallery__toggle-up-btn fl al_center' onClick={this.toggleFileUpload}>
-                        <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
-                    </p>
-                  }
-          			</header>
-        				<hr style={hrStyle}/>
-                {this.uploadForm()}
-        				<ImageCard 
-                  API={this.API} 
-                  onCloseClick={this.handleThumbclick} 
-                  isVisible={imageCardVis}/>
-          		</div>
+              <div className='gallerybody__container fl fl_row' >
+                <section className='gallerybody fl fl_column al_center'>
+            			<header className='gallery__header fl fl_row al_center'>
+                    <section className='gallery__title'>
+            				  <h2 className='gallery__galname'>{galleryName}</h2>
+            				  <div>by<span className='gallery__author'>{author}</span></div>
+                    </section>
+                    { sameUser &&
+                      <p className='gallery__toggle-up-btn fl al_center' onClick={this.toggleFileUpload}>
+                          <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
+                      </p>
+                    }
+            			</header>
+
+          				<hr style={hrStyle}/>
+
+                  {this.uploadForm()}
+
+          				<ImageCard 
+                    API={this.API} 
+                    onCloseClick={this.handleThumbclick} 
+                    isVisible={imageCardVis}/>
+            		</section>
+                <aside className='gallery-body_commentsection'>
+                </aside>
+              </div>
             }
           </React.Fragment>
         }
