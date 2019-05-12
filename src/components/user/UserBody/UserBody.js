@@ -23,8 +23,8 @@ export default class UserBody extends React.Component {
       imageCardVis: false,
       galleries: this.props.galleries || [],
       username: '',
-      // curUser: this.props.curUser,
-      // curURL: this.props.curURL,
+      loggedInUser: this.props.loggedInUser,
+      curURL: this.props.curURL,
       loading: true,
       redirectFlag: false,
     }
@@ -39,16 +39,20 @@ export default class UserBody extends React.Component {
     let galleries = [];
     let username;
     
-    const { curURL, curUser } = this.props;
-    console.log('Current url is : ' + curURL);
+    const { curURL, loggedInUser } = this.props;
+    // console.log('Current url is : ' + curURL);
       
     // get user's username of whom galleries we want to display
     if( typeof this.props.match.params !== undefined ){
-      let username = this.props.match.params.username;
+      console.log(this.props.match.params)
+      console.log('AND THE NAME IS ' + this.props.match.params.username)
+      username = this.props.match.params.username;
+    }
+    else{
+      // if no name in params get logged in users galleries
+      username = this.props.loggedInUser
     }
 
-    // if no name in params get logged in users galleries
-    username = this.props.curUser
     this.setState({username: username})
 
 
@@ -58,15 +62,17 @@ export default class UserBody extends React.Component {
       res = await this.API.getFeedGalleries();
     }
     else if (curURL === '/user') {
-      if(curUser === username || username === ''){
-        galleries = this.props.galleries;
-        this.setState({galleries, loading: false})
-        return;
-      }
+      if(loggedInUser === username || username === ''){
+
         // If we want to get currently logged in user's galleries
         // then get them from parent element instead;
 
-      res = await this.API.getGalleries();
+        galleries = this.props.galleries;
+        this.setState({galleries, loading: false})
+        console.log('Already got the data!')    
+        return;
+      }
+      res = await this.API.getGalleries(username);
     }
 
     if(typeof res !== 'undefined') {
@@ -84,18 +90,27 @@ export default class UserBody extends React.Component {
   }
 
    componentDidMount(){
-
-
     this.getGalleries();
 
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
+    let curURL = this.props.curURL;
 
-    let curURL = this.props.curURL
-    if(curURL === prevProps.curURL)
-      return;
-    this.getGalleries();
+    if(curURL === prevProps.curURL){
+      console.log('inside if')
+      console.log(this.props.match.url + '   '+ prevProps.match.url)
+      if(this.props.match.url !== prevProps.match.url){
+        await this.getGalleries();
+        console.log('hey!');
+      }
+    }
+
+    if(curURL !== prevProps.curURL) {
+      await this.getGalleries();
+    }
+
+    return;
   }
 
 
@@ -122,7 +137,7 @@ export default class UserBody extends React.Component {
     const galleries = this.state.galleries;
     const username = this.API.getUser();
 
-    const { curURL, curUser } = this.props;
+    const { curURL, loggedInUser } = this.props;
     // console.log('Current url is : ' + curURL);
     return(
       <React.Fragment>

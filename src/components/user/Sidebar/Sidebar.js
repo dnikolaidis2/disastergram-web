@@ -54,7 +54,7 @@ export default class Sidebar extends React.Component {
     this.getGalleries = this.getGalleries.bind(this);
 
     // --- DELETES
-    this.unfollowFriend = this.unfollowFriend.bind(this);
+    this.unfollow = this.unfollow.bind(this);
     this.deleteGallery = this.deleteGallery.bind(this);
 
   }
@@ -62,6 +62,7 @@ export default class Sidebar extends React.Component {
   // --- Data fetching ---
 
   componentDidMount() {
+
     // const makeCancelable = (promise) => {
     //   let hasCanceled_ = false;
 
@@ -80,7 +81,7 @@ export default class Sidebar extends React.Component {
     //   };
     // };
 
-
+    this.getFollowing();
     this.getFollowers();
     // this.getGalleries(makeCancelable);
   }
@@ -93,6 +94,7 @@ export default class Sidebar extends React.Component {
   }
 
   componentDidUpdate(prevProps){
+
     let gal = this.props.galleries
     if(gal === prevProps.galleries)
       return;
@@ -127,21 +129,34 @@ export default class Sidebar extends React.Component {
     //     }
     //   });
 
-    let friends = [];
+    let followers = [];
     let res = await this.API.getFollowers();
     if (typeof res !== 'undefined') {
-      friends = res.data['Followed users'];
-      this.setState({lists:{...this.state.lists, friends}})
+      followers = res.data['Followed users'];
+      this.setState({lists:{...this.state.lists, followers}})
     }
     else {
-      this.setState({lists:{...this.state.lists, friends: []}})
+      this.setState({lists:{...this.state.lists, followers: []}})
+    }
+
+  }
+
+   async getFollowing() {
+
+    let following = [];
+    let res = await this.API.getFollowing();
+    if (typeof res !== 'undefined') {
+      following = res.data['Followed users'];
+      this.setState({lists:{...this.state.lists, following}})
+    }
+    else {
+      this.setState({lists:{...this.state.lists, following: []}})
     }
 
   }
 
   getGalleries() {
-
-
+    // get galleries from parent props
     this.refreshGalleries();
   }
 
@@ -167,7 +182,7 @@ export default class Sidebar extends React.Component {
   }
 
 
-  getListModule(listName, isVisible) {
+  getListModule(listName, isVisible, deleteItem) {
     let list = this.state.lists[listName];
 
     if (typeof list === 'undefined') {
@@ -182,12 +197,19 @@ export default class Sidebar extends React.Component {
       }
       return (
           <div className='sidebar__list' style={visStyle}>
-            {listName === 'friends' ? this.AddFriend() : this.AddGallery()}
+            {listName === 'following' && this.AddFriend()}
+            {listName === 'galleries' && this.AddGallery()}
           </div>
         );
     }
 
-    let height = 38 + (36 * Object.keys(list).length) + 'px';
+    let height;
+    if(listName === 'followers'){
+      height = (36 * Object.keys(list).length) + 'px';
+    }else{
+      height = 38 + (36 * Object.keys(list).length) + 'px';
+    }
+
     const visStyle = {
       maxHeight: isVisible ? height : '0px',
       visibility: isVisible ? 'visible' : 'hidden',
@@ -197,10 +219,11 @@ export default class Sidebar extends React.Component {
 
     return (
       <div className='sidebar__list' style={visStyle}>
-        {listName === 'friends' ? this.AddFriend() : this.AddGallery()}
+        {listName === 'following' && this.AddFriend()}
+        {listName === 'galleries' && this.AddGallery()}
         {list.map((item) => 
           <SidebarItem 
-            key={item.id}
+            key={'_' + item.id}
             curUser={this.Auth.getUser()}
             curUrl={this.props.url}
             itemName={item.username || item.galleryname}
@@ -208,7 +231,7 @@ export default class Sidebar extends React.Component {
             isActive={item.isActive} 
             listName={listName}
             handleActivate={this.handleActivate}
-            deleteItem={listName === 'friends' ? this.unfollowFriend : this.deleteGallery}
+            deleteItem={deleteItem}
             />
         )}
       </div>
@@ -226,7 +249,7 @@ export default class Sidebar extends React.Component {
     }
 
     this.activate(id, listName);
-    this.gotoGallery(id)
+    // this.gotoGallery(id)
     
   }
 
@@ -242,7 +265,7 @@ export default class Sidebar extends React.Component {
   // --- Add friend
   // <i className="material-icons">person_add</i> 
   AddFriend() {
-    const className = 'sidebar__item_container fl fl_row al_center'
+    const className = 'sidebar__item_container fl fl_row al_center noSelect'
     const addStyle = {color: '#888'}
     //<i className='fa fa-plus'></i>
     return(
@@ -258,7 +281,7 @@ export default class Sidebar extends React.Component {
           reqType={'friend'}/>
       </React.Fragment>
     );
-  }
+      }
 
   toggleAddFriend() {
     this.setState({addFriendVis: !this.state.addFriendVis})
@@ -267,7 +290,7 @@ export default class Sidebar extends React.Component {
   // --- Add Galleries
   //<i className="material-icons">add_to_photos</i> 
   AddGallery() {
-    const className = 'sidebar__item_container fl fl_row al_center'
+    const className = 'sidebar__item_container fl fl_row al_center noSelect'
     const addStyle = {color: '#888'}
     return(
       <React.Fragment>
@@ -284,14 +307,14 @@ export default class Sidebar extends React.Component {
     );
   }
 
-  toggleAddGallery() {
+    toggleAddGallery() {
     this.setState({addGalleryVis: !this.state.addGalleryVis})
   }
 
   // --- Unfollow Friend
 
   //@TODO implement
-  unfollowFriend(username) {
+  unfollow(username) {
     this.API.unfollowFriend(username)
       .then ( res => {
         if(typeof res !== 'undefined'){
@@ -322,10 +345,15 @@ export default class Sidebar extends React.Component {
         <div className='sidebar__top'>
           {userPageTitle(this.Auth.getUser())}
           <div className='sidebar__container'>
+
             <DropdownBtn text='Followers' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
-            {this.getListModule('friends', isFriendsVisible)}
+            {this.getListModule('followers', isFriendsVisible, null)}
+
+            <DropdownBtn text='Following' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
+            {this.getListModule('following', isFriendsVisible, this.unfollow)}
+
             <DropdownBtn text='My Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
-            {this.getListModule('galleries', isGalVisible)}
+            {this.getListModule('galleries', isGalVisible, this.deleteGallery)}
           </div>
         </div>
         <div className='sidebar__bottom'>
@@ -354,8 +382,8 @@ function userPageTitle(user){
   return (
     <div className='sidebar__title noSelect'>
       <header className='sidebar__header fl js_center al_center fl_column'>
-        <Link to={`/feed`} className='sidebar__disgram'>Disastergram</Link>
-        <Link to={`/user/${user}`} className='sidebar__username'>{user}</Link>
+        <Link to={`/feed`} replace className='sidebar__disgram'>Disastergram</Link>
+        <Link to={`/user/${user}`} replace className='sidebar__username'>{user}</Link>
       </header>
     </div>
   );

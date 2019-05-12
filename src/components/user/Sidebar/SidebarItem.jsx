@@ -49,26 +49,38 @@ export default class SidebarItem extends React.Component {
 
   render(){
     let { id, listName, username} = this.state;
-    let urlTag = listName === 'friends' ? 'friend' : 'gallery';
-    let curUrl = this.props.curUrl;
-
     const itemName = this.props.itemName;
+
+    const url = listName === 'followers' ? 'user' : 'user/gallery';
+    const urlID = listName === 'followers' ? itemName : id;
+
     const className = 'sidebar__item ' + (this.props.isActive ? 'active':'');
 
     return (
-        <Link to={{
-            pathname: `${curUrl}/${urlTag}/${id}`,
-            state: {id: id, itemName: itemName, username: username}
-          }} 
-
-          className='sidebar__item_container fl al_center js_between'>
-          <span className={className} onClick={this.toggleActive}>
-            {itemName}
-          </span>
-          <i className='sidebar__item_delete material-icons md-18' onClick={this.deleteItem}>close</i>
-        </Link>
+      <React.Fragment>
+      {listName === 'following'
+        ? <div className='sidebar__item_container noSelect noHover fl al_center js_between'>
+              <span className={className} onClick={this.toggleActive}>
+                {itemName}
+             </span>
+            {listName === 'followers' ||
+              <i className='sidebar__item_delete material-icons md-18' onClick={this.deleteItem}>close</i>
+            }
+          </div>
+        : <Link to={{
+              pathname: `/${url}/${urlID}`,
+              state: {id: id, itemName: itemName, username: username}
+            }}  replace
+            className='sidebar__item_container fl al_center js_between'>
+              <span className={className} onClick={this.toggleActive}>
+                {itemName}
+              </span>
+            {listName === 'followers' ||
+              <i className='sidebar__item_delete material-icons md-18' onClick={this.deleteItem}>close</i>
+            }
+          </Link>
+      }
+      </React.Fragment>
     )
   }
-          // <span className='sidebar__item_delete'>
-
 }

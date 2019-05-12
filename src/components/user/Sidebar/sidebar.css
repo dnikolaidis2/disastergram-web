@@ -120,14 +120,14 @@
 
 .sidebar__item_container {
   padding-left: 24px;
-  padding: 8px 18px;
+  padding: 8px 10px 8px 18px;
   margin: 0px;
   color: #bbb;
   transition: 0.1s background-color ease-in-out;
 }
 
 .sidebar__item_container > i {
-  padding-right: 10px;
+  /* padding-right: 10px; */
 }
 
 
@@ -142,16 +142,21 @@
   transition: 0s background-color ease-in-out;
 }
 
+.sidebar__item_container.noHover:hover {
+  background-color: unset;
+}
 
 .sidebar__item_container.active {
   /* background-color:  rgba(100%, 100%, 100%, 0.8); */
   color: #ad5cd6;
 }
 
+
 .sidebar__item_delete {
   position: relative;
   height: 100%;
   top: 0px;
+  margin-left: 10px;
   transition: top 0.1s ease-in-out;
 }
 

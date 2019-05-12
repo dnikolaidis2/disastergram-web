@@ -47,8 +47,8 @@ export default class UserPage extends React.Component {
   async getGalleries() {
 
     let galleries = [];
-    
-    let res = await this.API.getGalleries();
+    const curUser = this.state.curUser;
+    let res = await this.API.getGalleries(curUser);
     
     if(typeof res !== 'undefined') {
       galleries = res.data['Galleries'];
@@ -111,14 +111,14 @@ export default class UserPage extends React.Component {
             <Split direction='right'>
               <Switch>
                 <Route
-                  exact path={[`${match.url}`, `${match.url}/:userID`]}
+                  exact path={[`${match.url}`, `${match.url}/:username`]}
                   render={(props) => {
                     return (!loading &&
                       <UserBody 
                         {...props}
                         API={API} 
                         Auth={Auth} 
-                        curUser={curUser}
+                        loggedInUser={curUser}
                         curURL={match.url}
                         galleries={galleries}/>)
                     }}/>

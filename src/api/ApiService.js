@@ -164,9 +164,9 @@ export default class API {
 			})
 	}
 
-	// -- Get current logged in users galleries
-	getGalleries() {
-		const {headers, username, userToken} = this.state;
+	// -- Get users galleries
+	getGalleries(username) {
+		const {headers, userToken} = this.state;
 
 		// const url = `/api/user/${username}/galleries`
 
