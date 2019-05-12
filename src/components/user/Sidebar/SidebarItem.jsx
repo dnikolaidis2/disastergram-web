@@ -39,7 +39,7 @@ export default class SidebarItem extends React.Component {
 
     // Either unfollow Friend through its username
     // or delete Gallery through its id
-    if(this.props.listName === 'friends'){
+    if(this.props.listName === 'following'){
       this.props.deleteItem(this.props.itemName);
     }else{
       this.props.deleteItem(this.props.id)
@@ -63,7 +63,7 @@ export default class SidebarItem extends React.Component {
               <span className={className} onClick={this.toggleActive}>
                 {itemName}
              </span>
-            {listName === 'followers' ||
+            {listName !== 'followers' &&
               <i className='sidebar__item_delete material-icons md-18' onClick={this.deleteItem}>close</i>
             }
           </div>
@@ -75,7 +75,7 @@ export default class SidebarItem extends React.Component {
               <span className={className} onClick={this.toggleActive}>
                 {itemName}
               </span>
-            {listName === 'followers' ||
+            {listName !== 'followers' &&
               <i className='sidebar__item_delete material-icons md-18' onClick={this.deleteItem}>close</i>
             }
           </Link>
