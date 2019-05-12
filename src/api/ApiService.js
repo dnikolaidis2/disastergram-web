@@ -219,12 +219,13 @@ export default class API {
 	addGalComment(galID, text) {
 		const {headers, userToken} = this.state;
 
+		const data = {
+			token: userToken,
+			body: text,
+		}
 
 		return axios.post(`/api/user/gallery/${galID}/comment`, 
-				{data: {
-					token: userToken,
-					body: text,
-				}},
+				{data: {...data}},
 				{headers: {...headers}},
 			)
 			.then( res => {
@@ -271,16 +272,15 @@ export default class API {
 
 	uploadImage(image, gall_id){
 		const headers = { 
-			headers: {'content-type': 'multipart/form-data'}
+			headers: {'Content-Type': 'multipart/form-data'}
 		};
 
 		var formData = new FormData();
 		formData.append('file',image);
-		formData.append('token', this.state.userToken)
+		// formData.append('token', this.state.userToken)
 
-		axios.post(`/api/user/gallery/${gall_id}/upload`,
+		axios.post(`/api/user/gallery/${gall_id}/upload?token=${this.state.userToken}`,
 				formData,
-				headers
 			)
       .then((response) => {
         console.log("The file is successfully uploaded");

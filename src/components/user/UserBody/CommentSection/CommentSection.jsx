@@ -45,7 +45,7 @@ export default class CommentSection extends React.Component {
 
 	componentDidMount(){
 		this.setStyle(this.props.type);
-		// this.getComments(this.props.type, this.props.id);
+		this.getComments(this.props.type, this.props.id);
 
 	}
 
