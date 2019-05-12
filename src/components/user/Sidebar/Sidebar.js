@@ -51,6 +51,7 @@ export default class Sidebar extends React.Component {
 
     // --- GETS
     this.getFollowers = this.getFollowers.bind(this);
+    this.getFollowing = this.getFollowing.bind(this);
     this.getGalleries = this.getGalleries.bind(this);
 
     // --- DELETES
@@ -83,7 +84,6 @@ export default class Sidebar extends React.Component {
 
     this.getFollowing();
     this.getFollowers();
-    // this.getGalleries(makeCancelable);
   }
 
   componentWillUnmount(){
@@ -277,11 +277,11 @@ export default class Sidebar extends React.Component {
           API={this.API} 
           isVisible={this.state.addFriendVis} 
           onCloseClick={this.toggleAddFriend}
-          updateParent={this.getFollowers}
+          updateParent={this.getFollowing}
           reqType={'friend'}/>
       </React.Fragment>
     );
-      }
+  }
 
   toggleAddFriend() {
     this.setState({addFriendVis: !this.state.addFriendVis})
@@ -318,7 +318,7 @@ export default class Sidebar extends React.Component {
     this.API.unfollowFriend(username)
       .then ( res => {
         if(typeof res !== 'undefined'){
-          this.getFollowers();
+          this.getFollowing();
         }
       });
   }
@@ -387,11 +387,4 @@ function userPageTitle(user){
       </header>
     </div>
   );
-      // <hr style={hrStyle}></hr>
-      // <hr style={hrStyle}></hr>
-          // <Link to={{
-          //   pathname: `${curUrl}/${urlTag}/${id}`,
-          //   state: {id: id, itemName: itemName, username: username}
-          // }} 
-
 }

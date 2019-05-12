@@ -34,13 +34,12 @@ export default class UserPage extends React.Component {
 
 
     this.logout = this.logout.bind(this);
-    this.gotoGallery = this.gotoGallery.bind(this);
     this.refreshGalleries = this.refreshGalleries.bind(this);
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.updateLoggedIn();
-    this.getGalleries()
+    await this.getGalleries()
   }
 
 
@@ -69,11 +68,6 @@ export default class UserPage extends React.Component {
 
   refreshGalleries(){
     this.getGalleries();
-  }
-
-  gotoGallery(galleryName) {
-    this.setState({currModule: 'gallery', galleryName : galleryName})
-
   }
 
   render() {
