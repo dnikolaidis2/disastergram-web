@@ -69,3 +69,33 @@
 	background-color: #21de86;
 
 }
+
+/* *** IMAGE GRID *** */
+
+.images__container {	
+	width: 80%;
+
+	display:  flex;
+	flex-flow: row wrap;
+	margin-left: -8px;
+
+
+	/* Add some gap between rows and columns */
+	/* grid-gap: 2em;  */
+	/* Make columns adjust according to the available viewport/width */
+	/* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+	/* Set the height of the auto-created rows*/
+	/* grid-auto-rows:  auto; */
+}
+
+.thumbnail_gallery {
+  background-color: gray;
+  border-radius: 5px;
+  object-fit: cover;
+
+  flex: auto;
+  height: 250px;
+  min-width: 150px;
+  max-width: 500px;
+  margin: 0 8px 8px 0; /* Some gutter */
+}

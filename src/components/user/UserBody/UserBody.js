@@ -64,12 +64,12 @@ export default class UserBody extends React.Component {
     else if (curURL === '/user') {
       if(loggedInUser === username || username === ''){
 
-        console.log('Check!')
+        console.log('Check!');
         // If we want to get currently logged in user's galleries
         // then get them from parent element instead;
 
         galleries = this.props.galleries;
-        this.setState({galleries, loading: false, curUserFlag: true})  
+        this.setState({galleries, loading: false, curUserFlag: true});
         return;
       }
       res = await this.API.getGalleries(username);
@@ -82,10 +82,10 @@ export default class UserBody extends React.Component {
 
       galleries = res.data['Galleries'];
       if(res.status === 204 || galleries.length === 0){
-        this.setState({galleries: [], loading:false, curUserFlag: false})
-        return
+        this.setState({galleries: [], loading:false, curUserFlag: false});
+        return;
       }
-      this.setState({galleries, loading:false, curUserFlag: false})
+      this.setState({galleries, loading:false, curUserFlag: false});
     }
   }
 

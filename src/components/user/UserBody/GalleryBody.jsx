@@ -32,7 +32,7 @@ export default class GalleryBody extends React.Component {
     this.getGalInfo = this.getGalInfo.bind(this);
 
     // Images/Thumbs
-    this.handleThumbclick = this.handleThumbclick.bind(this);
+    this.handleThumbClick = this.handleThumbClick.bind(this);
     this.Thumbnails = this.Thumbnails.bind(this);
     this.Thumbnail = this.Thumbnail.bind(this);
 
@@ -145,12 +145,12 @@ export default class GalleryBody extends React.Component {
 
   Thumbnail(id, url){
     return(
-      <img key={id} src={url} className='thumbnail' onClick={this.handleThumbClick}></img>
+      <img key={id} src={url} className='thumbnail_gallery' onClick={this.handleThumbClick}></img>
     );
   }
 
 
-  handleThumbclick(){
+  handleThumbClick(){
     this.setState({imageCardVis: !this.state.imageCardVis})
   }
 
@@ -253,7 +253,7 @@ export default class GalleryBody extends React.Component {
 
           				<ImageCard 
                     API={this.API} 
-                    onCloseClick={this.handleThumbclick} 
+                    onCloseClick={this.handleThumbClick} 
                     isVisible={imageCardVis}/>
             		</section>
                 <aside className='gallery-body_commentsection'>
