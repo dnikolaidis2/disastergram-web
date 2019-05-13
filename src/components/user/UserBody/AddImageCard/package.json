@@ -1,0 +1,5 @@
+{
+	"name":"AddImageCard",
+	"private":"true",
+	"main":"./AddImageCard.jsx"
+}

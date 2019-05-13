@@ -42,27 +42,17 @@ export default class LoginPage extends React.Component {
 		}
 
 		return (
-			<div className='loginpage'>
-				<FlexBox>
+			<div className='loginpage flexbox'>
 					<Card>
 						{LoginTitle()}
 						<Login Auth={this.Auth} updateLoggedIn={this.updateLoggedIn}/>
 					</Card>
-				</FlexBox>
 			</div>
 
 			);
 	}
 }
 
-
-function FlexBox(props) {
-	return(
-		<div className='flexbox'>
-			{props.children}
-		</div>
-	);
-}
 
 function Card(props) {
 	return (

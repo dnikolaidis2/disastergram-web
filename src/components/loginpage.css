@@ -4,10 +4,11 @@
   background-image: url('../images/login/background.jpeg');
   background-attachment: fixed;
   background-position: center center;
+  background-size: cover;
 }
 
 
-.loginpage > .flexbox {
+.flexbox {
 
   height:100%;
   display: flex;

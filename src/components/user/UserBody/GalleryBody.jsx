@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 // ** Components
 import ImageCard from './ImageCard'
+import AddImageCard from './AddImageCard'
 
 import './gallerybody.css'
 
@@ -23,6 +24,7 @@ export default class GalleryBody extends React.Component {
       //Flags
       isFileUpVis: false,
 			imageCardVis: false,
+      addImageCardVis: false,
       redirectFlag: false,
       sameUser: true,
       loading: true,
@@ -35,6 +37,7 @@ export default class GalleryBody extends React.Component {
     this.handleThumbClick = this.handleThumbClick.bind(this);
     this.Thumbnails = this.Thumbnails.bind(this);
     this.Thumbnail = this.Thumbnail.bind(this);
+    this.getImagesLinks = this.getImagesLinks.bind(this);
 
 
     // Upload forms
@@ -150,8 +153,19 @@ export default class GalleryBody extends React.Component {
   }
 
 
-  handleThumbClick(){
-    this.setState({imageCardVis: !this.state.imageCardVis})
+  handleThumbClick(e){
+    if(this.state.imageCardVis === false){
+      this.setState({imageCardVis: true, imageToShow: e.target.src})
+    }
+    else {
+
+    }
+
+    this.setState({
+      imageCardVis: !this.state.imageCardVis,
+    })
+
+
   }
 
   // --  Images/Thumbnails -END --
@@ -172,12 +186,6 @@ export default class GalleryBody extends React.Component {
           this.getImagesLinks();
         }
       });
-
-    // if(typeof res !== 'undefined'){
-    //   if(res.status < 400){
-    //     this.getImagesLinks();
-    //   }
-    // }
   }
   
 
@@ -196,7 +204,7 @@ export default class GalleryBody extends React.Component {
   }
 
   toggleFileUpload(){
-    this.setState({isFileUpVis : !this.state.isFileUpVis })
+    this.setState({addImageCardVis : !this.state.addImageCardVis })
   }
 
   // Images
@@ -204,9 +212,9 @@ export default class GalleryBody extends React.Component {
 
 
   render(){
-    const  imageCardVis = this.state.imageCardVis;
 
-    let {galleryName, author, sameUser, redirectFlag, loading } = this.state;
+    let {galID, galleryName, author, sameUser, addImageCardVis, 
+      redirectFlag, loading, imageToShow, imageCardVis } = this.state;
 
     if(typeof this.props.location.state !== 'undefined'){
   	  // let galleryName = this.props.location.state.itemName;
@@ -244,9 +252,6 @@ export default class GalleryBody extends React.Component {
             			</header>
 
           				<hr style={hrStyle}/>
-
-                  {this.uploadForm()}
-
                   <section className='images__container'>
                     {this.Thumbnails()}
                   </section>
@@ -254,7 +259,16 @@ export default class GalleryBody extends React.Component {
           				<ImageCard 
                     API={this.API} 
                     onCloseClick={this.handleThumbClick} 
-                    isVisible={imageCardVis}/>
+                    isVisible={imageCardVis}
+                    imageURL={imageToShow}
+                    author={author}/>
+
+                  <AddImageCard
+                    API={this.API}
+                    onCloseClick={this.toggleFileUpload}
+                    isVisible={addImageCardVis}
+                    galID={galID}
+                    updateParent={this.getImagesLinks}/>
             		</section>
                 <aside className='gallery-body_commentsection'>
                 </aside>

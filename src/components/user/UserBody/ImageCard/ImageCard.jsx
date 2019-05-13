@@ -42,15 +42,15 @@ export default class ImageCard  extends React.Component {
 
 		return (
 				<section className='image-card__image-info select'>
-					<h2>{image.title}</h2>
-					<div>by<span className='image-author'>{image.author}</span></div>
+					<div>by<span className='image-author'>{this.props.author}</span></div>
 				</section>
 			)
 	}
 
 
 	render() {
-		const imgsrc = 'https://images.unsplash.com/photo-1508904186271-c9c83ae788cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1250&q=80'
+		const imgsrc = this.props.imageURL;
+		 // = 'https://images.unsplash.com/photo-1508904186271-c9c83ae788cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1250&q=80'
 		const isVisible = this.props.isVisible;
 
 		const hrStyle = {width: '96%', 'borderColor': '#dddddd', 'borderStyle':'solid'};

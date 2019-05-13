@@ -1,0 +1,33 @@
+.add-imagecard__container{
+	position: fixed;
+	background-color: rgba(0,0,0,0.6);
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+
+  transition:0.2s opacity ease-in-out,  0.2s visibility  ease-in-out;
+}
+
+
+.addimage-card__title {
+	padding-bottom: 25px;
+	font-weight: 400;
+}
+
+.addimage-card__form {}
+
+.addimage-card__input {
+	padding-bottom: 20px;
+}
+
+.previewImage {
+	max-width: 60%;
+	padding: 25px;
+}
