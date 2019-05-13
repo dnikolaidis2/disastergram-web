@@ -330,9 +330,6 @@ export default class API {
 	// *** IMAGES	***
 
 	uploadImage(image, galID){
-		// const headers = { 
-		// 	headers: {'Content-Type': 'multipart/form-data'}
-		// };
 
 		var formData = new FormData();
 		formData.append('file',image);
@@ -348,6 +345,30 @@ export default class API {
       .catch((error) => {
       	console.log('An error occured while uploading!')	
   		});
+	}
+
+	deleteImage(imID){
+		const {headers, userToken} = this.state;
+
+		const data = {
+			token: userToken
+		}
+
+		return axios.post(`/api/user/image/${imID}`, 
+				{headers: {...headers}},
+				{data: {...data}})
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API:('+ res.status +') DELETE image. (imID: '+ imID +')');
+					}
+				}
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
 	}
 
 	getImagesLinks(galID){

@@ -148,7 +148,7 @@ export default class GalleryBody extends React.Component {
 
   Thumbnail(id, url){
     return(
-      <img key={id} src={url} className='thumbnail_gallery' onClick={this.handleThumbClick}></img>
+        <img key={'_'+id} src={url} className='thumbnail_gallery' onClick={this.handleThumbClick}></img>
     );
   }
 
@@ -158,14 +158,10 @@ export default class GalleryBody extends React.Component {
       this.setState({imageCardVis: true, imageToShow: e.target.src})
     }
     else {
-
+      this.setState({
+        imageCardVis: !this.state.imageCardVis,
+      })
     }
-
-    this.setState({
-      imageCardVis: !this.state.imageCardVis,
-    })
-
-
   }
 
   // --  Images/Thumbnails -END --

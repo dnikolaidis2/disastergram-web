@@ -70,7 +70,7 @@
 
 }
 
-/* *** IMAGE GRID *** */
+/* *** IMAGE FLEXBOX *** */
 
 .images__container {	
 	width: 80%;
@@ -78,16 +78,10 @@
 	display:  flex;
 	flex-flow: row wrap;
 
-
-	/* Add some gap between rows and columns */
-	/* grid-gap: 2em;  */
-	/* Make columns adjust according to the available viewport/width */
-	/* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
-	/* Set the height of the auto-created rows*/
-	/* grid-auto-rows:  auto; */
 }
 
 .thumbnail_gallery {
+	position: relative;
   background-color: gray;
   border-radius: 5px;
   object-fit: cover;
@@ -97,4 +91,17 @@
   min-width: 150px;
   max-width: 500px;
   margin: 0 8px 8px 0; /* Some gutter */
+  transition: 0.2s top ease-in-out, 0.2s box-shadow ease-in-out;
+  top: 0;
+}
+
+.thumbnail_gallery:hover {
+	box-shadow: 0px 0px 8px 8px rgba(20,20,20,0.6);
+	border-width: 3px;
+	border: inset 3px solid red;
+	top: -3px;
+}
+
+.delete-image-btn {
+	position: relative;
 }

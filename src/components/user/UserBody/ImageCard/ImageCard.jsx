@@ -38,8 +38,6 @@ export default class ImageCard  extends React.Component {
 	// -- Submodules
 
 	infoTab() {
-		const image = this.state.image;
-
 		return (
 				<section className='image-card__image-info select'>
 					<div>by<span className='image-author'>{this.props.author}</span></div>
@@ -63,8 +61,8 @@ export default class ImageCard  extends React.Component {
 
 					<article className='image-card card' onClick={this.stopClickPropagation}>
 						<picture className='image-container'>
-							{this.infoTab()}
 							<img className='image-card__image' alt='Post' src={imgsrc}></img>
+							{this.infoTab()}
 						</picture>
 						<hr style={hrStyle}/>
 						<CommentSection API={this.API} type='image' id='e2dff1c1-223d-4956-ab7e-c509f4dc306a' isVisible={true}/>

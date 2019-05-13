@@ -60,9 +60,6 @@ export default class AddImageCard extends React.Component {
 
 		render() {
 			const isVisible = this.props.isVisible;
-			const file = this.state.file;
-			const filePreview = this.state.filePreview;
-
 			const contVisStyle = {
 	      visibility: isVisible ? 'visible' : 'hidden',
 	      opacity: isVisible ? '1' : 0
