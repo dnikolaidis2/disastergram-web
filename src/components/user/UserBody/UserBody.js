@@ -143,7 +143,6 @@ export default class UserBody extends React.Component {
     const username = this.API.getUser();
 
     // const { curURL, loggedInUser } = this.props;
-    // console.log('Current url is : ' + curURL);
     return(
       <React.Fragment>
         {!loading &&

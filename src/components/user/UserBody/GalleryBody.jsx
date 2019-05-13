@@ -17,16 +17,27 @@ export default class GalleryBody extends React.Component {
 			galleryName: 'Loading...',
 			author: 'Loading...',
       galID:null,
-			imageCardVis: false,
       file: null,
+      images: [],
+
+      //Flags
       isFileUpVis: false,
+			imageCardVis: false,
       redirectFlag: false,
       sameUser: true,
       loading: true,
 		}
 
+    // General Gal
     this.getGalInfo = this.getGalInfo.bind(this);
+
+    // Images/Thumbs
     this.handleThumbclick = this.handleThumbclick.bind(this);
+    this.Thumbnails = this.Thumbnails.bind(this);
+    this.Thumbnail = this.Thumbnail.bind(this);
+
+
+    // Upload forms
     this.onChange = this.onChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.uploadForm = this.uploadForm.bind(this);
@@ -40,8 +51,8 @@ export default class GalleryBody extends React.Component {
     }
 
     let galID = this.props.match.params.galID;
-    this.setState({galdID: galID})
-    this.getGalInfo(galID)
+    this.setState({galdID: galID});
+    this.getGalInfo(galID);
 
 
   }
@@ -80,6 +91,9 @@ export default class GalleryBody extends React.Component {
           author_id: res.data.Gallery[0].user_id,
           loading: false,
         })
+
+        this.getImagesLinks();
+
         if(res.data.username === this.API.Auth.getUser())
           this.setState({sameUser: true})
 
@@ -92,18 +106,82 @@ export default class GalleryBody extends React.Component {
 
   }
 
+  // --  Images/Thumbnails -Start --
+
+  async getImagesLinks() {
+    const galID = this.state.galID
+
+    if(typeof galID === 'undefined')
+      return;
+
+    let res = await this.API.getImagesLinks(galID)
+
+    
+    if(typeof res !== 'undefined') {
+      if (res.status < 400){
+        if(res.status === 204){
+          this.setState({images: []});
+          return;
+        }
+
+        this.setState({
+          images : res.data.gallery_images
+        })
+      } 
+    }
+    else {
+      this.setState({images: []})
+    }
+
+  }
+
+  Thumbnails(){
+    const images = this.state.images;
+
+    return images.map( image => {
+      return this.Thumbnail(image.image_id, image.image_url);
+    });
+  }
+
+  Thumbnail(id, url){
+    return(
+      <img key={id} src={url} className='thumbnail' onClick={this.handleThumbClick}></img>
+    );
+  }
+
+
   handleThumbclick(){
     this.setState({imageCardVis: !this.state.imageCardVis})
   }
+
+  // --  Images/Thumbnails -END --
+
+
+  // --  Upload Form -Start --
 
   onChange(e){
     this.setState({file:e.target.files[0]});
   }
 
   onFormSubmit(e){
-     e.preventDefault();
-     this.API.uploadImage(this.state.file, this.state.galID)
+    e.preventDefault();
+    this.API.uploadImage(this.state.file, this.state.galID)
+      .then(res => {
+        if(res.status < 400) {
+          setTimeout(1000);
+          this.getImagesLinks();
+        }
+      });
+
+    // if(typeof res !== 'undefined'){
+    //   if(res.status < 400){
+    //     this.getImagesLinks();
+    //   }
+    // }
   }
+  
+
+  // --  Upload Form -END --
 
   uploadForm(){
     return (
@@ -120,6 +198,10 @@ export default class GalleryBody extends React.Component {
   toggleFileUpload(){
     this.setState({isFileUpVis : !this.state.isFileUpVis })
   }
+
+  // Images
+
+
 
   render(){
     const  imageCardVis = this.state.imageCardVis;
@@ -144,7 +226,7 @@ export default class GalleryBody extends React.Component {
   	return(
       <React.Fragment>
         {redirectFlag
-          ?<Redirect to={`/user`}/>
+          ?<Redirect to={`/feed`}/>
           :<React.Fragment>
             {!loading &&
               <div className='gallerybody__container fl fl_row' >
@@ -164,6 +246,10 @@ export default class GalleryBody extends React.Component {
           				<hr style={hrStyle}/>
 
                   {this.uploadForm()}
+
+                  <section className='images__container'>
+                    {this.Thumbnails()}
+                  </section>
 
           				<ImageCard 
                     API={this.API} 

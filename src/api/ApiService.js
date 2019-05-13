@@ -329,7 +329,7 @@ export default class API {
 
 	// *** IMAGES	***
 
-	uploadImage(image, gall_id){
+	uploadImage(image, galID){
 		// const headers = { 
 		// 	headers: {'Content-Type': 'multipart/form-data'}
 		// };
@@ -338,15 +338,40 @@ export default class API {
 		formData.append('file',image);
 		// formData.append('token', this.state.userToken)
 
-		axios.post(`/api/user/gallery/${gall_id}/upload?token=${this.state.userToken}`,
+		return axios.post(`/api/user/gallery/${galID}/upload?token=${this.state.userToken}`,
 				formData,
 			)
-      .then((response) => {
+      .then((res) => {
         console.log("The file is successfully uploaded");
+        return Promise.resolve(res);
       })
       .catch((error) => {
       	console.log('An error occured while uploading!')	
   		});
+	}
+
+	getImagesLinks(galID){
+		const {headers, userToken} = this.state;
+
+		return axios.get(`/api/user/gallery/${galID}/images`, 
+				{params: {
+					token: userToken
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API:('+ res.status +') GET images. (galID: '+ galID +')');
+					}
+				}
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
+
 	}
  
 

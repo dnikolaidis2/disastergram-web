@@ -346,6 +346,8 @@ export default class Sidebar extends React.Component {
           {userPageTitle(this.Auth.getUser())}
           <div className='sidebar__container'>
 
+            <Link to={'/feed'}className='dropdown-btn noSelect'>Home</Link>
+
             <DropdownBtn text='Followers' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
             {this.getListModule('followers', isFriendsVisible, null)}
 
