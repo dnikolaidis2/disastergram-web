@@ -172,10 +172,6 @@ export default class GalleryBody extends React.Component {
     );
   }
 
-  callbackFn(key){
-    this.props.callbackFn(key);
-  }
-
   toggleDelete(){
     this.setState({deleteMode: !this.state.deleteMode})
   }

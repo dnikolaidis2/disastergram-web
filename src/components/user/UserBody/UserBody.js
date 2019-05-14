@@ -22,7 +22,7 @@ export default class UserBody extends React.Component {
     this.state = {
       imageCardVis: false,
       galleries: this.props.galleries || [],
-      username: '',
+      imageAuthor: '',
       loggedInUser: this.props.loggedInUser,
       curURL: this.props.curURL,
       loading: true,
@@ -113,7 +113,8 @@ export default class UserBody extends React.Component {
 
 
   handleThumbclick(srcURL, imageAuthor, id){
-    this.setState({imageCardVis: !this.state.imageCardVis, srcURL, imageAuthor, imageID: id});
+    console.log(srcURL+ ' ' + imageAuthor +' '+ id )
+    this.setState({imageCardVis: !this.state.imageCardVis, srcURL, imageAuthor: imageAuthor, imageID: id});
   }
 
   TopBanner() {
@@ -127,10 +128,8 @@ export default class UserBody extends React.Component {
 
 
   render() {
-    const { imageCardVis, loading, curUserFlag, srcURL, imageAuthor, imageID } = this.state;
-    // if(typeof this.props.match.params !== 'undefined'){
+    const { imageCardVis, loading, curUserFlag, imageAuthor, srcURL, imageID, username } = this.state;
 
-    // }
     let galleries;
     if (curUserFlag){
       galleries = this.props.galleries;
@@ -140,7 +139,7 @@ export default class UserBody extends React.Component {
     }
     
 
-    const username = this.API.getUser();
+    const curUser = this.API.getUser();
 
     // const { curURL, loggedInUser } = this.props;
     return(
@@ -160,7 +159,7 @@ export default class UserBody extends React.Component {
               })
             }
           </div>
-          <ImageCard 
+          <ImageCard
             API={this.API} 
             onCloseClick={this.handleThumbclick} 
             isVisible={imageCardVis}
