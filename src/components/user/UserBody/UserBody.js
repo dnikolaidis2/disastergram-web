@@ -166,7 +166,7 @@ export default class UserBody extends React.Component {
             isVisible={imageCardVis}
             imageURL={srcURL}
             author={imageAuthor}
-            id={imageID}/>
+            imageID={imageID}/>
         </div>
         }
       </React.Fragment>

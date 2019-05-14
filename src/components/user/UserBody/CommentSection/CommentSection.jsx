@@ -209,7 +209,7 @@ export default class CommentSection extends React.Component {
 
 		// 'image' means that the bg of the module is white
 		// Background is white in other cases. Change className accordingly (style changes in css file)
-		const classAddField = `comment-section__add__field ${type === 'image' ? 'whiteBG' : 'blackBG' }`;
+		const classAddField = `comment-section__add__field blackBG`; //${type === 'image' ? 'whiteBG' : 'blackBG' }`;
 		// const classCont = `comment-section__container ${ type === 'image' ? 'whiteBG' : 'blackBG' }`;
 
 
