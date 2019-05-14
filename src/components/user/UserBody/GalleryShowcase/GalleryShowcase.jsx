@@ -39,7 +39,6 @@ export default class GalleryShowcase extends React.Component {
   	}
 
     componentDidUpdate(prevProps) {
-    		console.log('prev: ' + prevProps.gallery.id + 'curR: ' + this.props.gallery)
     	if(prevProps.gallery !== this.props.gallery){
     		this.getImagesLinks(this.props.gallery.id)
     	}
@@ -122,6 +121,11 @@ export default class GalleryShowcase extends React.Component {
 	  const isVis = this.state.isCommmentsVisible;
 	  const loading = this.state.loading;
 
+	  let isEmpty = false;
+	  if(this.state.images.length === 0){
+	  	isEmpty = true;
+	  }
+
 	  const expandMoreStyle = {
   	  'WebkitTransform': isVis ? 'rotate(180deg)': 'rotate(0deg)',
 			'MozTransform': isVis ? 'rotate(180deg)': 'rotate(0deg)',
@@ -144,6 +148,11 @@ export default class GalleryShowcase extends React.Component {
 	    	</header>
 	      <section className='gal-showcase__body'>
 	        {!loading && this.Thumbnails()}
+	        {(isEmpty && !loading) && 
+	        	<p className='emptymessage'>
+	        		This gallery seems to be empty...
+	        	</p>
+	        }
 	      </section>
 				<CommentSection API={this.API} type='galshowcase' id={id} isVisible={isVis}/>
 	    </article>
