@@ -60,7 +60,7 @@
 
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: flex-start;
   overflow: hidden;
 
@@ -72,4 +72,5 @@
   width: 150px;
   background-color: gray;
   border-radius: 5px;
+  object-fit: cover;
 }

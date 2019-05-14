@@ -119,7 +119,11 @@ export default class AuthAPI {
 		const token = this.getToken();
 
 		// if token is not empty AND is NOT expired, return TRUE
-		return !!token && !this.isTokenExpired(token);
+		const flag = !!token && !this.isTokenExpired(token)
+		if(!flag){
+			this.logout();
+		}
+		return flag;
 	}
 
 

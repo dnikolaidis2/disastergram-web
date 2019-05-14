@@ -20,20 +20,10 @@ export default class GalleryShowcase extends React.Component {
 
 		this.state = {
       images: [
-        {id: 1, name: 'img1name', url: 'http::/1234' },
-        {id: 2, name: 'img2name', url: 'http::/2234' },
-        {id: 3, name: 'img3name', url: 'http::/3234' },
-        {id: 4, name: 'img4name', url: 'http::/4234' },
-        {id: 5, name: 'img5name', url: 'http::/5234' },
-        {id: 6, name: 'img6name', url: 'http::/6234' },
-        {id: 7, name: 'img7name', url: 'http::/7234' },
-        {id: 8, name: 'img8name', url: 'http::/8234' },
-        {id: 9, name: 'img9name', url: 'http::/9234' },
-        {id: 10, name: 'img10name', url: 'http::/10234' },
-        {id: 11, name: 'img11name', url: 'http::/11234' },
       ],
       isCommmentsVisible: false,
       imageCardVis: false,
+      loading: true,
 		}
 
 		this.toggleComments = this.toggleComments.bind(this);
@@ -43,19 +33,80 @@ export default class GalleryShowcase extends React.Component {
 
   }
 
-	Thumbnails(){
-		const images = this.state.images;
+  componentDidMount(){
+  	if(typeof this.props.gallery !== 'undefined')
+    	this.getImagesLinks(this.props.gallery.id);
+  	}
 
-	  return images.map( photo => {
-	    return this.Thumbnail(photo.id);
-	  });
-	}
+    componentDidUpdate(prevProps) {
+    		console.log('prev: ' + prevProps.gallery.id + 'curR: ' + this.props.gallery)
+    	if(prevProps.gallery !== this.props.gallery){
+    		this.getImagesLinks(this.props.gallery.id)
+    	}
+    }
 
-	Thumbnail(id){
-	  return(
-	    <div key={id} className='thumbnail' onClick={this.handleThumbClick}></div>
-	  );
-	}
+
+  // --  Images/Thumbnails -Start --
+
+  async getImagesLinks() {
+    const galID = this.props.gallery.id
+
+    if(typeof galID === 'undefined')
+      return;
+
+    let res = await this.API.getImagesLinks(galID)
+
+    
+    if(typeof res !== 'undefined') {
+      if (res.status < 400){
+        if(res.status === 204){
+          this.setState({images: [], loading: false});
+          return;
+        }
+
+        this.setState({
+          images : res.data.gallery_images,
+          loading: false,
+        })
+      } 
+    }
+    else {
+      this.setState({images: [], loading: false})
+    }
+
+  }
+
+  refreshImages(){
+    this.getImagesLinks();
+  }
+
+  Thumbnails(){
+    const images = this.state.images;
+
+    return images.map( image => {
+      return this.Thumbnail(image.image_id, image.image_url);
+    });
+  }
+
+  Thumbnail(id, url){
+    let style = {};
+
+    if(this.state.deleteMode){
+     style = {
+        // borderRadius : '20px'
+      }
+    }
+
+    return(
+        <img 
+          key={id} 
+          src={url} 
+          className='thumbnail' 
+          onClick={this.handleThumbClick.bind(this, id)}
+          style={style}></img>
+    );
+  }
+
 
 	handleThumbClick(){
 		this.onThumbClick(/*Pass data to parent*/);
@@ -69,6 +120,7 @@ export default class GalleryShowcase extends React.Component {
 	  const { galleryname, id } = this.props.gallery;
 	  const username = this.props.username;
 	  const isVis = this.state.isCommmentsVisible;
+	  const loading = this.state.loading;
 
 	  const expandMoreStyle = {
   	  'WebkitTransform': isVis ? 'rotate(180deg)': 'rotate(0deg)',
@@ -91,7 +143,7 @@ export default class GalleryShowcase extends React.Component {
 		      <p className='gal-showcase__commentbtn' onClick={this.toggleComments}>Comments <i className="material-icons" style={expandMoreStyle}>expand_more</i></p>
 	    	</header>
 	      <section className='gal-showcase__body'>
-	        {this.Thumbnails()}
+	        {!loading && this.Thumbnails()}
 	      </section>
 				<CommentSection API={this.API} type='galshowcase' id={id} isVisible={isVis}/>
 	    </article>
