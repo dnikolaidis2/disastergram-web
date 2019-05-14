@@ -112,8 +112,8 @@ export default class UserBody extends React.Component {
 
 
 
-  handleThumbclick(){
-    this.setState({imageCardVis: !this.state.imageCardVis})
+  handleThumbclick(srcURL, imageAuthor){
+    this.setState({imageCardVis: !this.state.imageCardVis, srcURL, imageAuthor});
   }
 
   TopBanner() {
@@ -127,7 +127,7 @@ export default class UserBody extends React.Component {
 
 
   render() {
-    const { imageCardVis, loading, curUserFlag } = this.state;
+    const { imageCardVis, loading, curUserFlag, srcURL, imageAuthor } = this.state;
     // if(typeof this.props.match.params !== 'undefined'){
 
     // }
@@ -163,7 +163,9 @@ export default class UserBody extends React.Component {
           <ImageCard 
             API={this.API} 
             onCloseClick={this.handleThumbclick} 
-            isVisible={imageCardVis}/>
+            isVisible={imageCardVis}
+            imageURL={srcURL}
+            author={imageAuthor}/>
         </div>
         }
       </React.Fragment>

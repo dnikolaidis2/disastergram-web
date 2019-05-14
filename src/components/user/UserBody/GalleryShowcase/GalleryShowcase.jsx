@@ -107,8 +107,8 @@ export default class GalleryShowcase extends React.Component {
   }
 
 
-	handleThumbClick(){
-		this.onThumbClick(/*Pass data to parent*/);
+	handleThumbClick(id, e){
+		this.onThumbClick(e.target.src, this.props.gallery.username);
 	}
 
 	toggleComments() {

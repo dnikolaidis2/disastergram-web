@@ -173,9 +173,7 @@ export default class GalleryBody extends React.Component {
           src={url} 
           className='thumbnail_gallery' 
           onClick={this.handleThumbClick.bind(this, id)}
-          style={style}
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}></img>
+          style={style}></img>
     );
   }
 
