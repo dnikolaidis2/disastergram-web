@@ -26,8 +26,9 @@ export default class GalleryBody extends React.Component {
 			imageCardVis: false,
       addImageCardVis: false,
       redirectFlag: false,
-      sameUser: true,
+      sameUser: false,
       loading: true,
+      deleteMode: false,
 		}
 
     // General Gal
@@ -38,6 +39,11 @@ export default class GalleryBody extends React.Component {
     this.Thumbnails = this.Thumbnails.bind(this);
     this.Thumbnail = this.Thumbnail.bind(this);
     this.getImagesLinks = this.getImagesLinks.bind(this);
+    this.refreshImages = this.refreshImages.bind(this);
+    this.toggleDelete = this.toggleDelete.bind(this);
+
+    // this.onMouseEnter = this.onMouseEnter.bind(this);
+    // this.onMouseLeave = this.onMouseLeave.bind(this);
 
 
     // Upload forms
@@ -97,7 +103,9 @@ export default class GalleryBody extends React.Component {
 
         this.getImagesLinks();
 
-        if(res.data.username === this.API.Auth.getUser())
+        console.log(this.API.Auth.getUser())
+        console.log(res.data.username)
+        if(res.data.Gallery[0].username === this.API.Auth.getUser())
           this.setState({sameUser: true})
 
         return;
@@ -138,6 +146,10 @@ export default class GalleryBody extends React.Component {
 
   }
 
+  refreshImages(){
+    this.getImagesLinks();
+  }
+
   Thumbnails(){
     const images = this.state.images;
 
@@ -147,13 +159,48 @@ export default class GalleryBody extends React.Component {
   }
 
   Thumbnail(id, url){
+    let style = {};
+
+    if(this.state.deleteMode){
+     style = {
+        // borderRadius : '20px'
+      }
+    }
+
     return(
-        <img key={'_'+id} src={url} className='thumbnail_gallery' onClick={this.handleThumbClick}></img>
+        <img 
+          key={id} 
+          src={url} 
+          className='thumbnail_gallery' 
+          onClick={this.handleThumbClick.bind(this, id)}
+          style={style}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}></img>
     );
   }
 
+  callbackFn(key){
+    this.props.callbackFn(key);
+  }
 
-  handleThumbClick(e){
+  toggleDelete(){
+    this.setState({deleteMode: !this.state.deleteMode})
+  }
+
+  handleThumbClick(id, e){
+    // If delete mode is enabled
+    if(this.state.deleteMode){
+      this.API.deleteImage(id)
+      .then( res => {
+        if(res.status < 400){
+          setTimeout(1000);
+          this.getImagesLinks();
+        }
+      })
+      return
+    }
+
+
     if(this.state.imageCardVis === false){
       this.setState({imageCardVis: true, imageToShow: e.target.src})
     }
@@ -210,7 +257,7 @@ export default class GalleryBody extends React.Component {
   render(){
 
     let {galID, galleryName, author, sameUser, addImageCardVis, 
-      redirectFlag, loading, imageToShow, imageCardVis } = this.state;
+      redirectFlag, loading, imageToShow, imageCardVis, deleteMode } = this.state;
 
     if(typeof this.props.location.state !== 'undefined'){
   	  // let galleryName = this.props.location.state.itemName;
@@ -219,6 +266,14 @@ export default class GalleryBody extends React.Component {
     } else {
 
     }
+
+    console.log(deleteMode)
+    const deletePStyle = {
+      height: deleteMode ? '50px' :'0px',
+      padding: deleteMode ? '30px': '0px',
+      border: deleteMode ? '2px solid #d21714' : '0px',
+      opacity: deleteMode ? '1' : '0',
+     }
 
   	const hrStyle = {
       position: 'relative',
@@ -241,13 +296,25 @@ export default class GalleryBody extends React.Component {
             				  <div>by<span className='gallery__author'>{author}</span></div>
                     </section>
                     { sameUser &&
-                      <p className='gallery__toggle-up-btn fl al_center' onClick={this.toggleFileUpload}>
-                          <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
-                      </p>
+                      <div className='fl al_center gallery_settings'>
+                        <p className='upload-btn fl al_center' onClick={this.toggleFileUpload}>
+                            <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
+                        </p>
+                        <p className='delete-btn fl al_center' onClick={this.toggleDelete}>
+                          <i className="material-icons">delete_outline</i>
+                        </p>
+                      </div>
                     }
             			</header>
 
           				<hr style={hrStyle}/>
+
+                  
+                    <p className='deleteP noSelect' style={deletePStyle}>
+                      Click the image you want to delete!
+                    </p>
+                  
+
                   <section className='images__container'>
                     {this.Thumbnails()}
                   </section>

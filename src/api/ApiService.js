@@ -354,9 +354,12 @@ export default class API {
 			token: userToken
 		}
 
-		return axios.post(`/api/user/image/${imID}`, 
+		return axios.delete(`/api/user/image/${imID}`, 
+				{data: {
+					token: userToken,
+				}},
 				{headers: {...headers}},
-				{data: {...data}})
+			)
 			.then( res => {
 				if (process.env.NODE_ENV ==='development'){
 					if(res.status < 400){
