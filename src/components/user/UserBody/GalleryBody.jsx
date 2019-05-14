@@ -42,10 +42,6 @@ export default class GalleryBody extends React.Component {
     this.refreshImages = this.refreshImages.bind(this);
     this.toggleDelete = this.toggleDelete.bind(this);
 
-    // this.onMouseEnter = this.onMouseEnter.bind(this);
-    // this.onMouseLeave = this.onMouseLeave.bind(this);
-
-
     // Upload forms
     this.onChange = this.onChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -103,8 +99,6 @@ export default class GalleryBody extends React.Component {
 
         this.getImagesLinks();
 
-        console.log(this.API.Auth.getUser())
-        console.log(res.data.username)
         if(res.data.Gallery[0].username === this.API.Auth.getUser())
           this.setState({sameUser: true})
 
@@ -131,7 +125,7 @@ export default class GalleryBody extends React.Component {
     if(typeof res !== 'undefined') {
       if (res.status < 400){
         if(res.status === 204){
-          this.setState({images: []});
+          this.setState({images: [], loading:false});
           return;
         }
 
@@ -141,7 +135,7 @@ export default class GalleryBody extends React.Component {
       } 
     }
     else {
-      this.setState({images: []})
+      this.setState({images: [], loading:false})
     }
 
   }
@@ -170,6 +164,7 @@ export default class GalleryBody extends React.Component {
     return(
         <img 
           key={id} 
+          alt={id}
           src={url} 
           className='thumbnail_gallery' 
           onClick={this.handleThumbClick.bind(this, id)}
@@ -200,7 +195,7 @@ export default class GalleryBody extends React.Component {
 
 
     if(this.state.imageCardVis === false){
-      this.setState({imageCardVis: true, imageToShow: e.target.src})
+      this.setState({imageCardVis: true, imageToShow: e.target.src, imageID: id})
     }
     else {
       this.setState({
@@ -254,7 +249,7 @@ export default class GalleryBody extends React.Component {
 
   render(){
 
-    let {galID, galleryName, author, sameUser, addImageCardVis, 
+    let {galID, galleryName, author, sameUser, addImageCardVis, imageID,
       redirectFlag, loading, imageToShow, imageCardVis, deleteMode } = this.state;
 
     if(typeof this.props.location.state !== 'undefined'){
@@ -265,7 +260,6 @@ export default class GalleryBody extends React.Component {
 
     }
 
-    console.log(deleteMode)
     const deletePStyle = {
       height: deleteMode ? '50px' :'0px',
       padding: deleteMode ? '30px': '0px',
@@ -305,16 +299,14 @@ export default class GalleryBody extends React.Component {
                     }
             			</header>
 
-          				<hr style={hrStyle}/>
-
+          				<hr style={hrStyle}/> 
                   
-                    <p className='deleteP noSelect' style={deletePStyle}>
-                      Click the image you want to delete!
-                    </p>
-                  
+                  <p className='deleteP noSelect' style={deletePStyle}>
+                    Click the image you want to delete!
+                  </p>
 
                   <section className='images__container'>
-                    {this.Thumbnails()}
+                    {!loading && this.Thumbnails()}
                   </section>
 
           				<ImageCard 
@@ -322,6 +314,7 @@ export default class GalleryBody extends React.Component {
                     onCloseClick={this.handleThumbClick} 
                     isVisible={imageCardVis}
                     imageURL={imageToShow}
+                    imageID={imageID}
                     author={author}/>
 
                   <AddImageCard

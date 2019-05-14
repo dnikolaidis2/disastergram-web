@@ -40,7 +40,7 @@ export default class ImageCard  extends React.Component {
 	infoTab() {
 		return (
 				<section className='image-card__image-info select'>
-					<div>by<span className='image-author'>{this.props.author}</span></div>
+					<p className='byP' >by<span className='image-author'>{this.props.author}</span></p>
 				</section>
 			)
 	}
@@ -48,10 +48,10 @@ export default class ImageCard  extends React.Component {
 
 	render() {
 		const imgsrc = this.props.imageURL;
-		 // = 'https://images.unsplash.com/photo-1508904186271-c9c83ae788cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1250&q=80'
+		const id = this.props.imageID;
 		const isVisible = this.props.isVisible;
 
-		const hrStyle = {width: '96%', 'borderColor': '#dddddd', 'borderStyle':'solid'};
+		const hrStyle = {width: '100%', 'borderColor': '#dddddd', 'borderStyle':'solid'};
 
 		return (
 			<React.Fragment>
@@ -59,14 +59,16 @@ export default class ImageCard  extends React.Component {
 				<div className='image-card__container noSelect' onClick={this.onCloseClick}>
 					<button className='image-card__closebtn' onClick={this.onCloseClick}><i className='fa fa-times'></i></button>
 
-					<article className='image-card card' onClick={this.stopClickPropagation}>
-						<picture className='image-container'>
+					<article className='image-card card fl fl_row al_center js_center' onClick={this.stopClickPropagation}>
+						<picture className='image-container fl js_center'>
 							<img className='image-card__image' alt='Post' src={imgsrc}></img>
-							{this.infoTab()}
 						</picture>
-						<hr style={hrStyle}/>
-						<CommentSection API={this.API} type='image' id='e2dff1c1-223d-4956-ab7e-c509f4dc306a' isVisible={true}/>
 					</article>
+					<aside className='image-card-aside fl fl_column al_center' onClick={this.stopClickPropagation}>
+						{this.infoTab()}
+						<hr style={hrStyle}/>
+						<CommentSection API={this.API} type='image' id={id} isVisible={null}/>
+					</aside>
 				</div>
 				}
 			</React.Fragment>

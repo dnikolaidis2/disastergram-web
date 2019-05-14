@@ -13,7 +13,7 @@ export default class CommentSection extends React.Component {
 		this.API = this.props.API;
 
 		this.state = {
-			isVisible : this.props.isVisible,
+			isVisible : false,
 			comments: [
 				{id: 1, username: 'Bob', text: 'This is the most beautiful gallery.'},
 				{id: 2, username: 'Karen', text: 'But this isn\'t a gallery... it\'s an image!!'},
@@ -124,7 +124,15 @@ export default class CommentSection extends React.Component {
 
 		let height = 95 + (75 * Object.keys(comments).length) +'px';
 
-		const isVisible = this.props.isVisible;
+		let isVisible;
+
+		if(this.props.type === 'image'){
+			isVisible = !this.state.loading;
+		}
+		else{
+			isVisible = this.props.isVisible;
+		}
+
 
 
 		switch(x) {
@@ -159,17 +167,31 @@ export default class CommentSection extends React.Component {
 
 	handleCommentSubmit(e){
 		e.preventDefault();
-
+		const type = this.props.type;
 		this.setState({commentToAdd : ''})
-		this.API.addGalComment(this.props.id, this.state.commentToAdd)
-			.then( res => {
-				if(typeof res !== 'undefined'){
-					if(res.status < 400){
-						console.log('Comment added!');
-						this.refreshComments();
+
+		if (type === 'gallery' || type === 'galshowcase') {
+			this.API.addGalComment(this.props.id, this.state.commentToAdd)
+				.then( res => {
+					if(typeof res !== 'undefined'){
+						if(res.status < 400){
+							console.log('Comment added!');
+							this.refreshComments();
+						}
 					}
-				}
-			})
+				})
+		}
+		if(type === 'image') {
+			this.API.addImageComment(this.props.id, this.state.commentToAdd)
+				.then( res => {
+					if(typeof res !== 'undefined'){
+						if(res.status < 400){
+							console.log('Comment added!');
+							this.refreshComments();
+						}
+					}
+				})
+		}
 	}
 
 	refreshComments(){
@@ -186,7 +208,7 @@ export default class CommentSection extends React.Component {
 		const type = this.props.type;
 
 		// 'image' means that the bg of the module is white
-		// bg is white in other cases. Change className accordingly (style changes in css file)
+		// Background is white in other cases. Change className accordingly (style changes in css file)
 		const classAddField = `comment-section__add__field ${type === 'image' ? 'whiteBG' : 'blackBG' }`;
 		// const classCont = `comment-section__container ${ type === 'image' ? 'whiteBG' : 'blackBG' }`;
 

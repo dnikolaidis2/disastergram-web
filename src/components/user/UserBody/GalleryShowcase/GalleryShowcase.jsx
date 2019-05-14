@@ -98,7 +98,8 @@ export default class GalleryShowcase extends React.Component {
 
     return(
         <img 
-          key={id} 
+          key={id}
+          alt={id}
           src={url} 
           className='thumbnail' 
           onClick={this.handleThumbClick.bind(this, id)}
@@ -108,7 +109,7 @@ export default class GalleryShowcase extends React.Component {
 
 
 	handleThumbClick(id, e){
-		this.onThumbClick(e.target.src, this.props.gallery.username);
+		this.onThumbClick(e.target.src, this.props.gallery.username, id);
 	}
 
 	toggleComments() {

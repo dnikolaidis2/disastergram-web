@@ -327,13 +327,12 @@ export default class API {
 			})
 	}
 
-	// *** IMAGES	***
+	// *** IMAGES COMMENTS
 
 	uploadImage(image, galID){
 
 		var formData = new FormData();
 		formData.append('file',image);
-		// formData.append('token', this.state.userToken)
 
 		return axios.post(`/api/user/gallery/${galID}/upload?token=${this.state.userToken}`,
 				formData,
@@ -349,10 +348,6 @@ export default class API {
 
 	deleteImage(imID){
 		const {headers, userToken} = this.state;
-
-		const data = {
-			token: userToken
-		}
 
 		return axios.delete(`/api/user/image/${imID}`, 
 				{data: {
@@ -386,7 +381,7 @@ export default class API {
 			.then( res => {
 				if (process.env.NODE_ENV ==='development'){
 					if(res.status < 400){
-						console.log('API:('+ res.status +') GET images. (galID: '+ galID +')');
+						console.log('API: ('+ res.status +') GET images. (galID: '+ galID +')');
 					}
 				}
 
@@ -399,35 +394,54 @@ export default class API {
 	}
  
 
+	// *** IMAGES COMMENTS ***
 
  getImageComments(imID) {
-		// const {headers, userToken} = this.state;
-
-		let res;
-
-		return Promise.resolve(res);
-		
+	const {headers, userToken} = this.state;
 
 
-	// 	return axios.get(`/api/user/gallery/${galID}/comments`, 
-	// 			{params: {
-	// 				token: userToken
-	// 			}},
-	// 			{headers: {...headers}},
-	// 		)
-	// 		.then( res => {
-	// 			if (process.env.NODE_ENV ==='development'){
-	// 				if(res.status < 400){
-	// 					console.log('API:('+ res.status +') GET comments. (galID: '+ galID +')');
-	// 				}
-	// 			}
+		return axios.get(`/api/user/image/${imID}/comments`, 
+				{params: {
+					token: userToken
+				}},
+				{headers: {...headers}},
+			)
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API:('+ res.status +') GET  IMAGE comments. (ID: '+ imID +')');
+					}
+				}
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+				return Promise.resolve(er)
+			})
+	}
 
-	// 			// this.updateLocalStorage('galleries', res.data['Galleries']);
+	addImageComment(imID, text) {
+		const {headers, userToken} = this.state;
 
-	// 			return Promise.resolve(res);
-	// 		})
-	// 		.catch( er => {
-	// 			console.log(er)
-	// 		})
+		const data = {
+			body: text,
+			token: userToken
+		}
+
+		return axios.post(`/api/user/image/${imID}/comment`, 
+				{headers: {...headers}},
+				{data: {...data}})
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API:('+ res.status +') ADD IMAGE comments. (ID: '+ imID +')');
+					}
+				}
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				console.log(er)
+			})
 	}
 }

@@ -90,7 +90,7 @@ export default class AddImageCard extends React.Component {
 									autoComplete='off'
 									onSubmit={this.handleFormSubmit}>
 						        <input className='addimage-card__input' type="file" onChange={this.handleChange}/>
-						        <img className='previewImage'src={this.state.filePreview}/>
+						        {this.state.filePreview === '' || <img className='previewImage' alt='preview' src={this.state.filePreview}/>}
 									<InputBtn />
 								</form>
 							</article>
