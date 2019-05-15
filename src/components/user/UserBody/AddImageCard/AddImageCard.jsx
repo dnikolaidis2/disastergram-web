@@ -48,6 +48,8 @@ export default class AddImageCard extends React.Component {
           this.updateParent();
         }
       });
+    e.target.reset();
+  	this.setState({file:null, filePreview: ''})
     this.onCloseClick();
   }
 
