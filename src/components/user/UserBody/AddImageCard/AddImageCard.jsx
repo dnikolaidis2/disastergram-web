@@ -30,10 +30,13 @@ export default class AddImageCard extends React.Component {
 	// *** Form Handling ***
 
   handleChange(e){
-  	this.setState({
-  		file:e.target.files[0],
-  		filePreview: URL.createObjectURL(e.target.files[0])
-  	});
+  	console.log( )
+  	if(e.target.files.length > 0){
+	  	this.setState({
+	  		file:e.target.files[0],
+	  		filePreview: URL.createObjectURL(e.target.files[0])
+	  	});
+  	}
 	}
 
   handleFormSubmit(e){
