@@ -84,13 +84,20 @@ export default class Sidebar extends React.Component {
 
     this.getFollowing();
     this.getFollowers();
+
+    // setInterval(this.getFollowing, 2000);
+    setInterval(this.getFollowers, 5000);
+    // this.setState({interval})
+
   }
 
   componentWillUnmount(){
+    // @TODO remove
     if( this.state.friendsPromise !== null && this.state.galleriesPromise !== null){
       this.state.friendsPromise.cancel();
       this.state.galleriesPromise.cancel();
     }
+    // clearInterval(this.state.interval);
   }
 
   componentDidUpdate(prevProps){
