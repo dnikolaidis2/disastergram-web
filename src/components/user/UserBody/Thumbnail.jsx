@@ -8,27 +8,40 @@ export default class Thumbnail extends React.Component {
 		this.handleThumbClick = this.props.handleThumbClick;
 
 		this.state = {
-			isVis: false
+			isVis: false,
+			loading: false,
 		}
 
-		this.show = this.show.bind(this);
+		this.toggleShow = this.toggleShow.bind(this);
 	}
 
 	componentWillMount(){
 		var that=this;
 		setTimeout( () => {
-			that.show();
+			that.toggleShow();
 		}, that.props.wait);
 	}
 
-	show(){
-		this.setState({isVis: true})
+	compomentDidUpdate(prevProps){
+		console.log(prevProps.galID + ' -- ' + this.props.galID)
+		if(prevProps.loading !== this.props.loading){
+			this.toggleShow();
+			var that=this;
+
+			setTimeout( () => {
+				that.toggleShow();
+			}, that.props.wait);
+		}
+	}
+
+	toggleShow(){
+		this.setState({isVis: !this.state.isVis})
 	}
 
   render() {
     
-    const { id,  url, index, wait } = this.props;
-    const isVis = this.state.isVis;
+    const { id,  url, loading } = this.props;
+    const isVis = this.state.isVis && !loading;
 
     const style = {
       opacity: isVis ? '1' : '0' ,
@@ -36,7 +49,7 @@ export default class Thumbnail extends React.Component {
     }
     
     return(
-      <img 
+      <img
         key={id} 
         alt={id}
         src={url} 

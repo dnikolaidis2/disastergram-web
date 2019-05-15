@@ -31,6 +31,7 @@ export default class GalleryBody extends React.Component {
       loading: true,
       deleteMode: false,
       loadingAnim: false,
+      isUploading: false,
 		}
 
     // General Gal
@@ -47,10 +48,10 @@ export default class GalleryBody extends React.Component {
     this.showImages = this.showImages.bind(this);
 
     // Upload forms
-    this.onChange = this.onChange.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.uploadForm = this.uploadForm.bind(this);
+    this.startedUpload = this.startedUpload.bind(this);
+    this.finishedUpload = this.finishedUpload.bind(this);
     this.toggleFileUpload = this.toggleFileUpload.bind(this);
+    this.UploadModal = this.UploadModal.bind(this);
 	}
 
   componentDidMount(){
@@ -60,7 +61,7 @@ export default class GalleryBody extends React.Component {
     }
 
     let galID = this.props.match.params.galID;
-    this.setState({galdID: galID});
+    this.setState({galID: galID});
     this.getGalInfo(galID);
 
 
@@ -79,7 +80,7 @@ export default class GalleryBody extends React.Component {
 
     if (this.props.match.params.galID !== prevProps.match.params.galID) {
       this.getGalInfo(this.props.match.params.galID);
-      this.setState({loading: false})
+      this.setState({loading: true})
       if(this.props.location.pathname === prevProps.location.pathname){
       }
     }
@@ -87,7 +88,6 @@ export default class GalleryBody extends React.Component {
 
 
   async getGalInfo(galID){
-    
     this.setState({galID: this.props.match.params.galID})
     
     let res = await this.API.getGallery(galID)
@@ -119,13 +119,12 @@ export default class GalleryBody extends React.Component {
 
   async getImagesLinks() {
     const galID = this.state.galID
-
+  
     if(typeof galID === 'undefined')
       return;
 
     let res = await this.API.getImagesLinks(galID)
 
-    
     if(typeof res !== 'undefined') {
       if (res.status < 400){
         if(res.status === 204){
@@ -143,7 +142,6 @@ export default class GalleryBody extends React.Component {
     }
     else {
       this.setState({images: [], loading:false})
-      // console.log(this.state.loading)      
     }
 
   }
@@ -158,48 +156,24 @@ export default class GalleryBody extends React.Component {
 
   Thumbnails(){
     const images = this.state.images;
+    const loading = this.state.loading;
     // this.setState({loadingAnim: true})
 
     return images.map( (image, index) => {
       return (
         <Thumbnail
+          key={image.image_id}
+          galID={this.state.galID}
           id={image.image_id}
           url={image.image_url}
-          index={index}
-          wait={800 + index*80}
+          loading={loading}
+          wait={600 + index*80}
           handleThumbClick={this.handleThumbClick}
           />
         );
 
     });
   }
-      // this.Thumbnail(image.image_id, image.image_url, index);
-
-  // delayedThumbnail(id, url, ms) {
-  //   return new Promise(resolve => setTimeout(resolve, ms));
-  // }
-
-  // Thumbnail(id, url, index, isVis){
-  //   let style = {};
-
-  //   // var isVis = true;
-  //   // await setTimeout(800 + (index * 80))
-
-  //   style = {
-  //     opacity: isVis ? '1' : '0' ,
-  //     top: isVis ? '0px' : '10px',
-  //   }
-
-  //   return(
-  //       <img 
-  //         key={id} 
-  //         alt={id}
-  //         src={url} 
-  //         className='thumbnail_gallery' 
-  //         onClick={this.handleThumbClick.bind(this, id)}
-  //         style={style}></img>
-  //   );
-  // }
 
   toggleDelete(){
     this.setState({deleteMode: !this.state.deleteMode})
@@ -234,42 +208,33 @@ export default class GalleryBody extends React.Component {
 
   // --  Upload Form -Start --
 
-  onChange(e){
-    this.setState({file:e.target.files[0]});
+
+  startedUpload(){
+    this.setState({isUploading: true});
   }
 
-  onFormSubmit(e){
-    e.preventDefault();
-    this.API.uploadImage(this.state.file, this.state.galID)
-      .then(res => {
-        if(res.status < 400) {
-          setTimeout(1000);
-          this.getImagesLinks();
-        }
-      });
-  }
-  
-
-  // --  Upload Form -END --
-
-  uploadForm(){
-    return (
-      <section className='image-upload__container'>
-        <form className='image-upload__form' onSubmit={this.onFormSubmit}>
-          <h1>File Upload</h1>
-          <input type="file" name="image" onChange= {this.onChange} />
-          <button type="submit">Upload</button>
-        </form>
-      </section>
-    );
+  finishedUpload(){
+    this.setState({isUploading: false});
   }
 
   toggleFileUpload(){
     this.setState({addImageCardVis : !this.state.addImageCardVis })
   }
 
-  // Images
+  // Upload module
+  UploadModal(){
+    const isUploading = this.state.isUploading;
+    const uploadStyle = {
+      bottom: isUploading ? '50px' : '-200px',
+      opacity: isUploading ? '1' : '0',
+    }
 
+    return(
+        <div className='uploading-modal noSelect' style={uploadStyle}>Uploading...</div>
+      );
+  }
+
+  // --  Upload Form -END --
 
 
   render(){
@@ -286,6 +251,9 @@ export default class GalleryBody extends React.Component {
     }
 
 
+    const imageContStyle = {
+      opacity: loading ? '0' : '1',
+    }
 
     const deletePStyle = {
       height: deleteMode ? '50px' :'0px',
@@ -309,32 +277,36 @@ export default class GalleryBody extends React.Component {
             {!loadingGalInfo &&
               <div className='gallerybody__container fl fl_row' >
                 <section className='gallerybody fl fl_column al_center'>
-            			<header className='gallery__header fl fl_row al_center'>
-                    <section className='gallery__title'>
-            				  <h2 className='gallery__galname'>{galleryName}</h2>
-            				  <div>by<span className='gallery__author'>{author}</span></div>
-                    </section>
-                    { sameUser &&
-                      <div className='fl al_center gallery_settings'>
-                        <p className='upload-btn fl al_center' onClick={this.toggleFileUpload}>
-                            <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
-                        </p>
-                        <p className='delete-btn fl al_center' onClick={this.toggleDelete}>
-                          <i className="material-icons">delete_outline</i>
-                        </p>
+            			<header className='gallery__header fl fl_column al_center'>
+                    <div className='gallery__title_cont fl fl_row al_center js_between'>
+                      <section className='gallery__title'>
+              				  <h2 className='gallery__galname'>{galleryName}</h2>
+              				  <div>by<span className='gallery__author'>{author}</span></div>
+                      </section>
+                      { sameUser &&
+                        <div className='fl al_center gallery_settings'>
+                          <p className='upload-btn fl al_center' onClick={this.toggleFileUpload}>
+                              <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
+                          </p>
+                          <p className='delete-btn fl al_center' onClick={this.toggleDelete}>
+                            <i className="material-icons">delete_outline</i>
+                          </p>
+                        </div>
+                      }
                       </div>
-                    }
+          				    <hr style={hrStyle}/> 
             			</header>
 
-          				<hr style={hrStyle}/> 
                   
                   <p className='deleteP noSelect' style={deletePStyle}>
                     Click the image you want to delete!
                   </p>
 
-                  <section className='images__container'>
+                  <section className='images__container' style={imageContStyle}>
                     {!loading && this.Thumbnails()}
                   </section>
+
+                  {this.UploadModal()}
 
           				<ImageCard 
                     API={this.API} 
@@ -349,7 +321,9 @@ export default class GalleryBody extends React.Component {
                     onCloseClick={this.toggleFileUpload}
                     isVisible={addImageCardVis}
                     galID={galID}
-                    updateParent={this.getImagesLinks}/>
+                    updateParent={this.getImagesLinks}
+                    startedUpload={this.startedUpload}
+                    finishedUpload={this.finishedUpload}/>
             		</section>
                 <aside className='gallery-body_commentsection'>
                 </aside>

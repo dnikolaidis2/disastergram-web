@@ -137,9 +137,6 @@ export default class UserBody extends React.Component {
     else {
       galleries = this.state.galleries;
     }
-    
-
-    const curUser = this.API.getUser();
 
     // const { curURL, loggedInUser } = this.props;
     return(

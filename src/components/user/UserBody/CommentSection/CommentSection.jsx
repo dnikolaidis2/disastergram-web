@@ -15,17 +15,7 @@ export default class CommentSection extends React.Component {
 		this.state = {
 			isVisible : false,
 			comments: [
-				{id: 1, username: 'Bob', text: 'This is the most beautiful gallery.'},
-				{id: 2, username: 'Karen', text: 'But this isn\'t a gallery... it\'s an image!!'},
-				{id: 3, username: 'Bob', text: 'Stfu Karen. No one likes youStfu Karen. No one likes youStfu Karen. No one likes youStfu Karen. No one likes youStfu Karen. No one likes you'},
-				{id: 4, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{id: 5, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{id: 6, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{id: 7, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{id: 8, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{id: 9, username: 'Bob', text: 'Stfu Karen. No one likes you.'},
-				{id: 10, username: 'Jacob', text: 'Yeah karen, go kys.'},
-			],
+				],
 			commentStyle : {
 				style : {
 					backgroundColor: 'white' //default 
@@ -217,10 +207,9 @@ export default class CommentSection extends React.Component {
 		let visStyle = this.determineAnimStyle('section');
 		let visStyle2 = this.determineAnimStyle('container')
 
-		const type = this.props.type;
-
 		// 'image' means that the bg of the module is white
 		// Background is white in other cases. Change className accordingly (style changes in css file)
+		
 		const classAddField = `comment-section__add__field blackBG`; //${type === 'image' ? 'whiteBG' : 'blackBG' }`;
 		// const classCont = `comment-section__container ${ type === 'image' ? 'whiteBG' : 'blackBG' }`;
 

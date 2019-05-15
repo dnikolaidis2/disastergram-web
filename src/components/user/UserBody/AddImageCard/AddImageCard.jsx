@@ -12,6 +12,8 @@ export default class AddImageCard extends React.Component {
 
 		this.API = this.props.API;
 		this.updateParent = this.props.updateParent;
+		this.startedUpload = this.props.startedUpload;
+		this.finishedUpload = this.props.finishedUpload;
 
 		this.onCloseClick = this.onCloseClick.bind(this);
 		this.stopClickPropagation = this.stopClickPropagation.bind(this);
@@ -40,9 +42,11 @@ export default class AddImageCard extends React.Component {
 	}
 
   handleFormSubmit(e){
+  	this.startedUpload();
     e.preventDefault();
     this.API.uploadImage(this.state.file, this.props.galID)
       .then(res => {
+      	this.finishedUpload();
         if(res.status < 400) {
           setTimeout(1000);
           this.updateParent();
