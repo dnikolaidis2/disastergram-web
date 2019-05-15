@@ -129,7 +129,10 @@
   min-width: 150px;
   max-width: 500px;
   margin: 0 8px 8px 0; /* Some gutter */
-  transition: 0.15s top ease-in-out, 0.2s box-shadow ease-in-out;
+  transition: 
+  	0.3s opacity ease-in-out, 
+  	0.2s top ease-in-out, 
+  	0.2s box-shadow ease-in-out;
   top: 0;
   z-index: 0;
 }

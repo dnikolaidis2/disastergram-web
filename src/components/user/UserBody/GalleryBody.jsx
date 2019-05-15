@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 // ** Components
 import ImageCard from './ImageCard'
 import AddImageCard from './AddImageCard'
+import Thumbnail from './Thumbnail.jsx'
 
 import './gallerybody.css'
 
@@ -29,6 +30,7 @@ export default class GalleryBody extends React.Component {
       sameUser: false,
       loading: true,
       deleteMode: false,
+      loadingAnim: false,
 		}
 
     // General Gal
@@ -37,10 +39,12 @@ export default class GalleryBody extends React.Component {
     // Images/Thumbs
     this.handleThumbClick = this.handleThumbClick.bind(this);
     this.Thumbnails = this.Thumbnails.bind(this);
-    this.Thumbnail = this.Thumbnail.bind(this);
+    // this.Thumbnail = this.Thumbnail.bind(this);
     this.getImagesLinks = this.getImagesLinks.bind(this);
     this.refreshImages = this.refreshImages.bind(this);
     this.toggleDelete = this.toggleDelete.bind(this);
+    
+    this.showImages = this.showImages.bind(this);
 
     // Upload forms
     this.onChange = this.onChange.bind(this);
@@ -94,7 +98,7 @@ export default class GalleryBody extends React.Component {
           galleryName: res.data.Gallery[0].galleryname,
           author: res.data.Gallery[0].username,
           author_id: res.data.Gallery[0].user_id,
-          loading: false,
+          loadingGalInfo: false,
         })
 
         this.getImagesLinks();
@@ -130,14 +134,22 @@ export default class GalleryBody extends React.Component {
         }
 
         this.setState({
-          images : res.data.gallery_images
+          images : res.data.gallery_images,
+          loading:false,
         })
+        setTimeout(this.showImages, 1)
+
       } 
     }
     else {
       this.setState({images: [], loading:false})
+      // console.log(this.state.loading)      
     }
 
+  }
+
+  showImages(){
+    this.setState({loadingAnim: true})
   }
 
   refreshImages(){
@@ -146,31 +158,48 @@ export default class GalleryBody extends React.Component {
 
   Thumbnails(){
     const images = this.state.images;
+    // this.setState({loadingAnim: true})
 
-    return images.map( image => {
-      return this.Thumbnail(image.image_id, image.image_url);
+    return images.map( (image, index) => {
+      return (
+        <Thumbnail
+          id={image.image_id}
+          url={image.image_url}
+          index={index}
+          wait={800 + index*80}
+          handleThumbClick={this.handleThumbClick}
+          />
+        );
+
     });
   }
+      // this.Thumbnail(image.image_id, image.image_url, index);
 
-  Thumbnail(id, url){
-    let style = {};
+  // delayedThumbnail(id, url, ms) {
+  //   return new Promise(resolve => setTimeout(resolve, ms));
+  // }
 
-    if(this.state.deleteMode){
-     style = {
-        // borderRadius : '20px'
-      }
-    }
+  // Thumbnail(id, url, index, isVis){
+  //   let style = {};
 
-    return(
-        <img 
-          key={id} 
-          alt={id}
-          src={url} 
-          className='thumbnail_gallery' 
-          onClick={this.handleThumbClick.bind(this, id)}
-          style={style}></img>
-    );
-  }
+  //   // var isVis = true;
+  //   // await setTimeout(800 + (index * 80))
+
+  //   style = {
+  //     opacity: isVis ? '1' : '0' ,
+  //     top: isVis ? '0px' : '10px',
+  //   }
+
+  //   return(
+  //       <img 
+  //         key={id} 
+  //         alt={id}
+  //         src={url} 
+  //         className='thumbnail_gallery' 
+  //         onClick={this.handleThumbClick.bind(this, id)}
+  //         style={style}></img>
+  //   );
+  // }
 
   toggleDelete(){
     this.setState({deleteMode: !this.state.deleteMode})
@@ -246,7 +275,7 @@ export default class GalleryBody extends React.Component {
   render(){
 
     let {galID, galleryName, author, sameUser, addImageCardVis, imageID,
-      redirectFlag, loading, imageToShow, imageCardVis, deleteMode } = this.state;
+      redirectFlag, loading, loadingGalInfo, imageToShow, imageCardVis, deleteMode } = this.state;
 
     if(typeof this.props.location.state !== 'undefined'){
   	  // let galleryName = this.props.location.state.itemName;
@@ -255,6 +284,8 @@ export default class GalleryBody extends React.Component {
     } else {
 
     }
+
+
 
     const deletePStyle = {
       height: deleteMode ? '50px' :'0px',
@@ -275,7 +306,7 @@ export default class GalleryBody extends React.Component {
         {redirectFlag
           ?<Redirect to={`/feed`}/>
           :<React.Fragment>
-            {!loading &&
+            {!loadingGalInfo &&
               <div className='gallerybody__container fl fl_row' >
                 <section className='gallerybody fl fl_column al_center'>
             			<header className='gallery__header fl fl_row al_center'>
