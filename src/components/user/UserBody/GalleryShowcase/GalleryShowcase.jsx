@@ -45,6 +45,7 @@ export default class GalleryShowcase extends React.Component {
     }
 
 
+
   // --  Images/Thumbnails -Start --
 
   async getImagesLinks() {
@@ -109,7 +110,6 @@ export default class GalleryShowcase extends React.Component {
 
 
 	handleThumbClick(id, e){
-    console.log(e.target.src + ' ' + this.props.gallery.username +' '+ id )
 		this.onThumbClick(e.target.src, this.props.username || this.props.gallery.username  , id);
 	}
 

@@ -45,11 +45,22 @@ export default class CommentSection extends React.Component {
 
 	componentDidMount(){
 		this.setStyle(this.props.type);
-		this.getComments(this.props.type, this.props.id);
+		this.getComments(this.props.type, this.props.id, false);
+		var interval = setInterval(this.getComments, 2000, this.props.type, this.props.id, true);
+		this.setState({interval})
 
 	}
 
-	async getComments(type, id) {
+	componentWillUnmount(){
+		console.log('here')
+		clearInterval(this.state.interval);
+	}
+
+	async getComments(type, id, flag) {
+		if((!this.props.isVisible && flag) && this.props.type !== 'image'){
+			return;
+		}
+
 		var res;
 		// Get Appropriate data from server	
 		if (type === 'gallery' || type === 'galshowcase') {
@@ -138,6 +149,7 @@ export default class CommentSection extends React.Component {
 		switch(x) {
 			case 'section':
 				const visStyle = {
+					width: '100%',
 		      maxHeight: isVisible ? height : '0px',
 		      transition: isVisible
 		      	? '0.4s max-height ease-in-out, 0.4s height ease-in-out, 5s opacity, 5s visibility'

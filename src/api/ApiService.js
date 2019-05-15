@@ -343,6 +343,7 @@ export default class API {
       })
       .catch((error) => {
       	console.log('An error occured while uploading!')	
+      	return Promise.resolve(error)
   		});
 	}
 
