@@ -227,6 +227,7 @@ export default class GalleryBody extends React.Component {
     const uploadStyle = {
       bottom: isUploading ? '50px' : '-200px',
       opacity: isUploading ? '1' : '0',
+      transition: isUploading ? 'opacity 0.2s, bottom 0.4s ease-in-out' : 'opacity 0.2s 1.5s, bottom 0.4s ease-in-out 1.5s'
     }
 
     return(

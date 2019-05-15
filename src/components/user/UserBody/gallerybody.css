@@ -131,8 +131,6 @@
 	font-size: 1.2em;
 	/* border-radius: 7px; */
 	color: white;
-
-	transition: opacity 0.1s, bottom 0.3s ease-in-out;
 }
 
 /* *** IMAGE FLEXBOX *** */
