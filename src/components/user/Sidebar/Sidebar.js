@@ -263,10 +263,15 @@ export default class Sidebar extends React.Component {
   activate(id, listName) {
 
     const list = this.state.lists[listName];
-    list.forEach( item => {
-          item.isActive = (item.id === id ? true : false);
-        });
-    this.setState({[listName]: list});
+    if(typeof list !== 'undefined'){
+      list.forEach( item => {
+            item.isActive = (item.id === id ? true : false);
+          });
+      this.setState({[listName]: list});
+    }
+    else{
+      this.setState({[listName]: []});
+    }
   }
 
   // --- Add friend
