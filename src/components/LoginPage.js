@@ -42,7 +42,7 @@ export default class LoginPage extends React.Component {
 		}
 
 		return (
-			<div className='loginpage flexbox'>
+			<div className='loginpage flexbox noSelect'>
 					<Card>
 						{LoginTitle()}
 						<Login Auth={this.Auth} updateLoggedIn={this.updateLoggedIn}/>

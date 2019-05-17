@@ -29,6 +29,7 @@ export default class DropdownBtn extends React.Component {
 		return (
 			// ** DEPRECATED AS BUTTON **
 			// Simply a text div now
+			// until further notice
 
 			<div className={className} onClick={this.handleClick}>
 				{text}

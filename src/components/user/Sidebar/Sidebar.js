@@ -330,23 +330,25 @@ export default class Sidebar extends React.Component {
 
   render() {
     const {isGalVisible, isFriendsVisible} = this.state;
+    const user = this.Auth.getUser()
 
     return (
       <nav className='sidebar-bg'>
         <div className='sidebar__top'>
-          {userPageTitle(this.Auth.getUser())}
+          {userPageTitle(user)}
           <div className='sidebar__container'>
 
             <Link to={'/feed'}className='dropdown-btn noSelect'>Home</Link>
 
-            <DropdownBtn text='Followers' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
+            <Link to={`/user/${user}`} replace className='dropdown-btn noSelect'>My Galleries</Link>
+            {this.getListModule('galleries', isGalVisible, this.deleteGallery)}
+
+            <Link to={`/feed`} replace className='dropdown-btn noSelect'>Followers</Link>
             {this.getListModule('followers', isFriendsVisible, null)}
 
             <DropdownBtn text='Following' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
             {this.getListModule('following', isFriendsVisible, this.unfollow)}
 
-            <DropdownBtn text='My Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
-            {this.getListModule('galleries', isGalVisible, this.deleteGallery)}
           </div>
         </div>
         <div className='sidebar__bottom'>
@@ -354,6 +356,8 @@ export default class Sidebar extends React.Component {
         </div>
     </nav>
     );
+    // <DropdownBtn text='Followers' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
+    // <DropdownBtn text='My Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
   }
 
 }
