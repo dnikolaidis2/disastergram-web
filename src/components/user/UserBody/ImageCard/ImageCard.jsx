@@ -40,7 +40,7 @@ export default class ImageCard  extends React.Component {
 	infoTab() {
 		return (
 				<section className='image-card__image-info select'>
-					<p className='byP' >by<span className='image-author'>{this.props.author}</span></p>
+					<p className='byP'>by<span className='image-author'>{this.props.author}</span></p>
 				</section>
 			)
 	}

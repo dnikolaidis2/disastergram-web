@@ -31,7 +31,11 @@
 	border-bottom-left-radius: 7px;
 	border-bottom-right-radius: 7px;
 }
+
+/* *** COMMENT BLOCK CSS *** */
+
 .comment {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	margin:10px;
@@ -63,6 +67,29 @@
 	font-weight: 400;
 
 }
+
+.delete-comment-btn{
+	position: absolute;
+	right: 10px;
+	top: 50%;
+  
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+
+	background-color: #ef5350;
+	color: white;
+	padding: 2px 2px 0px 2px;
+	border-radius: 5px;
+
+	transition: opacity 0.3s ease-in-out 0.1s;
+}
+
+.delete-comment-btn:hover{
+	background-color: #f05e5c;
+}
+
+
+/* *** ADD COMMENT CSS *** */
 
 .comment-section__add {
 	border-bottom-left-radius: 5px;

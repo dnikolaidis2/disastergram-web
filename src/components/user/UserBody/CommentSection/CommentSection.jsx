@@ -4,6 +4,7 @@ import React from 'react';
 // *** CSS
 import './commentsection.css'
 import Input from './../../../inputs/InputBox.jsx';
+import Comment from './Comment.jsx';
 
 
 export default class CommentSection extends React.Component {
@@ -31,6 +32,9 @@ export default class CommentSection extends React.Component {
 		this.setStyle = this.setStyle.bind(this);
 		this.handleCommentChange = this.handleCommentChange.bind(this);
 		this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+
+		this.refreshComments = this.refreshComments.bind(this);
+
 	}
 
 	componentDidMount(){
@@ -110,21 +114,26 @@ export default class CommentSection extends React.Component {
 	}
 
 	showComment(comment){
-		let commentStyle = this.state.commentStyle
+		let {commentStyle} = this.state
+		const sameUserFlag = (comment.username === this.API.getUser())
 
 		return (
-			<div className='comment select' key={comment.comment_id} style={commentStyle.container}>
-				<p className='comment__username' style={commentStyle.username}>{comment.username}:</p>
-				<p className='comment__text' style={commentStyle.text}>{comment.body}</p>
-			</div>
+				<Comment 
+					key={comment.comment_id} 
+					comment={comment} 
+					style={commentStyle} 
+					sameUserFlag={sameUserFlag}
+					API={this.API}
+					updateParent={this.refreshComments}
+					type={this.props.type}/>
 		)
 	}
 
+
+
 	determineAnimStyle(x){
 		const comments = this.state.comments;
-
 		let height = 95 + (75 * Object.keys(comments).length) +'px';
-
 		let isVisible;
 
 		if(this.props.type === 'image'){
@@ -133,8 +142,6 @@ export default class CommentSection extends React.Component {
 		else{
 			isVisible = this.props.isVisible;
 		}
-
-
 
 		switch(x) {
 			case 'section':
@@ -199,6 +206,7 @@ export default class CommentSection extends React.Component {
 	refreshComments(){
 		this.getComments(this.props.type, this.props.id);
 	}
+
 
 	render() {
 		const commentToAdd = this.state.commentToAdd;

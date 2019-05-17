@@ -58,6 +58,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 
 	}
@@ -78,13 +79,12 @@ export default class API {
 						console.log('API: ('+res.status+') GET all users that follow you');
 					}
 				}
-				// No need for this atm
-				// this.updateLocalStorage('friends', res.data['Followed users']);
 
 				return Promise.resolve(res);
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 
 	}
@@ -104,13 +104,13 @@ export default class API {
 						console.log('API: ('+res.status+') GET all users you are following');
 					}
 				}
-				// No need for this atm
-				// this.updateLocalStorage('friends', res.data['Followed users']);
+
 
 				return Promise.resolve(res);
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 
 	}
@@ -134,6 +134,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 	}
 
@@ -161,6 +162,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 	}
 
@@ -183,12 +185,11 @@ export default class API {
 					}
 				}
 
-				// this.updateLocalStorage('galleries', res.data['Galleries']);
-
 				return Promise.resolve(res);
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 	}
 
@@ -214,7 +215,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
-				// return Promise.resolve(res);
+				return Promise.resolve(er);
 			})
 	}
 
@@ -243,6 +244,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 	}
 
@@ -267,6 +269,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 
 }
@@ -298,6 +301,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 	}
 
@@ -324,7 +328,32 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
+	}
+
+	deleteGalComment(commentID) {
+		const {headers, userToken} = this.state;
+
+		const data = {
+			token: userToken,
+		}
+		return axios.delete(`/api/user/gallery/comment/${commentID}`, 
+				{headers: {...headers}},
+				{data: {...data}})
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API:('+ res.status +') DELETE GALLERY comment. (ID: '+ commentID +')');
+					}
+				}
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				return Promise.resolve(er);
+			})
+
 	}
 
 	// *** IMAGES COMMENTS
@@ -367,6 +396,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 	}
 
@@ -390,6 +420,7 @@ export default class API {
 			})
 			.catch( er => {
 				console.log(er)
+				return Promise.resolve(er);
 			})
 
 	}
@@ -410,14 +441,14 @@ export default class API {
 			.then( res => {
 				if (process.env.NODE_ENV ==='development'){
 					if(res.status < 400){
-						console.log('API:('+ res.status +') GET  IMAGE comments. (ID: '+ imID +')');
+						console.log('API:('+ res.status +') GET  IMAGE comment. (ID: '+ imID +')');
 					}
 				}
 				return Promise.resolve(res);
 			})
 			.catch( er => {
 				console.log(er)
-				return Promise.resolve(er)
+				return Promise.resolve(er);
 			})
 	}
 
@@ -442,7 +473,31 @@ export default class API {
 				return Promise.resolve(res);
 			})
 			.catch( er => {
-				console.log(er)
+				return Promise.resolve(er);
 			})
+	}
+
+	deleteImageComment(commentID) {
+		const {headers, userToken} = this.state;
+
+		const data = {
+			token: userToken,
+		}
+		return axios.delete(`/api/user/image/comment/${commentID}`, 
+				{headers: {...headers}},
+				{data: {...data}})
+			.then( res => {
+				if (process.env.NODE_ENV ==='development'){
+					if(res.status < 400){
+						console.log('API:('+ res.status +') DELETE IMAGE comments. (ID: '+ commentID +')');
+					}
+				}
+
+				return Promise.resolve(res);
+			})
+			.catch( er => {
+				return Promise.resolve(er);
+			})
+
 	}
 }

@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 // ** Components
 import ImageCard from './ImageCard'
 import AddImageCard from './AddImageCard'
+  // import CommentSection from './CommentSection'
 import Thumbnail from './Thumbnail.jsx'
 
 import './gallerybody.css'
@@ -287,7 +288,7 @@ export default class GalleryBody extends React.Component {
                       { sameUser &&
                         <div className='fl al_center gallery_settings'>
                           <p className='upload-btn fl al_center' onClick={this.toggleFileUpload}>
-                              <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
+                            <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Upload New
                           </p>
                           <p className='delete-btn fl al_center' onClick={this.toggleDelete}>
                             <i className="material-icons">delete_outline</i>
@@ -326,8 +327,6 @@ export default class GalleryBody extends React.Component {
                     startedUpload={this.startedUpload}
                     finishedUpload={this.finishedUpload}/>
             		</section>
-                <aside className='gallery-body_commentsection'>
-                </aside>
               </div>
             }
           </React.Fragment>
