@@ -115,27 +115,6 @@ export default class Sidebar extends React.Component {
 
   async getFollowers() {
 
-    // var cancelablePromise;
-    // this.setState({friendsPromise: cancelablePromise});
-    // cancelablePromise = makeCancelable(
-    //     this.API.getFollowers()
-    //   );
-
-
-    // cancelablePromise
-    //   .promise
-    //   .then( res => {
-    //     if(typeof res !== 'undefined') {
-    //       console.log(res.status);
-    //       if (res.status === 204){
-    //         console.log('No friends found');
-    //       }
-
-    //       let friends = res.data['Followed users'];
-    //       this.setState({lists:{...this.state.lists, friends}})
-    //     }
-    //   });
-
     let followers = [];
     let res = await this.API.getFollowers();
     if (typeof res !== 'undefined') {

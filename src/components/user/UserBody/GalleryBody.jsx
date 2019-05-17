@@ -225,9 +225,9 @@ export default class GalleryBody extends React.Component {
   UploadModal(){
     const isUploading = this.state.isUploading;
     const uploadStyle = {
-      bottom: isUploading ? '50px' : '-200px',
+      bottom: isUploading ? '50px' : '-100px',
       opacity: isUploading ? '1' : '0',
-      transition: isUploading ? 'opacity 0.2s, bottom 0.4s ease-in-out' : 'opacity 0.2s 1.5s, bottom 0.4s ease-in-out 1.5s'
+      transition: isUploading ? 'opacity 0.2s, bottom 0.4s ease-in-out' : 'opacity 0.2s 1.5s, bottom 0.1s ease-in-out 1.5s'
     }
 
     return(

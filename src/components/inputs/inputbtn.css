@@ -7,7 +7,7 @@
 #inputBtn {
 	-webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  background-color: black;
+  background-color: #232323;
   border: none;
   color: white;
   padding: 15px 32px;

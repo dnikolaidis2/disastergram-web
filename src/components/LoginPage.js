@@ -56,7 +56,7 @@ export default class LoginPage extends React.Component {
 
 function Card(props) {
 	return (
-		<div className="card">
+		<div className="logincard card fl fl_column js_center">
 			{props.children}
 		</div>
 	);
