@@ -83,7 +83,8 @@ export default class GalleryShowcase extends React.Component {
   Thumbnails(){
     const images = this.state.images;
 
-    return images.map( image => {
+    // Show first 5 images
+    return images.slice(0,5).map( image => {
       return this.Thumbnail(image.image_id, image.image_url);
     });
   }
