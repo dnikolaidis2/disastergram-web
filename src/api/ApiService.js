@@ -339,8 +339,8 @@ export default class API {
 			token: userToken,
 		}
 		return axios.delete(`/api/user/gallery/comment/${commentID}`, 
-				{headers: {...headers}},
-				{data: {...data}})
+				{data: {...data}},
+				{headers: {...headers}})
 			.then( res => {
 				if (process.env.NODE_ENV ==='development'){
 					if(res.status < 400){
@@ -484,8 +484,8 @@ export default class API {
 			token: userToken,
 		}
 		return axios.delete(`/api/user/image/comment/${commentID}`, 
-				{headers: {...headers}},
-				{data: {...data}})
+				{data: {...data}},
+				{headers: {...headers}})
 			.then( res => {
 				if (process.env.NODE_ENV ==='development'){
 					if(res.status < 400){
