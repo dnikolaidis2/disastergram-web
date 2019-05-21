@@ -13,29 +13,35 @@ export default class Thumbnail extends React.Component {
 		}
 
 		this.toggleShow = this.toggleShow.bind(this);
+		this.onImageLoad = this.onImageLoad.bind(this);
 	}
 
 	componentWillMount(){
 		var that=this;
 		setTimeout( () => {
-			that.toggleShow();
+			// that.toggleShow();
 		}, that.props.wait);
 	}
 
 	compomentDidUpdate(prevProps){
 		console.log(prevProps.galID + ' -- ' + this.props.galID)
 		if(prevProps.loading !== this.props.loading){
-			this.toggleShow();
-			var that=this;
+			// this.toggleShow();
+			// var that=this;
 
-			setTimeout( () => {
-				that.toggleShow();
-			}, that.props.wait);
+			// setTimeout( () => {
+			// 	that.toggleShow();
+			// }, that.props.wait);
 		}
 	}
 
 	toggleShow(){
 		this.setState({isVis: !this.state.isVis})
+	}
+
+	onImageLoad(){
+		console.log('I loaded!'+ this.props.id);
+		this.toggleShow();
 	}
 
   render() {
@@ -47,14 +53,17 @@ export default class Thumbnail extends React.Component {
       opacity: isVis ? '1' : '0' ,
       top: isVis ? '0px' : '20px',
     }
+
+    const className = 'thumbnail_' + this.props.type;
     
     return(
       <img
         key={id} 
         alt={id}
         src={url} 
-        className='thumbnail_gallery' 
+        className={className} 
         onClick={this.handleThumbClick.bind(this, id)}
+        onLoad={this.onImageLoad}
         style={style}></img>
     );
 

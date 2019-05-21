@@ -34,7 +34,10 @@ export default class API {
 		return this.state.user_id;
 	}
 
-	// *** FRIENDS ***
+
+
+
+	// *** FOLLOWERS/FOLLOWING ***
 
 	addFriend(username) {
 		const {headers, userToken} = this.state;
@@ -137,6 +140,12 @@ export default class API {
 				return Promise.resolve(er);
 			})
 	}
+
+
+
+
+
+
 
 	// *** GALLERIES ***
 
@@ -272,7 +281,8 @@ export default class API {
 				return Promise.resolve(er);
 			})
 
-}
+	}
+
 
 
 
@@ -356,7 +366,11 @@ export default class API {
 
 	}
 
-	// *** IMAGES COMMENTS
+
+
+
+
+	// *** IMAGES ***
 
 	uploadImage(image, galID){
 
@@ -425,6 +439,10 @@ export default class API {
 
 	}
  
+
+
+
+
 
 	// *** IMAGES COMMENTS ***
 

@@ -163,6 +163,7 @@ export default class GalleryBody extends React.Component {
     return images.map( (image, index) => {
       return (
         <Thumbnail
+          type='gallerybody'
           key={image.image_id}
           galID={this.state.galID}
           id={image.image_id}

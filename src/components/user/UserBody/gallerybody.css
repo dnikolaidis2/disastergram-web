@@ -145,7 +145,7 @@
   	0.3s opacity ease-in-out, 
 }
 
-.thumbnail_gallery {
+.thumbnail_gallerybody {
 	position: relative;
   background-color: gray;
   border-radius: 5px;
@@ -164,7 +164,7 @@
   z-index: 0;
 }
 
-.thumbnail_gallery:hover {
+.thumbnail_gallerybody:hover {
 	box-shadow: 0px 0px 8px 5px rgba(20,20,20,0.6);
 	top: -2px;
 	z-index: 5;

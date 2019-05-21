@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 // ** Components
 import CommentSection from './../CommentSection'
+import Thumbnail from './../Thumbnail.jsx'
 
 
 // ** CSS
@@ -28,7 +29,7 @@ export default class GalleryShowcase extends React.Component {
 
 		this.toggleComments = this.toggleComments.bind(this);
     this.Thumbnails = this.Thumbnails.bind(this);
-    this.Thumbnail = this.Thumbnail.bind(this);
+    // this.Thumbnail = this.Thumbnail.bind(this);
     this.handleThumbClick = this.handleThumbClick.bind(this);
 
   }
@@ -84,29 +85,19 @@ export default class GalleryShowcase extends React.Component {
     const images = this.state.images;
 
     // Show first 5 images
-    return images.slice(0,5).map( image => {
-      return this.Thumbnail(image.image_id, image.image_url);
+    return images.slice(0,5).map( (image, index) => {
+      return (
+        <Thumbnail
+          type='galshowcase'
+          key={image.image_id}
+          galID={this.props.gallery.ID}
+          id={image.image_id}
+          url={image.image_url}
+          loading={this.state.loading}
+          wait={1000 + index*200}
+          handleThumbClick={this.handleThumbClick}/>
+        )
     });
-  }
-
-  Thumbnail(id, url){
-    let style = {};
-
-    if(this.state.deleteMode){
-     style = {
-        // borderRadius : '20px'
-      }
-    }
-
-    return(
-        <img 
-          key={id}
-          alt={id}
-          src={url} 
-          className='thumbnail' 
-          onClick={this.handleThumbClick.bind(this, id)}
-          style={style}></img>
-    );
   }
 
 

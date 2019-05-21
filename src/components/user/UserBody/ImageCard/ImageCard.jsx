@@ -59,10 +59,8 @@ export default class ImageCard  extends React.Component {
 				<div className='image-card__container noSelect' onClick={this.onCloseClick}>
 					<button className='image-card__closebtn' onClick={this.onCloseClick}><i className='fa fa-times'></i></button>
 
-					<article className='image-card card fl fl_row al_center js_center' onClick={this.stopClickPropagation}>
-						<picture className='image-container fl js_center'>
-							<img className='image-card__image' alt='Post' src={imgsrc}></img>
-						</picture>
+					<article className='image-card fl fl_row al_center js_center' >
+							<img className='image-card__image' alt='Post' src={imgsrc} onClick={this.stopClickPropagation}></img>
 					</article>
 					<aside className='image-card-aside fl fl_column al_center' onClick={this.stopClickPropagation}>
 						{this.infoTab()}
@@ -75,3 +73,5 @@ export default class ImageCard  extends React.Component {
 		)
 	}
 }
+						// <picture className='image-container fl js_center'>
+						// </picture>
