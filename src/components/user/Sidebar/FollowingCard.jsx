@@ -22,8 +22,13 @@ export default class FollowingCard extends React.Component{
   deleteItem(username, e) {
     e.preventDefault();
 
-    this.props.API.unfollowFriend(username);
-    this.props.updateParent();
+    this.props.API.unfollowFriend(username)
+      .then( res => {
+
+          if (res.status < 400){
+            this.props.updateParent();
+          }
+      });
 
   }
 
