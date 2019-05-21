@@ -98,9 +98,9 @@ export default class Login extends React.Component {
 			.then( res => {
 				// force refresh parents logged in status
 				this.updateLoggedIn();
+				this.Auth._getID();
 			})		
 
-		this.Auth._getID();
 	}
 
 	handleRegisterChange(){

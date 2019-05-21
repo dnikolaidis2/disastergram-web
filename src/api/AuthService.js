@@ -149,14 +149,14 @@ export default class AuthAPI {
 		}
 	}
 
- 	setToken(idToken) {
+ 	setToken(userToken) {
       //** Save user token to localStorage
-      localStorage.setItem('id_token', idToken);
+      localStorage.setItem('userToken', userToken);
   }
 
   getToken() {
       //** Retrieve the user token from localStorage
-      return localStorage.getItem('id_token');
+      return localStorage.getItem('userToken');
   }
 
 	setUser(username) {
@@ -179,8 +179,9 @@ export default class AuthAPI {
 
   logout() {
       //** Clear user token and profile data from localStorage
-      localStorage.removeItem('id_token');
+      localStorage.removeItem('userToken');
       localStorage.removeItem('userID');
+      localStorage.removeItem('username');
   }
 
 
@@ -191,9 +192,9 @@ export default class AuthAPI {
       'Content-Type': 'application/json'
     };
 
-    if (this.isLoggedIn()) {
-    	headers['Authorization'] = 'Bearer ' + this.getToken();
-    }
+    // if (this.isLoggedIn()) {
+    // 	headers['Authorization'] = 'Bearer ' + this.getToken();
+    // }
 
     return headers;
 

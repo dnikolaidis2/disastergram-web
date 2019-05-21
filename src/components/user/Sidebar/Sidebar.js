@@ -86,8 +86,8 @@ export default class Sidebar extends React.Component {
     this.getFollowers();
 
     // setInterval(this.getFollowing, 2000);
-    setInterval(this.getFollowers, 5000);
-    // this.setState({interval})
+    var interval = setInterval(this.getFollowers, 5000);
+    this.setState({interval})
 
   }
 
@@ -97,7 +97,7 @@ export default class Sidebar extends React.Component {
       this.state.friendsPromise.cancel();
       this.state.galleriesPromise.cancel();
     }
-    // clearInterval(this.state.interval);
+    clearInterval(this.state.interval);
   }
 
   componentDidUpdate(prevProps){

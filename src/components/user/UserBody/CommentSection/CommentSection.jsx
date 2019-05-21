@@ -46,7 +46,6 @@ export default class CommentSection extends React.Component {
 	}
 
 	componentWillUnmount(){
-		console.log('here')
 		clearInterval(this.state.interval);
 	}
 
