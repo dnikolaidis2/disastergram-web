@@ -39,9 +39,9 @@ export default class Thumbnail extends React.Component {
 		this.setState({isVis: !this.state.isVis})
 	}
 
-	onImageLoad(){
-		console.log('I loaded!'+ this.props.id);
-		this.toggleShow();
+onImageLoad(){
+		if(!this.state.isVis)
+			this.toggleShow();
 	}
 
   render() {
