@@ -169,7 +169,7 @@ export default class GalleryBody extends React.Component {
           id={image.image_id}
           url={image.image_url}
           loading={loading}
-          wait={600 + index*80}
+          wait={0 /*600 + index*80*/}
           handleThumbClick={this.handleThumbClick}
           />
         );

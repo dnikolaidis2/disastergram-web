@@ -40,13 +40,13 @@ export default class CommentSection extends React.Component {
 	componentDidMount(){
 		this.setStyle(this.props.type);
 		this.getComments(this.props.type, this.props.id, false);
-		var interval = setInterval(this.getComments, 2000, this.props.type, this.props.id, true);
-		this.setState({interval})
+		var getCommentsInterval = setInterval(this.getComments, 2000, this.props.type, this.props.id, true);
+		this.setState({getCommentsInterval})
 
 	}
 
 	componentWillUnmount(){
-		clearInterval(this.state.interval);
+		clearInterval(this.state.getCommentsInterval);
 	}
 
 	async getComments(type, id, flag) {

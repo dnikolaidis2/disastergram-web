@@ -59,7 +59,6 @@ export default class AddCard extends React.Component {
 
 	onCloseClick() {
 		this.props.onCloseClick();
-		console.log('isVisible: false')
 	}
 
 	stopClickPropagation(event) {

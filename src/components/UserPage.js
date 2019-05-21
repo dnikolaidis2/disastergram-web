@@ -50,10 +50,12 @@ export default class UserPage extends React.Component {
     let res = await this.API.getGalleries(curUser);
     
     if(typeof res !== 'undefined') {
-      galleries = res.data['Galleries'];
-      if(res.status === 204){
-        this.setState({galleries: [], loading:false})
-        return
+      if(res.status < 400){
+        galleries = res.data['Galleries'];
+        if(res.status === 204){
+          this.setState({galleries: [], loading:false})
+          return
+        }
       }
       this.setState({galleries, loading:false})
     }

@@ -60,9 +60,11 @@
 
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: flex-start;
   overflow: hidden;
+
+  padding-left: 15px;
 
 }
 

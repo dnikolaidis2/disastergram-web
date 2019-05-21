@@ -31,12 +31,13 @@
   position: absolute;
   font-size: 100px;
   margin: 0px;
-  font-family: 'Raleway',serif;
-    font-family: 'Pacifico';
-  font-weight: 500;
-  font-weight: 300;
+  /* font-family: 'Raleway',serif; */
+  font-family: 'Pacifico';
+  font-weight: 400;
+  font-style: normal;
   top: 50%;
   left: 50%;
+
   color: #333333;
   transform: translate(-50%, -50%);
 }

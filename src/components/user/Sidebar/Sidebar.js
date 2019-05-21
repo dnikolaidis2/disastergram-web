@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import SidebarItem from './SidebarItem.jsx'
 import DropdownBtn from './DropdownBtn.jsx'
 import AddCard from './AddCard'
+import FollowersCard from './FollowersCard.jsx'
+import FollowingCard from './FollowingCard.jsx'
 
 // ** CSS
 import './sidebar.css'
@@ -23,7 +25,8 @@ export default class Sidebar extends React.Component {
 
     this.state = {
       lists : {
-        friends: [],
+        followers: [],
+        following: [],
         galleries: this.props.galleries || [],
       },
       friendsPromise: null,
@@ -32,6 +35,9 @@ export default class Sidebar extends React.Component {
       isFriendsVisible: true,
       addFriendVis: false,
       addGalleryVis: false,
+
+      followersCardVis: false,
+      followingCardVis: false,
 
     }
 
@@ -48,6 +54,8 @@ export default class Sidebar extends React.Component {
     this.toggleAddFriend = this.toggleAddFriend.bind(this);
     this.AddGallery = this.AddGallery.bind(this);
     this.toggleAddGallery = this.toggleAddGallery.bind(this);
+    this.onMouseEnterAddGal = this.onMouseEnterAddGal.bind(this);
+    this.onMouseLeaveAddGal = this.onMouseLeaveAddGal.bind(this);
 
     // --- GETS
     this.getFollowers = this.getFollowers.bind(this);
@@ -57,6 +65,12 @@ export default class Sidebar extends React.Component {
     // --- DELETES
     this.unfollow = this.unfollow.bind(this);
     this.deleteGallery = this.deleteGallery.bind(this);
+
+    // --- CARDS
+    this.toggleFollowersCard = this.toggleFollowersCard.bind(this);
+    this.toggleFollowingCard = this.toggleFollowingCard.bind(this);
+
+
 
   }
 
@@ -117,13 +131,15 @@ export default class Sidebar extends React.Component {
 
     let followers = [];
     let res = await this.API.getFollowers();
+
     if (typeof res !== 'undefined') {
-      followers = res.data['Followed users'];
-      this.setState({lists:{...this.state.lists, followers}})
+      if(res.status < 400) {
+        followers = res.data['Followed users'];
+        this.setState({lists:{...this.state.lists, followers}})
+        return;
+      }
     }
-    else {
-      this.setState({lists:{...this.state.lists, followers: []}})
-    }
+    this.setState({lists:{...this.state.lists, followers: []}})
 
   }
 
@@ -131,13 +147,15 @@ export default class Sidebar extends React.Component {
 
     let following = [];
     let res = await this.API.getFollowing();
+
     if (typeof res !== 'undefined') {
-      following = res.data['Followed users'];
-      this.setState({lists:{...this.state.lists, following}})
+      if(res.status < 400) {
+        following = res.data['Followed users'];
+        this.setState({lists:{...this.state.lists, following}})
+        return;
+      }
     }
-    else {
-      this.setState({lists:{...this.state.lists, following: []}})
-    }
+    this.setState({lists:{...this.state.lists, following: []}})
 
   }
 
@@ -183,10 +201,11 @@ export default class Sidebar extends React.Component {
       }
       return (
           <div className='sidebar__list' style={visStyle}>
-            {listName === 'following' && this.AddFriend()}
-            {listName === 'galleries' && this.AddGallery()}
+
           </div>
         );
+            // {listName === 'following' && this.AddFriend()}
+            // {listName === 'galleries' && this.AddGallery()}
     }
 
     let height;
@@ -203,10 +222,10 @@ export default class Sidebar extends React.Component {
       height: height,
     }
 
+        // {listName === 'following' && this.AddFriend()}
+        // {listName === 'galleries' && this.AddGallery()}
     return (
       <div className='sidebar__list' style={visStyle}>
-        {listName === 'following' && this.AddFriend()}
-        {listName === 'galleries' && this.AddGallery()}
         {list.map((item) => 
           <SidebarItem 
             key={'_' + item.id}
@@ -262,14 +281,9 @@ export default class Sidebar extends React.Component {
     return(
       <React.Fragment>
         <p className={className} style={addStyle} onClick={this.toggleAddFriend}>
-          + Add Friend
+          <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i> Add Friend
         </p>
-        <AddCard 
-          API={this.API} 
-          isVisible={this.state.addFriendVis} 
-          onCloseClick={this.toggleAddFriend}
-          updateParent={this.getFollowing}
-          reqType={'friend'}/>
+
       </React.Fragment>
     );
   }
@@ -279,27 +293,38 @@ export default class Sidebar extends React.Component {
   }
 
   // --- Add Galleries
-  //<i className="material-icons">add_to_photos</i> 
+  // <i className="material-icons">add_to_photos</i> 
   AddGallery() {
-    const className = 'sidebar__item_container fl fl_row al_center noSelect'
-    const addStyle = {color: '#888'}
+    const className = 'sidebar_add fl fl_row al_center noSelect'
+    const isHovered = this.state.isHoveredAddGal;
+    const addStyle = {
+      opacity: isHovered ? '1' : '0',
+      left: isHovered ? '100%' : '-50px',
+    }
+
     return(
-      <React.Fragment>
-        <p className={className} style={addStyle} onClick={this.toggleAddGallery}>
-          + Add Gallery
+      <div className='popout noSelect' style={addStyle}  >
+        <p className={className} onClick={this.toggleAddGallery}>
+          <i className="material-icons" style={{'paddingRight':'5px'}}>control_point</i>Add Gallery
         </p>
-        <AddCard 
-          API={this.API}
-          isVisible={this.state.addGalleryVis} 
-          onCloseClick={this.toggleAddGallery}
-          updateParent={this.getGalleries}
-          reqType={'gallery'}/>
-      </React.Fragment>
+      </div>
     );
   }
 
-    toggleAddGallery() {
+  toggleAddGallery() {
     this.setState({addGalleryVis: !this.state.addGalleryVis})
+  }
+
+  onMouseEnterAddGal() {
+    this.setState({isHoveredAddGal:true})
+    clearTimeout(this.state.leaveTimeoutAddGal)
+  }
+
+  onMouseLeaveAddGal() {
+    var leaveTimeoutAddGal = setTimeout( ()=>{
+          this.setState({isHoveredAddGal:false})
+        }, 400);
+    this.setState({leaveTimeoutAddGal})
   }
 
   // --- Unfollow Friend
@@ -326,40 +351,94 @@ export default class Sidebar extends React.Component {
   }
 
 
+  // --- Followers/Following cards
+
+  toggleFollowersCard(){
+    this.setState({followersCardVis : !this.state.followersCardVis})
+  }
+
+  toggleFollowingCard(){
+    this.setState({followingCardVis : !this.state.followingCardVis})
+  }
 
 
   render() {
     const {isGalVisible, isFriendsVisible} = this.state;
     const user = this.Auth.getUser()
 
+    const followersCount = this.state.lists.followers.length;
+    const followingCount = this.state.lists.following.length;
+
     return (
       <nav className='sidebar-bg'>
         <div className='sidebar__top'>
           {userPageTitle(user)}
+          <div className='sidebar__followers fl fl_row al_center js_center'>
+            <p className='followers noSelect' onClick={this.toggleFollowersCard}>Followers: {followersCount}</p>
+            <p className='divider noSelect'>|</p>
+            <p className='following noSelect' onClick={this.toggleFollowingCard}>Following: {followingCount}</p>
+          </div>
           <div className='sidebar__container'>
 
             <Link to={'/feed'}className='dropdown-btn noSelect'>Home</Link>
 
-            <Link to={`/user/${user}`} replace className='dropdown-btn noSelect'>My Galleries</Link>
+            <div className='sidebar__item_cont'
+              onMouseEnter={this.onMouseEnterAddGal}
+              onMouseLeave={this.onMouseLeaveAddGal}>
+              <Link 
+                to={`/user/${user}`} replace 
+                className='dropdown-btn noSelect'>
+                  My Galleries
+              </Link>
+                {this.AddGallery()}
+            </div>
             {this.getListModule('galleries', isGalVisible, this.deleteGallery)}
 
-            <Link to={`/feed`} replace className='dropdown-btn noSelect'>Followers</Link>
-            {this.getListModule('followers', isFriendsVisible, null)}
-
-            <DropdownBtn text='Following' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
-            {this.getListModule('following', isFriendsVisible, this.unfollow)}
 
           </div>
         </div>
         <div className='sidebar__bottom'>
           <LogoutBtn func={this.logout} />
         </div>
+        <AddCard
+          API={this.API}
+          isVisible={this.state.addGalleryVis} 
+          onCloseClick={this.toggleAddGallery}
+          updateParent={this.getGalleries}
+          reqType={'gallery'}/>
+
+        <AddCard 
+          API={this.API} 
+          isVisible={this.state.addFriendVis} 
+          onCloseClick={this.toggleAddFriend}
+          updateParent={this.getFollowing}
+          reqType={'friend'}/>
+
+        
+        <FollowersCard
+          followers={this.state.lists.followers} // Followers list
+          API={this.API} // API object ref
+          isVis={this.state.followersCardVis }// card Visibility
+          onCloseClick={this.toggleFollowersCard}    // toggle card vis
+          />
+
+        <FollowingCard
+          following={this.state.lists.following} // Following list
+          API={this.API} // API object ref
+          isVis={this.state.followingCardVis }// card Visibility
+          onCloseClick={this.toggleFollowingCard}    // toggle card vis
+          addFollower={this.toggleAddFriend}
+          updateParent={this.getFollowing}
+          />
     </nav>
     );
-    // <DropdownBtn text='Followers' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
-    // <DropdownBtn text='My Galleries' isActive={isGalVisible} handleClick={this.toggleGalleries}/>
   }
 
+          /*  <Link to={`/feed`} replace className='dropdown-btn noSelect'>Followers</Link>
+            {this.getListModule('followers', isFriendsVisible, null)}
+
+            <DropdownBtn text='Following' isActive={isFriendsVisible} handleClick={this.toggleFriends}/>
+            {this.getListModule('following', isFriendsVisible, this.unfollow)}*/
 }
 
 function LogoutBtn(props) {

@@ -6,13 +6,17 @@
   background: #232323;
   display: flex;
   flex-direction: column;
-  }
+  z-index: inherit;
+}
 
 .sidebar__top {
+  position: inherit;
+  z-index: inherit;
+  
   display: flex;
   flex-direction: column;
-  position: inherit;
-  overflow-x:hidden;
+  overflow-x:visible;
+  
   flex: 1;
 }
 
@@ -62,15 +66,54 @@
 }
 
 
+/* followers following */
+
+.sidebar__followers{
+  position: relative;
+  top: -30px;
+  font-family: Roboto;
+  font-weight: 300;
+  color: #aaa;
+}
+
+.followers {
+  margin: 0px;
+  color: #aaa;
+  padding: 3px;
+  border-radius: 2px;
+}
+
+.followers:hover {
+  background-color: rgba(255,255,255,0.2)
+
+}
+
+.divider {
+  margin: 0px;
+  color: #aaa;
+  padding: 0px 7px;
+}
+
+.following {
+  margin: 0px;
+  color: #aaa;
+  padding: 3px;
+  border-radius: 2px;
+}
+
+.following:hover {
+  background-color: rgba(255,255,255,0.2)
+}
 
 
 /* --- Lists --- */
 
 .sidebar__container {
   display: flex;
+  z-index: inherit;
   flex-direction: column;
   position: inherit;
-  overflow-x: hidden;
+  overflow-x:visible;
   justify-content: flex-start;
 }
 
@@ -78,39 +121,137 @@
   width: 0 !important 
 }
 
-.sidebar__list {
+.sidebar__list {  
+  position: relative;
   transition: 0.3s max-height ease-in-out, 0.3s opacity ease-in-out,  0.2s visibility  ease-in-out;
 /*   max-height: 0; */
-  overflow-x:hidden;
+  overflow-x: visible;
   scrollbar-width:none;
+  z-index: inherit;
 
 /*   -webkit-box-shadow: inset 0px -99px 22px -103px rgba(100,100,100,0.75);
   -moz-box-shadow: inset 0px -99px 22px -103px rgba(0,0,0,0.75);
   box-shadow: inset 0px -100px 14px -103px rgba(0,0,0,1); */
 }
 
+.popout{
+  position: relative;
+  top: 24px;
+  /* left: 100%; */
+  z-index: 4;
+  
+  margin: 0px;
+  padding: 0px;
+  width: 140px;
+  /* max-width: 140px; */
+
+  transition: left 0.3s ease-in-out, opacity 0.2s ease-in-out;
+
+  transform: translate(0%,-50%);
+  -ms-transform: translate(0%,-50%);
+
+  background: none;
+}
+
+.popout.delete {
+  top: -24px;
+  height: 19px
+}
+
+
+.sidebar_add {
+  margin: 0px;
+  padding: 2px 0px 2px 7px;
+
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  
+  background-color: #995cd6;
+
+  font-size: 1.1em;
+  color: white;
+  font-weight: 300;
+  font-family: pacifico;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+.sidebar_add:hover {
+  background-color: #a670db;
+}
+
+
+.sidebar_del {
+  margin: 0px;
+  padding: 4px 5px 4px 5px;
+  width: 25px;
+
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  
+  background-color: #ef5350;
+
+  font-size: 1.1em;
+  color: white;
+  font-weight: 300;
+  font-family: pacifico;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+.sidebar_del:hover{
+  background-color: #f27573;
+
+}
+
+.sidebar__item_cont {
+  position: relative;
+  z-index: inherit;
+
+  /* Empty space to assist relative pos */
+  /* margin-top: 20px; */
+  padding-top: 5px;
+  padding-bottom: 0px;
+  height: 38px;
+}
+
+.sidebar__item_cont > .dropdown-btn {
+    position: absolute;
+    top: -10px;
+}
+
+.sidebar__list_item_cont {
+  position: relative;
+  z-index: inherit;
+  margin: 0px;
+  padding: 5px 0px;
+  height: 27px;
+}
+
+
+.sidebar__list_item_container {
+  position: absolute;
+}
 
 .sidebar__item_container, .dropdown-btn{
-
-  padding: 7px 12px 7px 12px;
+  position: relative;
+  z-index: inherit;
   text-align: left;
   border: none;
   font-size: 16px;
   font-family: inherit;
   font-weight: 300;
-  color: white;
-  /* background-color: rgba(50%, 50%, 50%, 0.1) */
 }
 
 .dropdown-btn {
-  width: 100%;
-  padding: 10px 0px 0px 10px;
+  width: 225px;
+  padding: 5px 0px 5px 5px;
   margin-top: 20px;
   background: none;
   display: flex;
   flex-direction: row;
   align-items: center;
   font-size: 1.4em;
+  color: white;
+  background-color: #232323;
 }
 
 .dropdown-btn > i {
@@ -123,6 +264,7 @@
   padding: 8px 10px 8px 18px;
   margin: 0px;
   color: #bbb;
+  background-color: #232323;
   transition: 0.1s background-color ease-in-out;
 }
 
@@ -138,7 +280,7 @@
 }
 
 .sidebar__item_container:hover {
-  background-color: rgba(70%, 70%, 70%, 0.2);
+  background-color: #4d4d4d;
   transition: 0s background-color ease-in-out;
 }
 
@@ -152,17 +294,20 @@
 }
 
 
+.sidebar_item {
+  position: relative;
+}
+
+
 .sidebar__item_delete {
   position: relative;
   height: 100%;
   top: 0px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   transition: top 0.1s ease-in-out;
 }
 
 .sidebar__item_delete:hover {
-  color: #ad5cd6;
-  top: -3px;
 }
 
 .material-icons.md-18 {
@@ -195,4 +340,121 @@
 
 .sidebar__bottom > .logoutBtn:hover {
   background-color: #8e59a6;
+}
+
+/* CARDS */
+
+.followers_card_container {
+  z-index: 20;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+
+
+.followers_card {
+  position: relative;
+  padding: 15px 5px;
+  width: 180px;
+  top: 5%;
+  left: 20%;
+  transform: translate(-50%,0%);
+  -ms-transform: translate(-50%,0%);
+}
+
+.followers_card_header{
+  margin: 5px 5px;
+  padding: 0px;
+}
+
+.followers_card_p {
+  margin: 5px;
+  padding: 5px 0px;
+  width: 80%;
+
+  text-align: center;
+  /* background-color: gray; */
+  border-radius: 5px;
+  background-origin: content-box;
+}
+
+.followers_card_p:hover{
+  background-color: rgba(0,0,0,0.2);
+}
+
+.followers_card_link {
+  font-weight: 400;
+}
+
+
+
+/* ----- FOLLOWING CARD ----- */
+
+.following_card_container {
+  z-index: 20;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+
+
+.following_card {
+  position: relative;
+  padding: 15px 5px;
+  width: 200px;
+  top: 5%;
+  left: 20%;
+  transform: translate(-50%,0%);
+  -ms-transform: translate(-50%,0%);
+}
+
+.following_card_header{
+  margin: 5px 5px;
+  padding: 0px;
+}
+
+.following_car_row{
+  width: 80%;
+  padding: 3px 0px;
+}
+
+.following_card_p {
+  margin: 5px;
+  padding: 5px 0px;
+  width: 80%;
+
+  text-align: center;
+  /* background-color: gray; */
+  border-radius: 5px;
+  background-origin: content-box;
+}
+
+
+.card_delete {
+  border-radius: 5px;
+  margin: 0px;
+  padding: 2px;
+  height: 24px;
+  color: white;
+  background-color: #ef5350;
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.card_delete:hover {
+  background-color: #f05e5c;
+  box-shadow: 0px 2px 6px 1px #444;
+}
+.add_follower {
+  margin: 15px 0px 5px 0px;
+  padding: 9px;
+
+
+  font-weight: 500;
+  color: white;
+  background-color: #232323;
+  border-radius: 5px;
 }

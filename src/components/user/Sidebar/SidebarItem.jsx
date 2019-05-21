@@ -19,7 +19,11 @@ export default class SidebarItem extends React.Component {
     this.toggleActive = this.toggleActive.bind(this);
     this.handleActivate = this.props.handleActivate;
     this.getClassName = this.getClassName.bind(this);
+    
     this.deleteItem = this.deleteItem.bind(this);
+    this.popOut = this.popOut.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
 
@@ -47,6 +51,35 @@ export default class SidebarItem extends React.Component {
 
   }
 
+  popOut(){
+    const className = 'sidebar_del fl fl_row al_start noSelect'
+    const isHovered = this.state.isHovered;
+    const popOutStyle = {
+      opacity: isHovered ? '1' : '0',
+      left: isHovered ? '100%' : '-50px',
+    }
+
+    return (
+      <div className='popout delete noSelect' style={popOutStyle}>
+        <p className={className} onClick={this.deleteItem}>
+          <i className='sidebar__item_delete material-icons'>delete_outline</i>
+        </p>
+      </div>
+    )
+  }
+
+  onMouseEnter() {
+    this.setState({isHovered:true})
+    clearTimeout(this.state.leaveTimeout)
+  }
+
+  onMouseLeave() {
+    var leaveTimeout = setTimeout( ()=>{
+          this.setState({isHovered:false})
+        }, 400);
+    this.setState({leaveTimeout})
+  }
+
   render(){
     let { id, listName, username} = this.state;
     const itemName = this.props.itemName;
@@ -54,31 +87,43 @@ export default class SidebarItem extends React.Component {
     const url = listName === 'followers' ? 'user' : 'user/gallery';
     const urlID = listName === 'followers' ? itemName : id;
 
-    const className = 'sidebar__item ' + (this.props.isActive ? 'active':'');
+    const className = 'sidebar__item' + (this.props.isActive ? 'active':'');
 
     return (
       <React.Fragment>
       {listName === 'following'
-        ? <div className='sidebar__item_container noSelect noHover fl al_center js_between'>
+
+        // IF following
+        ? <div 
+            className='sidebar__item_container noSelect noHover fl al_center js_between'
+            onMouseEnter={this.onMouseEnter}
+            onMouseLeave={this.onMouseLeave}>
               <span className={className} onClick={this.toggleActive}>
                 {itemName}
              </span>
             {listName !== 'followers' &&
-              <i className='sidebar__item_delete material-icons md-18' onClick={this.deleteItem}>close</i>
+              this.popOut()
             }
           </div>
-        : <Link to={{
-              pathname: `/${url}/${urlID}`,
-              state: {id: id, itemName: itemName, username: username}
-            }}  replace
-            className='sidebar__item_container fl al_center js_between'>
-              <span className={className} onClick={this.toggleActive}>
-                {itemName}
-              </span>
-            {listName !== 'followers' &&
-              <i className='sidebar__item_delete material-icons md-18' onClick={this.deleteItem}>close</i>
+
+
+        // ELSE
+        : <div className='sidebar__list_item_cont'
+            onMouseEnter={this.onMouseEnter}
+            onMouseLeave={this.onMouseLeave}>
+            <Link to={{
+                pathname: `/${url}/${urlID}`,
+                state: {id: id, itemName: itemName, username: username}
+              }}  replace
+              className='sidebar__item_container fl al_start js_between'>
+                <span className={className} onClick={this.toggleActive}>
+                  {itemName}
+                </span>
+            </Link>
+            {listName === 'galleries' &&
+              this.popOut()
             }
-          </Link>
+          </div> 
       }
       </React.Fragment>
     )

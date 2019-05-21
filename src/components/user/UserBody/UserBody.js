@@ -76,8 +76,9 @@ export default class UserBody extends React.Component {
     }
 
     if(typeof res !== 'undefined') {
-      if(res.status >= 400){
+      if(res.status >= 400 || typeof res.status === 'undefined'){
         this.setState({redirectFlag: true})
+        return;
       }
 
       galleries = res.data['Galleries'];
