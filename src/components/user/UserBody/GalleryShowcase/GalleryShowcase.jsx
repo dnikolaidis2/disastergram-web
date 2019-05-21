@@ -115,6 +115,10 @@ export default class GalleryShowcase extends React.Component {
 	  const isVis = this.state.isCommmentsVisible;
 	  const loading = this.state.loading;
 
+    let author = this.props.username || this.props.gallery.username;
+    author = '[by '+ author +']';
+    console.log(author);
+
 	  let isEmpty = false;
 	  if(this.state.images.length === 0){
 	  	isEmpty = true;
@@ -131,13 +135,18 @@ export default class GalleryShowcase extends React.Component {
 	  return (
 	    <article className='gal-showcase card noSelect '>
 	    	<header className='gal-showcase__header'>
-		      <Link exact='true' to={{
-		      		pathname: `/user/gallery/${id}`,
-            	state: {id: id, itemName: galleryname, username: username}
-		      	}}
-		      	className='gal-showcase__title select'>
-		        {galleryname}
-		      </Link>
+          <div className='gal-showcase__info fl flo_row al_center js_start'>
+  		      <Link exact='true' to={{
+  		      		pathname: `/user/gallery/${id}`,
+              	state: {id: id, itemName: galleryname, username: username}
+  		      	}}
+  		      	className='gal-showcase__title select'>
+  		        {galleryname}
+  		      </Link>
+            <p className='gal-showcase__author'>
+              {author}
+            </p>
+          </div>
 		      <p className='gal-showcase__commentbtn' onClick={this.toggleComments}>Comments <i className="material-icons" style={expandMoreStyle}>expand_more</i></p>
 	    	</header>
 	      <section className='gal-showcase__body'>

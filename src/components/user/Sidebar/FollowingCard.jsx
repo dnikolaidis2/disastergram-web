@@ -42,14 +42,14 @@ export default class FollowingCard extends React.Component{
           <h2 className='following_card_header noSelect'>Followed Users</h2>
           {following.map( following => {
               return (
-                <tr className='following_car_row fl fl_row js_between al_center' >
-                  <p className='following_card_p noSelect'>
+                <div key={following.id} className='following_car_row fl fl_row js_between al_center' >
+                  <p key={following.id+'_'} className='following_card_p noSelect'>
                     {following.username}
                   </p>
-                  <p className='card_delete noSelect' onClick={this.deleteItem.bind(this, following.username)}>
+                  <p key={following.id+'__'} className='card_delete noSelect' onClick={this.deleteItem.bind(this, following.username)}>
                     <i className='material-icons'>delete_outline</i>
                   </p>
-                </tr>
+                </div>
                 )
             })
           }

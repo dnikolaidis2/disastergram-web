@@ -33,7 +33,7 @@ export default class FollowersCard extends React.Component{
           <h2 className='followers_card_header noSelect'>Followers</h2>
           {followers.map( follower => {
               return (
-                <p className='followers_card_p'>
+                <p  key={follower.id}className='followers_card_p'>
                   <Link 
                     className='followers_card_link'
                     to={{

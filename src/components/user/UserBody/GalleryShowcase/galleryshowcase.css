@@ -29,6 +29,11 @@
   color: #b385e0;
 }
 
+.gal-showcase__author {
+  padding-left: 7px;
+  color: #999;
+}
+
 .gal-showcase__commentbtn {
   margin: 5px 10px;
   padding: 5px 0px 5px 8px;
