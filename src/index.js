@@ -18,7 +18,7 @@ import * as serviceWorker from './serviceWorker';
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.Auth = new AuthAPI('http://disastergram.network');
+		this.Auth = new AuthAPI('https://disastergram.network');
 
 		this.updateLoggedIn = this.updateLoggedIn.bind(this);
 
